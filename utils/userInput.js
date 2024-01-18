@@ -18,4 +18,4 @@ function getUserInput(askQuestion) {
   return userInput();
 }
 
-export default getUserInput;
+export { getUserInput };
