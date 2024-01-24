@@ -1,5 +1,3 @@
 # Required Environment Variables
 
 - OPENAI_API_KEY
-- PINECONE_API_KEY
-- PINECONE_ENVIRONMENT_KEY
