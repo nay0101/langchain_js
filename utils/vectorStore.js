@@ -5,7 +5,7 @@ async function getRetriever(documents, embeddings, collectionName) {
   const client = new ChromaClient();
   const collections = await client.listCollections();
   const vectorStoreConfig = {
-    k: 10,
+    k: 15,
     searchType: "similarity",
   };
   if (!collections.every((collection) => collection.name !== collectionName)) {

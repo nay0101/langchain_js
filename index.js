@@ -1,15 +1,18 @@
 import { config } from "dotenv";
 import { ChatOpenAI } from "@langchain/openai";
-import { PromptTemplate } from "@langchain/core/prompts";
+import {
+  ChatPromptTemplate,
+  SystemMessagePromptTemplate,
+  HumanMessagePromptTemplate,
+} from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { getDataFromUrls } from "./utils/webloader.js";
+import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
-import { getUserInput } from "./utils/userInput.js";
+import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { writeFile } from "node:fs";
 
 config();
 
@@ -23,25 +26,17 @@ const urls = [
   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
   "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
 ];
-const documents = await getDataFromUrls(urls);
 
-const collectionName = "crc_chain_js";
+//Create Training Data for Chatbot
+const documents = await usePuppeteer(urls); //Creating documents from URL
 
 const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-ada-002",
 });
 
+const collectionName = "crc_chain_js";
 const retriever = await getRetriever(documents, embeddings, collectionName);
-
-const retriever_result = await retriever.getRelevantDocuments(
-  "Let's say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw at the end of the term."
-);
-
-retriever_result.forEach((result) => {
-  writeFile("./retriever.txt", result.pageContent, (err) => {
-    if (err) console.log(err);
-  });
-});
+//----------------------------------------
 
 const llm = new ChatOpenAI({
   modelName: "gpt-3.5-turbo-1106",
@@ -49,6 +44,22 @@ const llm = new ChatOpenAI({
   temperature: 0,
 });
 
+//Creating Prompt
+const system_template = `Use the following pieces of context to answer the users question. 
+If you don't know the answer, just say that you don't know, don't try to make up an answer.
+You answer should be detailed.
+----------------
+{context}`;
+
+const messages = [
+  SystemMessagePromptTemplate.fromTemplate(system_template),
+  HumanMessagePromptTemplate.fromTemplate("{question}"),
+];
+
+const prompt = ChatPromptTemplate.fromMessages(messages);
+//----------------------------------------
+
+//Creating Compression Retriever for Accurate Results
 const embeddings_filter = new EmbeddingsFilter({
   embeddings,
   similarityThreshold: 0.8,
@@ -59,22 +70,16 @@ const compression_retriever = new ContextualCompressionRetriever({
   baseCompressor: embeddings_filter,
   baseRetriever: retriever,
 });
+//----------------------------------------
 
-const compression_result = await compression_retriever.getRelevantDocuments(
-  "Let's say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw at the end of the term."
-);
-compression_result.forEach((result) => {
-  writeFile("./compression_retriever.txt", result.pageContent, (err) => {
-    if (err) console.log(err);
-  });
-});
-
+//Creating Memory Instance
 const memory = new BufferWindowMemory({
   memoryKey: "chat_history",
   inputKey: "question",
-  k: 2,
+  k: 3,
   returnMessages: true,
 });
+//----------------------------------------
 
 const chain = ConversationalRetrievalQAChain.fromLLM(
   llm,
@@ -84,6 +89,7 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
     // verbose: true,
     qaChainOptions: {
       type: "stuff",
+      prompt: prompt,
     },
   }
 );
@@ -96,30 +102,4 @@ const askQuestion = async (question) => {
   return answer;
 };
 
-const questions = [
-  "what is fixed deposit?",
-  "How many types of fixed deposit does HongLeong Bank provide?",
-  "What is the difference between Fixed Deposit and eFixed Deposit?",
-  "What are the interest rates for Fixed Deposit?",
-  "Let's say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw at the end of the term.",
-];
-
-// Get Pre-defined Questions
-console.log(
-  `Q: ${questions[0]}\nA: ${(await askQuestion(questions[0])).text}\n`
-);
-console.log(
-  `Q: ${questions[1]}\nA: ${(await askQuestion(questions[1])).text}\n`
-);
-console.log(
-  `Q: ${questions[2]}\nA: ${(await askQuestion(questions[2])).text}\n`
-);
-console.log(
-  `Q: ${questions[3]}\nA: ${(await askQuestion(questions[3])).text}\n`
-);
-console.log(
-  `Q: ${questions[4]}\nA: ${(await askQuestion(questions[4])).text}\n`
-);
-
-// Get User Questions
-// getUserInput(askQuestion);
+await generateAnswers({ askQuestion, userInput: false }); //Set userInput to true to get the User Input
