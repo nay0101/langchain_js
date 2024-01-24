@@ -9,6 +9,7 @@ import { getRetriever } from "./utils/vectorStore.js";
 import { getUserInput } from "./utils/userInput.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
+import { writeFile } from "node:fs";
 
 config();
 
@@ -32,8 +33,19 @@ const embeddings = new OpenAIEmbeddings({
 
 const retriever = await getRetriever(documents, embeddings, collectionName);
 
+const retriever_result = await retriever.getRelevantDocuments(
+  "Let's say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw at the end of the term."
+);
+
+retriever_result.forEach((result) => {
+  writeFile("./retriever.txt", result.pageContent, (err) => {
+    if (err) console.log(err);
+  });
+});
+
 const llm = new ChatOpenAI({
   modelName: "gpt-3.5-turbo-1106",
+  // modelName: "gpt-4-1106-preview",
   temperature: 0,
 });
 
@@ -46,6 +58,15 @@ const embeddings_filter = new EmbeddingsFilter({
 const compression_retriever = new ContextualCompressionRetriever({
   baseCompressor: embeddings_filter,
   baseRetriever: retriever,
+});
+
+const compression_result = await compression_retriever.getRelevantDocuments(
+  "Let's say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw at the end of the term."
+);
+compression_result.forEach((result) => {
+  writeFile("./compression_retriever.txt", result.pageContent, (err) => {
+    if (err) console.log(err);
+  });
 });
 
 const memory = new BufferWindowMemory({
@@ -84,10 +105,21 @@ const questions = [
 ];
 
 // Get Pre-defined Questions
-questions.forEach(async (question) => {
-  const result = await askQuestion(question);
-  console.log(`Q: ${question}\nA: ${result.text}\n`);
-});
+console.log(
+  `Q: ${questions[0]}\nA: ${(await askQuestion(questions[0])).text}\n`
+);
+console.log(
+  `Q: ${questions[1]}\nA: ${(await askQuestion(questions[1])).text}\n`
+);
+console.log(
+  `Q: ${questions[2]}\nA: ${(await askQuestion(questions[2])).text}\n`
+);
+console.log(
+  `Q: ${questions[3]}\nA: ${(await askQuestion(questions[3])).text}\n`
+);
+console.log(
+  `Q: ${questions[4]}\nA: ${(await askQuestion(questions[4])).text}\n`
+);
 
-//Get User Questions
+// Get User Questions
 // getUserInput(askQuestion);
