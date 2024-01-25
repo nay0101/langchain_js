@@ -7,6 +7,7 @@
   "scripts": {
     "chroma": "chroma run --path /db_path",
     "start": "node index",
+    "assistant": "node assistant",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

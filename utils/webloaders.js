@@ -15,13 +15,13 @@ async function splitDocuments(docs) {
   const documents = await sequence.invoke(docs.flat());
 
   //Getting Logs
-  writeFile("./webloaderLog.html", "", (err) => {
+  writeFile("./webloaderLog.txt", "", (err) => {
     if (err) console.log(err);
   });
 
   documents.flat().forEach((d, i) => {
     appendFile(
-      "./webloaderLog.html.html",
+      "./webloaderLog.txt",
       `\n${i}\n${d.metadata.source}\n${d.pageContent}\n`,
       (err) => {
         if (err) console.log(err);
