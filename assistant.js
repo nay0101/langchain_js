@@ -1,12 +1,11 @@
 import { config } from "dotenv";
 import { OpenAIAssistantRunnable } from "langchain/experimental/openai_assistant";
 import { OpenAIFiles } from "langchain/experimental/openai_files";
-import { createReadStream, statSync } from "node:fs";
-import path from "node:path";
+import { createReadStream } from "node:fs";
 
 config();
 
-const model = "gpt-4-1106-preview";
+const model = "gpt-4-0125-preview";
 const instructions = `You are a helpful assistant to answer the questions related to the files uploaded regarding Brillar Bank fixed deposit.
   Show the interest rate starting with \n and line by line whenever you answer it.
   Don't give references and sources

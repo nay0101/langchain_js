@@ -4,33 +4,7 @@ import { PuppeteerWebBaseLoader } from "langchain/document_loaders/web/puppeteer
 import { Document } from "langchain-core/documents";
 import { appendFile, writeFile } from "node:fs";
 import * as cheerio from "cheerio";
-
-async function splitDocuments(docs) {
-  const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1024,
-    chunkOverlap: 20,
-  });
-  const transformer = new HtmlToTextTransformer();
-  const sequence = splitter.pipe(transformer);
-  const documents = await sequence.invoke(docs.flat());
-
-  //Getting Logs
-  writeFile("./webloaderLog.txt", "", (err) => {
-    if (err) console.log(err);
-  });
-
-  documents.flat().forEach((d, i) => {
-    appendFile(
-      "./webloaderLog.txt",
-      `\n${i}\n${d.metadata.source}\n${d.pageContent}\n`,
-      (err) => {
-        if (err) console.log(err);
-      }
-    );
-  });
-
-  return { documents };
-}
+import { splitDocuments } from "./splitDocuments.js";
 
 async function useCheerio(urls) {
   const promises = urls.map(async (url) => {

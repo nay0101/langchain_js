@@ -9,13 +9,13 @@ async function getRetriever(documents, embeddings, collectionName) {
     searchType: "similarity",
   };
   if (!collections.every((collection) => collection.name !== collectionName)) {
-    // await client.deleteCollection({ name: collectionName });
-    console.log("Collection Already Exists");
-    const vector_store = await Chroma.fromExistingCollection(embeddings, {
-      collectionName: collectionName,
-    });
+    await client.deleteCollection({ name: collectionName });
+    // console.log("Collection Already Exists");
+    // const vector_store = await Chroma.fromExistingCollection(embeddings, {
+    //   collectionName: collectionName,
+    // });
 
-    return vector_store.asRetriever(vectorStoreConfig);
+    // return vector_store.asRetriever(vectorStoreConfig);
   }
 
   console.log("Creating New Collection");

@@ -27,24 +27,25 @@ const urls = [
   "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
 ];
 
-//Create Training Data for Chatbot
-const documents = await usePuppeteer(urls); //Creating documents from URL
+// Create Training Data for Chatbot
+const documents = await usePuppeteer(urls); // Creating documents from URL
 
 const embeddings = new OpenAIEmbeddings({
+  // modelName: "text-embedding-3-small",
   modelName: "text-embedding-ada-002",
 });
 
 const collectionName = "crc_chain_js";
 const retriever = await getRetriever(documents, embeddings, collectionName);
-//----------------------------------------
+// ----------------------------------------
 
 const llm = new ChatOpenAI({
   modelName: "gpt-3.5-turbo-1106",
-  // modelName: "gpt-4-1106-preview",
-  temperature: 0,
+  // modelName: "gpt-4-0125-preview",
+  temperature: 0.1,
 });
 
-//Creating Prompt
+// Creating Prompt
 const system_template = `Use the following pieces of context to answer the users question. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
 You answer should be detailed.
@@ -57,9 +58,9 @@ const messages = [
 ];
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
-//----------------------------------------
+// ----------------------------------------
 
-//Creating Compression Retriever for Accurate Results
+// Creating Compression Retriever for Accurate Results
 const embeddings_filter = new EmbeddingsFilter({
   embeddings,
   similarityThreshold: 0.8,
@@ -70,7 +71,7 @@ const compression_retriever = new ContextualCompressionRetriever({
   baseCompressor: embeddings_filter,
   baseRetriever: retriever,
 });
-//----------------------------------------
+// ----------------------------------------
 
 //Creating Memory Instance
 const memory = new BufferWindowMemory({
@@ -102,4 +103,4 @@ const askQuestion = async (question) => {
   return answer;
 };
 
-await generateAnswers({ askQuestion, userInput: false }); //Set userInput to true to get the User Input
+await generateAnswers({ askQuestion, userInput: false }); // Set userInput to true to get the User Input
