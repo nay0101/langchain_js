@@ -12,13 +12,13 @@ async function splitDocuments(docs) {
   const documents = await sequence.invoke(docs.flat());
 
   //Getting Logs
-  writeFile("./dataloaderLog.txt", "", (err) => {
+  writeFile("./logs/dataloaderLog.txt", "", (err) => {
     if (err) console.log(err);
   });
 
   documents.flat().forEach((d, i) => {
     appendFile(
-      "./dataloaderLog.txt",
+      "./logs/dataloaderLog.txt",
       `\n${i}\n${d.metadata.source}\n${d.pageContent}\n`,
       (err) => {
         if (err) console.log(err);

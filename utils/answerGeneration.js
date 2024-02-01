@@ -1,4 +1,5 @@
 import { createInterface } from "readline";
+import * as fs from "node:fs";
 
 function getUserInput(askQuestion) {
   const readline = createInterface({
