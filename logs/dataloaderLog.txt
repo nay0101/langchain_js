@@ -46,30 +46,6 @@ us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ�
 မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
 ပင်မစာမျက်နာ Updates
 
-3
-https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
-SME & Business Banking Payroll Services Cash Management Collection Services
-Payment Services Trade Finance Trust Services Escrow Services Onshore Security
-Agent Services အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ်
-KBZ Quick Pay KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment
-Order Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
-ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
-Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
-ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
-အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
-us ဝန်ဆောင်မှုများHome / ဝန်ဆောင်မှုများ KBZ Online Banking
-
-5
-https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
-Careers  News Corporate News Press Release CONTACT US No.(615/1), Pyay Road,
-Kamayut Township, Yangon City, Myanmar. Call Center for KBZ Bank 09951018555
-Call Center for KBZPAY 3211 Customer Service Email customer_service@kbzbank.com
-Press Office Email pressoffice@kbzbank.com KBZ Bank © 2024 / All Right Reserved.
-Request a call back Name (required) Phone number (required) Your Email
-(required)
-
-Δ × အခုပဲ လျှောက်ထားလိုက်ပါ နာမည် (required) ဖုန်းနံပါတ် (required) အီးမေးလ်
-
 4
 https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
 KBZ Online Banking KBZ Online Banking offers a great way for viewing your
@@ -87,6 +63,19 @@ Banking Mobile KBZPay ငွေလဲကောင်တာများ Help & Su
 Banking Personal Online Banking Corporate Online Banking Useful links
 Announcements Careers
 
+3
+https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
+SME & Business Banking Payroll Services Cash Management Collection Services
+Payment Services Trade Finance Trust Services Escrow Services Onshore Security
+Agent Services အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ်
+KBZ Quick Pay KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment
+Order Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
+ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
+Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
+ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
+အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
+us ဝန်ဆောင်မှုများHome / ဝန်ဆောင်မှုများ KBZ Online Banking
+
 6
 https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
 အီးမေးလ် စိတ်ဝင်စားသည့် အိမ်ရာချေးငွေ အမျိုးအစား
@@ -97,6 +86,17 @@ Interest
 Δ × Book an Appointment Name (required) Phone number (required) Your Email
 (required)
 
+
+5
+https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
+Careers  News Corporate News Press Release CONTACT US No.(615/1), Pyay Road,
+Kamayut Township, Yangon City, Myanmar. Call Center for KBZ Bank 09951018555
+Call Center for KBZPAY 3211 Customer Service Email customer_service@kbzbank.com
+Press Office Email pressoffice@kbzbank.com KBZ Bank © 2024 / All Right Reserved.
+Request a call back Name (required) Phone number (required) Your Email
+(required)
+
+Δ × အခုပဲ လျှောက်ထားလိုက်ပါ နာမည် (required) ဖုန်းနံပါတ် (required) အီးမေးလ်
 
 8
 https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
@@ -129,11 +129,6 @@ us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ�
 မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
 ပင်မစာမျက်နာ Updates
 
-7
-https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
-Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
-Notifications
-
 10
 https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
 Updates How To Videos Announcements Core Banking Updates About Us Company
@@ -150,6 +145,11 @@ Credit Cards ချေးငွေ Shopper Installment Loan Overdraft အိမ�
 ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward
 Remittance Inward Remittance
 
+7
+https://www.kbzbank.com/mm/%E1%80%9D%E1%80%94%E1%80%BA%E1%80%86%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%99%E1%80%BE%E1%80%AF%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8/
+Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
+Notifications
+
 11
 https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
 SME & Business Banking Payroll Services Cash Management Collection Services
@@ -163,21 +163,6 @@ Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
 အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
 us အခြားဝန်ဆောင်မှုများHome / အခြားဝန်ဆောင်မှုများ Other Services KBZ bank also
 offers a whole range of other services. Safe Deposit Locker
-
-12
-https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-Safe Deposit Locker Our Safe Deposit Box can be used to safely store your
-jewelry, important contracts, documents and other valuable possessions. Gift
-Cheques KBZ Gift Cheques are suitable for weddings, birthday presents, awards
-and memorable gifts. KBZ Quick Pay This is the new service, that the bank serves
-as the medium between clients, merchants and companies to transfer money safely
-and smoothly. Currently, Telenor Myanmar, Columbus Travel & Tour, Aeon
-Microfinance and Red Dot companies are using KBZ Quick Pay to accept payment
-from their clients and agents. Currency Exchange Since Oct 2011, the Central
-Bank of Myanmar (CBM) allows selected private banks including KBZ to operate the
-following foreign currencies in order to provide the more efficient flows of
-foreign trade and investments for the local and international customer alike …
-E-commerce
 
 13
 https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
@@ -196,15 +181,25 @@ Release CONTACT US No.(615/1), Pyay Road, Kamayut Township, Yangon City,
 Myanmar. Call Center for KBZ Bank 09951018555 Call Center for KBZPAY 3211
 Customer Service Email
 
-15
+12
 https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-Δ × Apply Now Name (required) Phone number (required) Your Email Product
-Interest
+Safe Deposit Locker Our Safe Deposit Box can be used to safely store your
+jewelry, important contracts, documents and other valuable possessions. Gift
+Cheques KBZ Gift Cheques are suitable for weddings, birthday presents, awards
+and memorable gifts. KBZ Quick Pay This is the new service, that the bank serves
+as the medium between clients, merchants and companies to transfer money safely
+and smoothly. Currently, Telenor Myanmar, Columbus Travel & Tour, Aeon
+Microfinance and Red Dot companies are using KBZ Quick Pay to accept payment
+from their clients and agents. Currency Exchange Since Oct 2011, the Central
+Bank of Myanmar (CBM) allows selected private banks including KBZ to operate the
+following foreign currencies in order to provide the more efficient flows of
+foreign trade and investments for the local and international customer alike …
+E-commerce
 
-Δ × Book an Appointment Name (required) Phone number (required) Your Email
-(required)
-
-Δ ×
+16
+https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
+Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
+Notifications
 
 14
 https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
@@ -231,22 +226,6 @@ Account) စာရင်းရှင် အပ်ငွေစာရင်း (�
 Prepaid Card MPU Teen Debit Card Credit Cards ချေးငွေ Shopper Installment Loan
 Overdraft အိမ်ရာချေးငွေ SME Loans ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း
 
-18
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward Remittance Inward Remittance SME & Business
-Banking Payroll Services Cash Management Collection Services Payment Services
-Trade Finance Trust Services Escrow Services Onshore Security Agent Services
-အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ် KBZ Quick Pay
-KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment Order
-Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
-ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
-Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
-ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
-အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
-us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ်ရန် English
-မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
-ပင်မစာမျက်နာ Updates
-
 19
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
 Updates How To Videos Announcements Core Banking Updates About Us Company
@@ -263,25 +242,21 @@ Credit Cards ချေးငွေ Shopper Installment Loan Overdraft အိမ�
 ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward
 Remittance Inward Remittance
 
-16
-https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
-Notifications
-
-20
+18
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-SME & Business Banking Payroll Services Cash Management Collection Services
-Payment Services Trade Finance Trust Services Escrow Services Onshore Security
-Agent Services အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ်
-KBZ Quick Pay KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment
-Order Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
+ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward Remittance Inward Remittance SME & Business
+Banking Payroll Services Cash Management Collection Services Payment Services
+Trade Finance Trust Services Escrow Services Onshore Security Agent Services
+အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ် KBZ Quick Pay
+KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment Order
+Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
 ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
 Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
 ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
 အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
-us စာရင်းများHome / စာရင်းများ Which account is right for you? Current Account
-Saving Deposit Account Fixed Deposit Account Call Deposit Account Foreign
-Currency Account Children’s Saving Account Savings Deposit Account
+us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ်ရန် English
+မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
+ပင်မစာမျက်နာ Updates
 
 21
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
@@ -298,6 +273,37 @@ apply? You must be aged 18 or overThis account is for new or existing customers
 ဆက်ဖတ်ရန် Fixed Account Eligible individuals and organizations can watch their
 money grow with the KBZ Savings Deposit Account. Interest rate 8% – 9.5% Initial
 deposit 1,000 MMK Minimum balance 1,000 MMK High interest rate
+
+20
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
+SME & Business Banking Payroll Services Cash Management Collection Services
+Payment Services Trade Finance Trust Services Escrow Services Onshore Security
+Agent Services အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ်
+KBZ Quick Pay KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment
+Order Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
+ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
+Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
+ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
+အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
+us စာရင်းများHome / စာရင်းများ Which account is right for you? Current Account
+Saving Deposit Account Fixed Deposit Account Call Deposit Account Foreign
+Currency Account Children’s Saving Account Savings Deposit Account
+
+23
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
+ဆက်ဖတ်ရန် Current Account (Foreign Currency) Current Account (Foreign) is
+suitable for individual businessmen, merchants and Foreigners working locally.
+Initial Deposit 100 USD/SG/EURO Minimum Balance 20 USD/SG/EURO International
+network Use KBZ’s extensive international network to transfer money anywhere in
+the world Multi currency Open an account in the currency of your choosing (USD,
+SGD, Euro) Withdrawals Make daily withdrawals of up to $5000 Online banking Get
+access to all of KBZs latest online banking services Monthly account fee FREE
+Who can apply? You must be aged 18 or overThis account is for new or existing
+customers ဆက်ဖတ်ရန် Children’s Savings Nurture your child’s saving habits and
+build the perfect foundation for their future. Interest rate – 300 Million MMK
+and Above: 7% per annum – Below 300 Million MMK: 6% per annum Initial deposit
+1,000 MMK Minimum balance 1,000 MMK Habit forming The perfect environment to
+practice the habit of savings money It grows with them
 
 22
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
@@ -316,21 +322,19 @@ access to all of KBZs latest online banking services Monthly account fee FREE
 Who can apply? You must be aged 18 or overThis account is for new or existing
 customers ဆက်ဖတ်ရန်
 
-23
+25
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-ဆက်ဖတ်ရန် Current Account (Foreign Currency) Current Account (Foreign) is
-suitable for individual businessmen, merchants and Foreigners working locally.
-Initial Deposit 100 USD/SG/EURO Minimum Balance 20 USD/SG/EURO International
-network Use KBZ’s extensive international network to transfer money anywhere in
-the world Multi currency Open an account in the currency of your choosing (USD,
-SGD, Euro) Withdrawals Make daily withdrawals of up to $5000 Online banking Get
-access to all of KBZs latest online banking services Monthly account fee FREE
-Who can apply? You must be aged 18 or overThis account is for new or existing
-customers ဆက်ဖတ်ရန် Children’s Savings Nurture your child’s saving habits and
-build the perfect foundation for their future. Interest rate – 300 Million MMK
-and Above: 7% per annum – Below 300 Million MMK: 6% per annum Initial deposit
-1,000 MMK Minimum balance 1,000 MMK Habit forming The perfect environment to
-practice the habit of savings money It grows with them
+Monthly account fee FREE Who can apply? You must be aged 18 or overThis account
+is for new or existing customers ဆက်ဖတ်ရန် Download FAQs PRODUCTS & SERVICES
+Loans Cards Deposits Insurance Payment Digital Banking Other Services Banking
+with us ATM Locations Branch Locations Internet Banking Mobile KBZPay
+ငွေလဲကောင်တာများ Help & Support FAQs Contact Us Online Banking Personal Online
+Banking Corporate Online Banking Useful links Announcements Careers  News
+Corporate News Press Release CONTACT US No.(615/1), Pyay Road, Kamayut Township,
+Yangon City, Myanmar. Call Center for KBZ Bank 09951018555 Call Center for
+KBZPAY 3211 Customer Service Email customer_service@kbzbank.com Press Office
+Email pressoffice@kbzbank.com KBZ Bank © 2024 / All Right Reserved. Request a
+call back Name (required) Phone number (required) Your Email (required)
 
 24
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
@@ -348,29 +352,23 @@ up to 4% Flexible interest Continue to earn interest on your savings, no matter
 when you make a deposit. Convenient This account is linked to your current
 account Online banking Get access to all of KBZs latest online banking services
 
-26
+27
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
+Δ × Book an Appointment Name (required) Phone number (required) Your Email
+(required)
 
-Δ × အခုပဲ လျှောက်ထားလိုက်ပါ နာမည် (required) ဖုန်းနံပါတ် (required) အီးမေးလ်
-စိတ်ဝင်စားသည့် အိမ်ရာချေးငွေ အမျိုးအစား
+Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
+Notifications
 
+15
+https://www.kbzbank.com/mm/%e1%80%a1%e1%80%81%e1%80%bc%e1%80%ac%e1%80%b8%e1%80%9d%e1%80%94%e1%80%ba%e1%80%86%e1%80%b1%e1%80%ac%e1%80%84%e1%80%ba%e1%80%99%e1%80%be%e1%80%af%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
 Δ × Apply Now Name (required) Phone number (required) Your Email Product
 Interest
 
+Δ × Book an Appointment Name (required) Phone number (required) Your Email
+(required)
 
-25
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-Monthly account fee FREE Who can apply? You must be aged 18 or overThis account
-is for new or existing customers ဆက်ဖတ်ရန် Download FAQs PRODUCTS & SERVICES
-Loans Cards Deposits Insurance Payment Digital Banking Other Services Banking
-with us ATM Locations Branch Locations Internet Banking Mobile KBZPay
-ငွေလဲကောင်တာများ Help & Support FAQs Contact Us Online Banking Personal Online
-Banking Corporate Online Banking Useful links Announcements Careers  News
-Corporate News Press Release CONTACT US No.(615/1), Pyay Road, Kamayut Township,
-Yangon City, Myanmar. Call Center for KBZ Bank 09951018555 Call Center for
-KBZPAY 3211 Customer Service Email customer_service@kbzbank.com Press Office
-Email pressoffice@kbzbank.com KBZ Bank © 2024 / All Right Reserved. Request a
-call back Name (required) Phone number (required) Your Email (required)
+Δ ×
 
 28
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
@@ -386,22 +384,6 @@ Training ဝန်ဆောင်မှုများ စာရင်းမျ�
 Account) စာရင်းရှင် အပ်ငွေစာရင်း (နိုင်ငံခြားသုံးငွေ) ကဒ်များ Explore Debit Card
 Prepaid Card MPU Teen Debit Card Credit Cards ချေးငွေ Shopper Installment Loan
 Overdraft အိမ်ရာချေးငွေ SME Loans ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း
-
-29
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
-ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward Remittance Inward Remittance SME & Business
-Banking Payroll Services Cash Management Collection Services Payment Services
-Trade Finance Trust Services Escrow Services Onshore Security Agent Services
-အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ် KBZ Quick Pay
-KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment Order
-Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
-ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
-Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
-ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
-အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
-us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ်ရန် English
-မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
-ပင်မစာမျက်နာ Updates
 
 30
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
@@ -467,13 +449,15 @@ mBanking အား ဖွင့်လှစ်ပေးခြင်း  ငွ�
 ထိန်းသိမ်းထားရန်လိုအပ်ပါသည်။) စာရင်းရှင်အပ်ငွေစာရင်းအကောင့်အသစ်မှ
 အခြားကမ္ဘောဇဘဏ်အကောင့်များကို အခမဲ့ ငွေလွှဲပြောင်းနိုင်ခြင်း
 
-27
+26
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/
-Δ × Book an Appointment Name (required) Phone number (required) Your Email
-(required)
 
-Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
-Notifications
+Δ × အခုပဲ လျှောက်ထားလိုက်ပါ နာမည် (required) ဖုန်းနံပါတ် (required) အီးမေးလ်
+စိတ်ဝင်စားသည့် အိမ်ရာချေးငွေ အမျိုးအစား
+
+Δ × Apply Now Name (required) Phone number (required) Your Email Product
+Interest
+
 
 34
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
@@ -492,6 +476,22 @@ https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b
 ကျပ် ငွေစာရင်းအကောင့်-ငွေစုဘဏ်အပ်ငွေစာရင်း၏ ငွေသားထုတ်ယူနိုင်သော ဘဏ်ခွဲများ
 ငွေသားထုတ်ယူနိုင်သော ဘဏ်ခွဲများစာရင်း
 
+29
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
+ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward Remittance Inward Remittance SME & Business
+Banking Payroll Services Cash Management Collection Services Payment Services
+Trade Finance Trust Services Escrow Services Onshore Security Agent Services
+အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ် KBZ Quick Pay
+KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment Order
+Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
+ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
+Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
+ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
+အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
+us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ်ရန် English
+မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
+ပင်မစာမျက်နာ Updates
+
 35
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
 ငွေစာရင်းအကောင့်သစ်:ခေါ်ယူအပ်ငွေစာရင်း နှင့် စာရင်းရှင်အပ်ငွေစာရင်း နှင့်
@@ -508,6 +508,11 @@ Online Banking Useful links Announcements Careers  News Corporate News Press
 Release CONTACT US No.(615/1), Pyay Road, Kamayut Township, Yangon City,
 Myanmar. Call Center for KBZ Bank 09951018555 Call Center for KBZPAY 3211
 Customer Service Email customer_service@kbzbank.com Press Office Email
+
+38
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
+Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
+Notifications
 
 37
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
@@ -544,10 +549,19 @@ Account) စာရင်းရှင် အပ်ငွေစာရင်း (�
 Prepaid Card MPU Teen Debit Card Credit Cards ချေးငွေ Shopper Installment Loan
 Overdraft အိမ်ရာချေးငွေ SME Loans ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း
 
-38
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/operating-account-mm/
-Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
-Notifications
+42
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
+SME & Business Banking Payroll Services Cash Management Collection Services
+Payment Services Trade Finance Trust Services Escrow Services Onshore Security
+Agent Services အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ်
+KBZ Quick Pay KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment
+Order Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
+ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
+Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
+ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
+အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
+us ငွေစုဘဏ်အပ်ငွေစာရင်:Home / စာရင်းများ / ငွေစုဘဏ်အပ်ငွေစာရင်:
+ငွေစုဘဏ်အပ်ငွေစာရင်း
 
 40
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
@@ -564,53 +578,6 @@ Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
 us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ်ရန် English
 မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
 ပင်မစာမျက်နာ Updates
-
-41
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-Updates How To Videos Announcements Core Banking Updates About Us Company
-Profile Who We Are Diversity, Equity & Inclusion DE&I for Workplace DE&I for
-Society Letter from the Chairman Governance Corporate Governance Risk Management
-Corporate Policies Board of Directors Annual General Meeting Sustainability Path
-to Sustainability Corporate Social Responsibility COVID-19 Response Managing Our
-Environmental Footprint Responsible Tax Management KBZ Bank: Compliance Activity
-Legal & Compliance Training ဝန်ဆောင်မှုများ စာရင်းများ စုဘူးအကောင့်များ
-ငွေစာရင်းအကောင့်အသစ်များ ငွေစုဘဏ်အပ်ငွေစာရင်: စာရင်းသေအပ်ငွေစာရင်း
-ခေါ်ယူအပ်ငွေစာရင်း သက်ငယ်စာရင်း (Minor Account) စာရင်းရှင် အပ်ငွေစာရင်း
-(နိုင်ငံခြားသုံးငွေ) ကဒ်များ Explore Debit Card Prepaid Card MPU Teen Debit Card
-Credit Cards ချေးငွေ Shopper Installment Loan Overdraft အိမ်ရာချေးငွေ SME Loans
-ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward
-Remittance Inward Remittance
-
-43
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-ကမ္ဘောဇဘဏ်လီမိတက်၏ ငွေစုဘဏ်အပ်ငွေစာရင်းသည် အသက်(၁၈)ပြည့်ပြီးသော
-နိုင်ငံသားများအားလုံး ဖွင့်လှစ်နိုင်သော စာရင်း အမျိုးအစားတစ်မျိုးဖြစ်ပါသည်။
-ငွေစုဘဏ်အပ်ငွေစာရင်းသည် အတိုးရရှိသောစာရင်း အမျိုးအစားဖြစ် ပါသည်။
-ပုဂ္ဂိုလ်တစ်ဦးတည်းစာရင်း (သို့) တစ်ဦးထက်ပိုသော ပုဂ္ဂိုလ် များဖြင့်
-တွဲဖက်စာရင်းဖွင့်လှစ်နိုင်ခြင်း တစ်နှစ်လျှင် သိန်း ၃၀၀၀ နှင့်အထက် ၇%သိန်း ၃၀၀၀
-အောက် ၆% (၃)လလျှင်တစ်ကြိမ်အတိုးထုတ်ယူနိုင်ခြင်း အတိုးပေးသည့်လများတွင်
-အတိုးငွေမထုတ်ယူခဲ့ပါက နောက်လများအတွက် တိုးရင်းပေါင်း၍
-တွက်ချက်ပေးခြင်းကိုယ်တိုင်ငွေထုတ်ယူနိုင်ခြင်းမရှိပါက ကိုယ်စားလှယ်ဖြင့်
-ငွေထုတ်ယူနိုင်ခြင်း (စာရင်းဖွင့်လှစ်ထားသည့် ဘဏ်ခွဲတွင်သာ)
-နီးစပ်ရာမည်သည့်ကမ္ဘောဇဘဏ်ခွဲတွင်မဆို လွယ်ကူစွာဖြင့်
-ငွေသွင်း/ငွေထုတ်ပြုလုပ်နိုင်ခြင်း ဘဏ်ဖွင့်ရက်များတွင် အကြိမ်အရေအတွက်
-အကန့်အသတ်မရှိ ငွေသွင်းနိုင်ပြီး (၁)ပတ်လျှင် (၁)ကြိမ်ငွေပမာဏကန့်သတ်ချက်မရှိပဲ
-ငွေထုတ်ယူနိုင်ပါသည်။ ဖွင့်လှစ်ထားရှိသည့် စာရင်းသို့ မည်သူမဆို
-ငွေပေးသွင်းနိုင်ခြင်း/စာရင်းပြောင်းပေးသွင်းနိုင်ခြင်း
-
-42
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-SME & Business Banking Payroll Services Cash Management Collection Services
-Payment Services Trade Finance Trust Services Escrow Services Onshore Security
-Agent Services အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ်
-KBZ Quick Pay KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment
-Order Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
-ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
-Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
-ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
-အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
-us ငွေစုဘဏ်အပ်ငွေစာရင်:Home / စာရင်းများ / ငွေစုဘဏ်အပ်ငွေစာရင်:
-ငွေစုဘဏ်အပ်ငွေစာရင်း
 
 44
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
@@ -629,6 +596,39 @@ Take out a loan ငွေစုဘဏ်အပ်ငွေစာရင်း စ
 ပေးပို့လိုပါက အဆိုပါ ဘဏ်စာရင်းသို့ တိုက်ရိုက် ငွေလွှဲပေးပို့နိုင်ခြင်း Online
 banking
 
+43
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
+ကမ္ဘောဇဘဏ်လီမိတက်၏ ငွေစုဘဏ်အပ်ငွေစာရင်းသည် အသက်(၁၈)ပြည့်ပြီးသော
+နိုင်ငံသားများအားလုံး ဖွင့်လှစ်နိုင်သော စာရင်း အမျိုးအစားတစ်မျိုးဖြစ်ပါသည်။
+ငွေစုဘဏ်အပ်ငွေစာရင်းသည် အတိုးရရှိသောစာရင်း အမျိုးအစားဖြစ် ပါသည်။
+ပုဂ္ဂိုလ်တစ်ဦးတည်းစာရင်း (သို့) တစ်ဦးထက်ပိုသော ပုဂ္ဂိုလ် များဖြင့်
+တွဲဖက်စာရင်းဖွင့်လှစ်နိုင်ခြင်း တစ်နှစ်လျှင် သိန်း ၃၀၀၀ နှင့်အထက် ၇%သိန်း ၃၀၀၀
+အောက် ၆% (၃)လလျှင်တစ်ကြိမ်အတိုးထုတ်ယူနိုင်ခြင်း အတိုးပေးသည့်လများတွင်
+အတိုးငွေမထုတ်ယူခဲ့ပါက နောက်လများအတွက် တိုးရင်းပေါင်း၍
+တွက်ချက်ပေးခြင်းကိုယ်တိုင်ငွေထုတ်ယူနိုင်ခြင်းမရှိပါက ကိုယ်စားလှယ်ဖြင့်
+ငွေထုတ်ယူနိုင်ခြင်း (စာရင်းဖွင့်လှစ်ထားသည့် ဘဏ်ခွဲတွင်သာ)
+နီးစပ်ရာမည်သည့်ကမ္ဘောဇဘဏ်ခွဲတွင်မဆို လွယ်ကူစွာဖြင့်
+ငွေသွင်း/ငွေထုတ်ပြုလုပ်နိုင်ခြင်း ဘဏ်ဖွင့်ရက်များတွင် အကြိမ်အရေအတွက်
+အကန့်အသတ်မရှိ ငွေသွင်းနိုင်ပြီး (၁)ပတ်လျှင် (၁)ကြိမ်ငွေပမာဏကန့်သတ်ချက်မရှိပဲ
+ငွေထုတ်ယူနိုင်ပါသည်။ ဖွင့်လှစ်ထားရှိသည့် စာရင်းသို့ မည်သူမဆို
+ငွေပေးသွင်းနိုင်ခြင်း/စာရင်းပြောင်းပေးသွင်းနိုင်ခြင်း
+
+41
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
+Updates How To Videos Announcements Core Banking Updates About Us Company
+Profile Who We Are Diversity, Equity & Inclusion DE&I for Workplace DE&I for
+Society Letter from the Chairman Governance Corporate Governance Risk Management
+Corporate Policies Board of Directors Annual General Meeting Sustainability Path
+to Sustainability Corporate Social Responsibility COVID-19 Response Managing Our
+Environmental Footprint Responsible Tax Management KBZ Bank: Compliance Activity
+Legal & Compliance Training ဝန်ဆောင်မှုများ စာရင်းများ စုဘူးအကောင့်များ
+ငွေစာရင်းအကောင့်အသစ်များ ငွေစုဘဏ်အပ်ငွေစာရင်: စာရင်းသေအပ်ငွေစာရင်း
+ခေါ်ယူအပ်ငွေစာရင်း သက်ငယ်စာရင်း (Minor Account) စာရင်းရှင် အပ်ငွေစာရင်း
+(နိုင်ငံခြားသုံးငွေ) ကဒ်များ Explore Debit Card Prepaid Card MPU Teen Debit Card
+Credit Cards ချေးငွေ Shopper Installment Loan Overdraft အိမ်ရာချေးငွေ SME Loans
+ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward
+Remittance Inward Remittance
+
 45
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
 Online banking Online Banking ကို အသုံးပြု၍ အခြားသော ဘဏ်လုပ်ငန်း
@@ -646,15 +646,9 @@ Pyay Road, Kamayut Township, Yangon City, Myanmar. Call Center for KBZ Bank
 customer_service@kbzbank.com Press Office Email pressoffice@kbzbank.com KBZ Bank
 © 2024 / All Right Reserved.
 
-47
+48
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-Δ × Apply Now Name (required) Phone number (required) Your Email Product
-Interest
-
-Δ × Book an Appointment Name (required) Phone number (required) Your Email
-(required)
-
-Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
+Notifications
 
 46
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
@@ -680,26 +674,6 @@ Account) စာရင်းရှင် အပ်ငွေစာရင်း (�
 Prepaid Card MPU Teen Debit Card Credit Cards ချေးငွေ Shopper Installment Loan
 Overdraft အိမ်ရာချေးငွေ SME Loans ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း
 
-48
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-Notifications
-
-50
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward Remittance Inward Remittance SME & Business
-Banking Payroll Services Cash Management Collection Services Payment Services
-Trade Finance Trust Services Escrow Services Onshore Security Agent Services
-အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ် KBZ Quick Pay
-KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment Order
-Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
-ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
-Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
-ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
-အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
-us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ်ရန် English
-မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
-ပင်မစာမျက်နာ Updates
-
 51
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
 Updates How To Videos Announcements Core Banking Updates About Us Company
@@ -716,23 +690,6 @@ Credit Cards ချေးငွေ Shopper Installment Loan Overdraft အိမ�
 ငွေလွှဲလုပ်ငန်း ပြည်တွင်းငွေလွှဲလုပ်ငန်း ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward
 Remittance Inward Remittance
 
-53
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-ကမ္ဘောဇဘဏ်မှ အထူးငွေသားစာရင်းသေအပ်ငွေစာရင်းဖြစ်သော ရက် ၃၀ နှင့် ရက် ၉၀
-စာရင်းများကိုမိတ်ဆက်ပေးလိုက်ပြီဖြစ်ပြီး စာရင်းဖွင့်ရန် လိုအပ်သည့်
-စတင်အပ်နှံငွေအား ငွေသား (သို့) မိမိ၏CASH ACCOUNT မှတစ်ဆင့်
-ငွေလွှဲကာအပ်နှံနိုင်ပါသည်။အထူးငွေသားစာရင်းသေအပ်ငွေစာရင်းသည်
-မြင့်မားသောအတိုးနှုန်း ရရှိလိုသော customer များနှင့်မိမိငွေကြေးအား လွယ်ကူစွာ
-စီမံခန့်ခွဲမှုပြုလုပ်လိုသော customer များအတွက် အထူးသင့်လျှော်ပါသည်။
-စာရင်းဖွင့်လှစ်နိုင်သော customer များ လူပုဂ္ဂိုလ်များ (တစ်ဦးချင်း သို့မဟုတ်
-နှစ်ဦး၊ သုံးဦးစသဖြင့် တွဲဖက်စာရင်းများ)အဖွဲ့အစည်းများ (NGO, INGO, Pagoda
-Trustees, Universities, etc)ကုမ္ပဏီများ (DICA Issued Company
-Registration)စီးပွားရေးလုပ်ငန်း နှင့ ကုမ္ပဏီများ (Non-DICA Issued Company
-Registration) မြင့်မားသော အတိုးနှုန်း ပုံမှန်စာရင်းသေအပ်ငွေစာရင်းထက် မြင့်မားသော
-အတိုးနှုန်းရရှိနိုင်ခြင်း။ငွေစုဘဏ်အပ်ငွေစာရင်းကဲ့သို့ လစဉ်အတိုးရရှိနိုင်ရန်အတွက်
-သတ်မှတ်ထားသည့်အချိန်အတွင်းသာငွေပေးသွင်းရန်မလိုအပ်ပဲ အခြားသောနေ့ရက်များ၌ပါ
-ငွေသွင်းနိုင်ခြင်း။ အပ်နှံခြင်း
-
 52
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
 SME & Business Banking Payroll Services Cash Management Collection Services
@@ -745,6 +702,22 @@ Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
 ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
 အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
 us အထူးငွေသား စာရင်းသေအပ်ငွေစာရင်းစာရင်းသေအပ်ငွေစာရင်း
+
+50
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
+ပြည်ပ ငွေလွှဲလုပ်ငန်း Outward Remittance Inward Remittance SME & Business
+Banking Payroll Services Cash Management Collection Services Payment Services
+Trade Finance Trust Services Escrow Services Onshore Security Agent Services
+အခြားဝန်ဆောင်မှုများ KBZPay အသက်အာမခံ မေတ္တာလက်ဆောင်ချက်လက်မှတ် KBZ Quick Pay
+KBZ DirectPay Bank Certificate E-commerce လုံခြုံမှုသေတ္တာ Payment Order
+Procurement KBZ MPU Corporate Tax Debit Card Treasury ကျွန်ုပ်တို့
+ဘဏ်လုပ်ငန်းများ Self-Service Banking ATM Banking ဘဏ်ခွဲများ Internet Banking
+Personal Mobile Banking Business Internet Banking Mobile mBanking KBZPay
+ငွေလဲကောင်တာများ အကူအညီ CBM Appeals အမေးများသော မေးခွန်းများ ဆက်သွယ်ရန် Website
+အသုံးပြုမှုသတ်မှတ်ချက်များ Security Guidelines Careers Working at KBZ Bank Join
+us Sign In KBZ iBanking Card Statement Self-Service Banking ဆက်သွယ်ရန် English
+မြန်မာ Searchဆက်သွယ်ရန် Sign In KBZ iBanking Card Statement Self-Service Banking
+ပင်မစာမျက်နာ Updates
 
 54
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
@@ -779,15 +752,6 @@ High-Interest rate ငွေစုဘဏ်အပ်ငွေစာရင်း�
 ကျပ်ထောင် ဂဏန်းအလီလီဖြင့်သာ အပ်နှံနိုင်ပါသည်။) အနည်းဆုံးလက်ကျန်ငွေ၁၀,၀၀၀ ကျပ်
 အပ်နှံထားနိုင်သည့် ကာလအပိုင်းအခြားနှင့် အတိုးနှုန်းများ FAQs Terms & Conditions
 
-57
-https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
-Δ × အခုပဲ လျှောက်ထားလိုက်ပါ နာမည် (required) ဖုန်းနံပါတ် (required) အီးမေးလ်
-စိတ်ဝင်စားသည့် အိမ်ရာချေးငွေ အမျိုးအစား
-
-Δ × Apply Now Name (required) Phone number (required) Your Email Product
-Interest
-
-
 56
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
 Terms & Conditions PRODUCTS & SERVICES Loans Cards Deposits Insurance Payment
@@ -802,6 +766,23 @@ customer_service@kbzbank.com Press Office Email pressoffice@kbzbank.com KBZ Bank
 (required) Your Email (required)
 
 
+53
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
+ကမ္ဘောဇဘဏ်မှ အထူးငွေသားစာရင်းသေအပ်ငွေစာရင်းဖြစ်သော ရက် ၃၀ နှင့် ရက် ၉၀
+စာရင်းများကိုမိတ်ဆက်ပေးလိုက်ပြီဖြစ်ပြီး စာရင်းဖွင့်ရန် လိုအပ်သည့်
+စတင်အပ်နှံငွေအား ငွေသား (သို့) မိမိ၏CASH ACCOUNT မှတစ်ဆင့်
+ငွေလွှဲကာအပ်နှံနိုင်ပါသည်။အထူးငွေသားစာရင်းသေအပ်ငွေစာရင်းသည်
+မြင့်မားသောအတိုးနှုန်း ရရှိလိုသော customer များနှင့်မိမိငွေကြေးအား လွယ်ကူစွာ
+စီမံခန့်ခွဲမှုပြုလုပ်လိုသော customer များအတွက် အထူးသင့်လျှော်ပါသည်။
+စာရင်းဖွင့်လှစ်နိုင်သော customer များ လူပုဂ္ဂိုလ်များ (တစ်ဦးချင်း သို့မဟုတ်
+နှစ်ဦး၊ သုံးဦးစသဖြင့် တွဲဖက်စာရင်းများ)အဖွဲ့အစည်းများ (NGO, INGO, Pagoda
+Trustees, Universities, etc)ကုမ္ပဏီများ (DICA Issued Company
+Registration)စီးပွားရေးလုပ်ငန်း နှင့ ကုမ္ပဏီများ (Non-DICA Issued Company
+Registration) မြင့်မားသော အတိုးနှုန်း ပုံမှန်စာရင်းသေအပ်ငွေစာရင်းထက် မြင့်မားသော
+အတိုးနှုန်းရရှိနိုင်ခြင်း။ငွေစုဘဏ်အပ်ငွေစာရင်းကဲ့သို့ လစဉ်အတိုးရရှိနိုင်ရန်အတွက်
+သတ်မှတ်ထားသည့်အချိန်အတွင်းသာငွေပေးသွင်းရန်မလိုအပ်ပဲ အခြားသောနေ့ရက်များ၌ပါ
+ငွေသွင်းနိုင်ခြင်း။ အပ်နှံခြင်း
+
 58
 https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
 Δ × Book an Appointment Name (required) Phone number (required) Your Email
@@ -809,3 +790,22 @@ https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b
 
 Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
 Notifications
+
+47
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%af%e1%80%98%e1%80%8f%e1%80%ba%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
+Δ × Apply Now Name (required) Phone number (required) Your Email Product
+Interest
+
+Δ × Book an Appointment Name (required) Phone number (required) Your Email
+(required)
+
+Δ × [https://www.facebook.com/tr?id=232479855049566&ev=PageView&noscript=1]
+
+57
+https://www.kbzbank.com/mm/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%99%e1%80%bb%e1%80%ac%e1%80%b8/%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba%e1%80%b8%e1%80%9e%e1%80%b1%e1%80%a1%e1%80%95%e1%80%ba%e1%80%84%e1%80%bd%e1%80%b1%e1%80%85%e1%80%ac%e1%80%9b%e1%80%84%e1%80%ba/
+Δ × အခုပဲ လျှောက်ထားလိုက်ပါ နာမည် (required) ဖုန်းနံပါတ် (required) အီးမေးလ်
+စိတ်ဝင်စားသည့် အိမ်ရာချေးငွေ အမျိုးအစား
+
+Δ × Apply Now Name (required) Phone number (required) Your Email Product
+Interest
+
