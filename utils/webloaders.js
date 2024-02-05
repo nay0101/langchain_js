@@ -1,8 +1,5 @@
-import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { PuppeteerWebBaseLoader } from "langchain/document_loaders/web/puppeteer";
 import { Document } from "langchain-core/documents";
-import { appendFile, writeFile } from "node:fs";
 import * as cheerio from "cheerio";
 import { splitDocuments } from "./splitDocuments.js";
 

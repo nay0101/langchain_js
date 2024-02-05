@@ -8,7 +8,7 @@ import {
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
+import { usePuppeteer } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
@@ -27,8 +27,8 @@ const urls = [
   "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
 ];
 
-// Create Training Data for Chatbot
-const documents = await usePuppeteer(urls); // Creating documents from URL
+/* Create Training Data for Chatbot */
+const documents = await usePuppeteer(urls);
 
 const embeddings = new OpenAIEmbeddings({
   // modelName: "text-embedding-3-small",
@@ -45,7 +45,7 @@ const llm = new ChatOpenAI({
   temperature: 0.1,
 });
 
-// Creating Prompt
+/* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
 You answer should be detailed.
@@ -58,9 +58,8 @@ const messages = [
 ];
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
-// ----------------------------------------
 
-// Creating Compression Retriever for Accurate Results
+/* Creating Compression Retriever for Accurate Results */
 const embeddings_filter = new EmbeddingsFilter({
   embeddings,
   similarityThreshold: 0.8,
@@ -71,17 +70,16 @@ const compression_retriever = new ContextualCompressionRetriever({
   baseCompressor: embeddings_filter,
   baseRetriever: retriever,
 });
-// ----------------------------------------
 
-//Creating Memory Instance
+/* Creating Memory Instance */
 const memory = new BufferWindowMemory({
   memoryKey: "chat_history",
   inputKey: "question",
   k: 3,
   returnMessages: true,
 });
-//----------------------------------------
 
+/* Creating Question Chain */
 const chain = ConversationalRetrievalQAChain.fromLLM(
   llm,
   compression_retriever,
@@ -95,6 +93,7 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
   }
 );
 
+/* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
   const answer = await chain.invoke({
     question,

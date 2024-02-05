@@ -1,6 +1,6 @@
 import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { writeFile, appendFile } from "node:fs";
+import * as fs from "node:fs";
 
 async function splitDocuments(docs) {
   const splitter = new RecursiveCharacterTextSplitter({
@@ -11,13 +11,13 @@ async function splitDocuments(docs) {
   const sequence = splitter.pipe(transformer);
   const documents = await sequence.invoke(docs.flat());
 
-  //Getting Logs
-  writeFile("./logs/dataloaderLog.txt", "", (err) => {
+  /* Getting Logs */
+  fs.writeFile("./logs/dataloaderLog.txt", "", (err) => {
     if (err) console.log(err);
   });
 
   documents.flat().forEach((d, i) => {
-    appendFile(
+    fs.appendFile(
       "./logs/dataloaderLog.txt",
       `\n${i}\n${d.metadata.source}\n${d.pageContent}\n`,
       (err) => {
