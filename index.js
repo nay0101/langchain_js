@@ -75,6 +75,7 @@ const compression_retriever = new ContextualCompressionRetriever({
 const memory = new BufferWindowMemory({
   memoryKey: "chat_history",
   inputKey: "question",
+  outputKey: "text",
   k: 3,
   returnMessages: true,
 });
@@ -84,7 +85,8 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
   llm,
   compression_retriever,
   {
-    memory,
+    returnSourceDocuments: true,
+    memory: memory,
     // verbose: true,
     qaChainOptions: {
       type: "stuff",
@@ -95,11 +97,18 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
 
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
-  const answer = await chain.invoke({
+  const result = await chain.invoke({
     question,
     chat_history: memory,
   });
-  return answer;
+  const answer = await result.text;
+  const sources = await result.sourceDocuments;
+
+  return { answer, sources };
 };
 
-await generateAnswers({ askQuestion, userInput: false }); // Set userInput to true to get the User Input
+await generateAnswers({
+  askQuestion,
+  returnSources: true,
+  userInput: true,
+}); // Set userInput to true to get the User Input
