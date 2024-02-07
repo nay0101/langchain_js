@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
@@ -35,20 +35,18 @@ const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-ada-002",
 });
 
-const collectionName = "crc_chain_js";
+const collectionName = "crc_chain_js_gemini";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
-const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo-1106",
-  // modelName: "gpt-4-0125-preview",
+const llm = new ChatGoogleGenerativeAI({
+  modelName: "gemini-pro",
   temperature: 0.1,
 });
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-You answer should be detailed.
+If you don't know the answer, just say that you don't know, don't try to make up an answer. 
 ----------------
 {context}`;
 
@@ -87,7 +85,7 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
   {
     returnSourceDocuments: true,
     memory: memory,
-    // verbose: true,
+    verbose: true,
     qaChainOptions: {
       type: "stuff",
       prompt: prompt,

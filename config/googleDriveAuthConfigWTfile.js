@@ -11,7 +11,6 @@ const oauth2Client = new google.auth.OAuth2(
   REDIRECT_URL
 );
 
-// generate a url that asks permissions for Blogger and Google Calendar scopes
 const SCOPES = ["https://www.googleapis.com/auth/drive"];
 
 const url = oauth2Client.generateAuthUrl({
@@ -20,7 +19,10 @@ const url = oauth2Client.generateAuthUrl({
 
   // If you only need one scope you can pass it as a string
   scope: SCOPES,
+  prompt: "consent",
 });
+
+console.log(url);
 
 // This will provide an object with the access_token and refresh_token.
 // Save these somewhere safe so they can be used at a later time.

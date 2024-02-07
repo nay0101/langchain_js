@@ -1,7 +1,8 @@
 import { createInterface } from "readline";
 
 async function getAnswerAndSource(getQuestion, returnSources) {
-  const { answer, sources } = await getQuestion;
+  const { question, answer, sources } = await getQuestion;
+  console.log(`Question: ${question}`);
   console.log(`Answer: ${answer}`);
   if (returnSources) {
     let tempSources = [];
@@ -47,10 +48,10 @@ async function generateAnswers({
   ];
 
   await getAnswerAndSource(askQuestion(questions[0]), returnSources);
-  // await getAnswerAndSource(askQuestion(questions[1]), returnSources);
-  // await getAnswerAndSource(askQuestion(questions[2]), returnSources);
-  // await getAnswerAndSource(askQuestion(questions[3]), returnSources);
-  // await getAnswerAndSource(askQuestion(questions[4]), returnSources);
+  await getAnswerAndSource(askQuestion(questions[1]), returnSources);
+  await getAnswerAndSource(askQuestion(questions[2]), returnSources);
+  await getAnswerAndSource(askQuestion(questions[3]), returnSources);
+  await getAnswerAndSource(askQuestion(questions[4]), returnSources);
 }
 
 export { generateAnswers };
