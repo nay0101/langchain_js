@@ -1,16 +1,18 @@
 import { config } from "dotenv";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import {
+  ChatGoogleGenerativeAI,
+  GoogleGenerativeAIEmbeddings,
+} from "@langchain/google-genai";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { usePuppeteer } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
-import { generateAnswers } from "./utils/answerGeneration.js";
+import { usePuppeteer } from "../utils/webloaders.js";
+import { getRetriever } from "../utils/vectorStore.js";
+import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 
@@ -30,23 +32,19 @@ const urls = [
 /* Create Training Data for Chatbot */
 const documents = await usePuppeteer(urls);
 
-const embeddings = new OpenAIEmbeddings({
-  // modelName: "text-embedding-3-small",
-  modelName: "text-embedding-ada-002",
+const embeddings = new GoogleGenerativeAIEmbeddings({
+  modelName: "embedding-001",
 });
 
 const collectionName = "crc_chain_js_gemini";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
-const llm = new ChatGoogleGenerativeAI({
-  modelName: "gemini-pro",
-  temperature: 0.1,
-});
+const llm = new ChatGoogleGenerativeAI({ modelName: "gemini-pro" });
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer. 
+phin khn lilet. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 ----------------
 {context}`;
 
@@ -60,7 +58,7 @@ const prompt = ChatPromptTemplate.fromMessages(messages);
 /* Creating Compression Retriever for Accurate Results */
 const embeddings_filter = new EmbeddingsFilter({
   embeddings,
-  similarityThreshold: 0.8,
+  similarityThreshold: 0.7,
   k: 10,
 });
 

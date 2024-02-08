@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-ai/generativelanguage": "^0.2.1",
     "@google-cloud/local-auth": "^2.1.0",
     "@langchain/community": "^0.0.15",
     "@langchain/google-genai": "^0.0.10",
@@ -22,6 +23,7 @@
     "cheerio": "^1.0.0-rc.12",
     "chromadb": "^1.7.3",
     "dotenv": "^16.3.1",
+    "google-auth-library": "^8.9.0",
     "googleapis": "^126.0.1",
     "html-to-text": "^9.0.5",
     "jsdom": "^23.2.0",

@@ -48,10 +48,10 @@ async function generateAnswers({
   ];
 
   await getAnswerAndSource(askQuestion(questions[0]), returnSources);
-  await getAnswerAndSource(askQuestion(questions[1]), returnSources);
-  await getAnswerAndSource(askQuestion(questions[2]), returnSources);
-  await getAnswerAndSource(askQuestion(questions[3]), returnSources);
-  await getAnswerAndSource(askQuestion(questions[4]), returnSources);
+  // await getAnswerAndSource(askQuestion(questions[1]), returnSources);
+  // await getAnswerAndSource(askQuestion(questions[2]), returnSources);
+  // await getAnswerAndSource(askQuestion(questions[3]), returnSources);
+  // await getAnswerAndSource(askQuestion(questions[4]), returnSources);
 }
 
 export { generateAnswers };
