@@ -47,8 +47,8 @@ async function generateAnswers({
     "Let's say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw at the end of the term.",
   ];
 
-  await getAnswerAndSource(askQuestion(questions[0]), returnSources);
-  // await getAnswerAndSource(askQuestion(questions[1]), returnSources);
+  // await getAnswerAndSource(askQuestion(questions[0]), returnSources);
+  await getAnswerAndSource(askQuestion(questions[1]), returnSources);
   // await getAnswerAndSource(askQuestion(questions[2]), returnSources);
   // await getAnswerAndSource(askQuestion(questions[3]), returnSources);
   // await getAnswerAndSource(askQuestion(questions[4]), returnSources);

@@ -15,6 +15,7 @@ import { getRetriever } from "../utils/vectorStore.js";
 import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 
 config();
 
@@ -31,6 +32,7 @@ const urls = [
 
 /* Create Training Data for Chatbot */
 const documents = await usePuppeteer(urls);
+// const documents = await useDirectoryLoader("./assets/HLB Data");
 
 const embeddings = new GoogleGenerativeAIEmbeddings({
   modelName: "embedding-001",
@@ -44,7 +46,7 @@ const llm = new ChatGoogleGenerativeAI({ modelName: "gemini-pro" });
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
-phin khn lilet. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+If you don't know the answer, just say that you don't know, don't try to make up an answer.
 ----------------
 {context}`;
 
@@ -106,5 +108,5 @@ const askQuestion = async (question) => {
 await generateAnswers({
   askQuestion,
   returnSources: true,
-  userInput: true,
+  userInput: false,
 }); // Set userInput to true to get the User Input

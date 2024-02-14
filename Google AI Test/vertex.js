@@ -1,16 +1,16 @@
 import { config } from "dotenv";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatGoogleVertexAI } from "@langchain/community/chat_models/googlevertexai";
+import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { usePuppeteer } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
-import { generateAnswers } from "./utils/answerGeneration.js";
+import { usePuppeteer } from "../utils/webloaders.js";
+import { getRetriever } from "../utils/vectorStore.js";
+import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 
@@ -30,19 +30,14 @@ const urls = [
 /* Create Training Data for Chatbot */
 const documents = await usePuppeteer(urls);
 
-const embeddings = new OpenAIEmbeddings({
-  // modelName: "text-embedding-3-small",
-  modelName: "text-embedding-ada-002",
-});
+const embeddings = new GoogleVertexAIEmbeddings();
 
-const collectionName = "crc_chain_js";
+const collectionName = "crc_chain_js_vertexai";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
-const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo-1106",
-  // modelName: "gpt-4-0125-preview",
-  temperature: 0.1,
+const llm = new ChatGoogleVertexAI({
+  model: "gemini-pro",
 });
 
 /* Creating Prompt */
@@ -86,7 +81,7 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
   {
     returnSourceDocuments: true,
     memory: memory,
-    // verbose: true,
+    verbose: true,
     qaChainOptions: {
       type: "stuff",
       prompt: prompt,
@@ -109,5 +104,5 @@ const askQuestion = async (question) => {
 await generateAnswers({
   askQuestion,
   returnSources: true,
-  userInput: true,
+  userInput: false,
 }); // Set userInput to true to get the User Input
