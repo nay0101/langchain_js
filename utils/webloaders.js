@@ -2,6 +2,8 @@ import { PuppeteerWebBaseLoader } from "langchain/document_loaders/web/puppeteer
 import { Document } from "langchain-core/documents";
 import * as cheerio from "cheerio";
 import { splitDocuments } from "./splitDocuments.js";
+import { RecursiveUrlLoader } from "langchain/document_loaders/web/recursive_url";
+import { compile } from "html-to-text";
 
 async function useCheerio(urls) {
   const promises = urls.map(async (url) => {
@@ -66,4 +68,16 @@ async function usePuppeteer(urls) {
   return documents;
 }
 
-export { useCheerio, usePuppeteer };
+async function useRecursiveUrlLoader(url) {
+  const compiledConvert = compile({ wordwrap: 130 });
+  const loader = new RecursiveUrlLoader(url, {
+    extractor: compiledConvert,
+    maxDepth: 1,
+  });
+  const docs = await loader.load();
+  // const { documents } = await splitDocuments(docs);
+  // return documents;
+  return docs;
+}
+
+export { useCheerio, usePuppeteer, useRecursiveUrlLoader };

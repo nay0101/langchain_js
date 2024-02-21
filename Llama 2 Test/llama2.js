@@ -1,9 +1,5 @@
 import { config } from "dotenv";
 import {
-  ChatGoogleGenerativeAI,
-  GoogleGenerativeAIEmbeddings,
-} from "@langchain/google-genai";
-import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
@@ -15,7 +11,8 @@ import { getRetriever } from "../utils/vectorStore.js";
 import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { useDirectoryLoader } from "../utils/fileloaders.js";
+import { ChatOllama } from "@langchain/community/chat_models/ollama";
+import { OllamaEmbeddings } from "@langchain/community/embeddings/ollama";
 
 config();
 
@@ -34,17 +31,18 @@ const urls = [
 const documents = await usePuppeteer(urls);
 // const documents = await useDirectoryLoader("./assets/HLB Data");
 
-const embeddings = new GoogleGenerativeAIEmbeddings({
-  modelName: "embedding-001",
+const embeddings = new OllamaEmbeddings({
+  model: "llama2",
+  baseUrl: "http://localhost:11434",
 });
 
-const collectionName = "crc_chain_js_gemini";
+const collectionName = "crc_chain_js_llama2";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
-const llm = new ChatGoogleGenerativeAI({
-  modelName: "gemini-pro",
-  maxRetries: 1,
+const llm = new ChatOllama({
+  model: "llama2",
+  baseUrl: "http://localhost:11434/",
 });
 
 /* Creating Prompt */
