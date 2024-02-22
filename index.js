@@ -43,6 +43,14 @@ const llm = new ChatOpenAI({
   modelName: "gpt-3.5-turbo-1106",
   // modelName: "gpt-4-0125-preview",
   temperature: 0.1,
+  streaming: true,
+  callbacks: [
+    {
+      handleLLMNewToken(token) {
+        console.log(token);
+      },
+    },
+  ],
 });
 
 /* Creating Prompt */
@@ -100,14 +108,16 @@ const askQuestion = async (question) => {
     question,
     chat_history: memory,
   });
+
   const answer = await result.text;
   const sources = await result.sourceDocuments;
-
+  console.log(answer);
   return { question, answer, sources };
 };
 
-await generateAnswers({
-  askQuestion,
-  returnSources: true,
-  userInput: true,
-}); // Set userInput to true to get the User Input
+// await generateAnswers({
+//   askQuestion,
+//   returnSources: true,
+//   userInput: true,
+// }); // Set userInput to true to get the User Input
+await askQuestion("how many types of fixed deposit are there?");
