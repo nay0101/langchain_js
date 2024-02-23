@@ -5,11 +5,15 @@ import { ConversationChain } from "langchain/chains";
 config();
 
 const model = new ChatOpenAI({
+  modelName: "gpt-3.5-turbo-1106",
   streaming: true,
   callbacks: [
     {
       handleLLMNewToken(token) {
         console.log(token);
+      },
+      handleLLMEnd(output) {
+        console.log(output);
       },
     },
   ],

@@ -15,7 +15,6 @@ import { getRetriever } from "./utils/vectorStore.js";
 import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { ChatGooglePaLM } from "@langchain/community/chat_models/googlepalm.js";
 
 config();
 
@@ -43,7 +42,6 @@ const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
 const llm = new ChatGoogleGenerativeAI({ modelName: "gemini-pro" });
-// const llm = new ChatGooglePaLM({ modelName: "chat-bison" });
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
