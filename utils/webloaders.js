@@ -4,6 +4,7 @@ import * as cheerio from "cheerio";
 import { splitDocuments } from "./splitDocuments.js";
 import { RecursiveUrlLoader } from "langchain/document_loaders/web/recursive_url";
 import { compile } from "html-to-text";
+import { promises as fs } from "node:fs";
 
 async function useCheerio(urls) {
   const promises = urls.map(async (url) => {
@@ -72,12 +73,31 @@ async function useRecursiveUrlLoader(url) {
   const compiledConvert = compile({ wordwrap: 130 });
   const loader = new RecursiveUrlLoader(url, {
     extractor: compiledConvert,
-    maxDepth: 1,
+    maxDepth: 2,
+    excludeDirs: ["https://js.langchain.com/docs/modules"],
   });
+
   const docs = await loader.load();
   // const { documents } = await splitDocuments(docs);
   // return documents;
-  return docs;
+  fs.writeFile("./logs/recursiveurltest.txt", "", (err) => {
+    if (err) console.log(err);
+  });
+  docs.map((doc, index) =>
+    setTimeout(() => {
+      fs.appendFile(
+        "./logs/recursiveurltest.txt",
+        `${index}\n${doc.metadata.source}\n`,
+        (err) => {
+          if (err) console.log(err);
+        }
+      );
+    }, 3000)
+  );
+
+  console.log(docs);
+
+  // return docs;
 }
 
 export { useCheerio, usePuppeteer, useRecursiveUrlLoader };
