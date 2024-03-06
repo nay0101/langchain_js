@@ -38,7 +38,7 @@ const embeddings = new OpenAIEmbeddings({
 const collectionName = "crc_chain_js";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
-
+let tempToken = 0;
 const llm = new ChatOpenAI({
   modelName: "gpt-3.5-turbo-1106",
   // modelName: "gpt-4-0125-preview",
@@ -48,6 +48,9 @@ const llm = new ChatOpenAI({
     {
       handleLLMNewToken(token) {
         console.log(token);
+      },
+      handleLLMEnd(output) {
+        console.log(output);
       },
     },
   ],
@@ -120,4 +123,4 @@ const askQuestion = async (question) => {
 //   returnSources: true,
 //   userInput: true,
 // }); // Set userInput to true to get the User Input
-await askQuestion("how many types of fixed deposit are there?");
+await askQuestion("what are the interest rates of fixed deposit?");

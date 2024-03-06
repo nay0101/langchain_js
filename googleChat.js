@@ -41,7 +41,22 @@ const collectionName = "crc_chain_js_googlechat";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
-const llm = new ChatGoogleGenerativeAI({ modelName: "gemini-pro" });
+const llm = new ChatGoogleGenerativeAI({
+  modelName: "gemini-pro",
+  streaming: true,
+  callbacks: [
+    {
+      handleLLMNewToken(token) {
+        console.log(token);
+      },
+    },
+    {
+      handleLLMEnd(output) {
+        console.log(output);
+      },
+    },
+  ],
+});
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
@@ -84,7 +99,7 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
   {
     returnSourceDocuments: true,
     memory: memory,
-    verbose: true,
+    // verbose: true,
     qaChainOptions: {
       type: "stuff",
       prompt: prompt,
@@ -104,8 +119,10 @@ const askQuestion = async (question) => {
   return { question, answer, sources };
 };
 
-await generateAnswers({
-  askQuestion,
-  returnSources: true,
-  userInput: false,
-}); // Set userInput to true to get the User Input
+// await generateAnswers({
+//   askQuestion,
+//   returnSources: true,
+//   userInput: false,
+// }); // Set userInput to true to get the User Input
+
+await askQuestion("what is fixed deposit?");
