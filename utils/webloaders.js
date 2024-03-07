@@ -78,26 +78,10 @@ async function useRecursiveUrlLoader(url) {
   });
 
   const docs = await loader.load();
-  // const { documents } = await splitDocuments(docs);
-  // return documents;
-  fs.writeFile("./logs/recursiveurltest.txt", "", (err) => {
-    if (err) console.log(err);
-  });
-  docs.map((doc, index) =>
-    setTimeout(() => {
-      fs.appendFile(
-        "./logs/recursiveurltest.txt",
-        `${index}\n${doc.metadata.source}\n`,
-        (err) => {
-          if (err) console.log(err);
-        }
-      );
-    }, 3000)
-  );
 
-  console.log(docs);
+  const { documents } = await splitDocuments(docs);
 
-  // return docs;
+  return documents;
 }
 
 export { useCheerio, usePuppeteer, useRecursiveUrlLoader };
