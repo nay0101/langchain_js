@@ -1,55 +1,85 @@
 import * as cheerio from "cheerio";
 import { URL } from "url";
 import { default as axios } from "axios";
+import * as fs from "node:fs";
 
-const startingUrl = "https://js.langchain.com/docs/integrations/platforms";
-const domainName = new URL(startingUrl).hostname;
+const startingUrl = "https://js.langchain.com/docs/";
+const domainName = new URL(startingUrl).origin;
 const visitedUrls = new Set();
-const urlsToVisit = [startingUrl];
+let urlsToVisit = [startingUrl];
+let storedUrls = [];
+let finalUrls = [];
+const maxDepth = 1;
+let depthCounter = 1;
 
 function isSameDomain(url) {
   try {
     const currentUrl = new URL(url);
-    return currentUrl.hostname === domainName;
+    return currentUrl.origin === domainName;
   } catch (error) {
-    return false; // Not a valid URL
+    return true;
   }
 }
 
-function crawl() {
-  if (urlsToVisit.length === 0) {
+async function crawl() {
+  if (urlsToVisit.length === 0 && depthCounter > maxDepth) {
+    finalUrls = finalUrls.filter(
+      (url, index) => finalUrls.indexOf(url) === index
+    );
+    finalUrls.forEach((url) => {
+      fs.appendFile("./webcrawler1.txt", `${url}\n`, (err) => {
+        if (err) console.log(err);
+      });
+    });
     console.log("Crawling finished.");
     return;
   }
 
+  if (urlsToVisit.length === 0 && depthCounter <= maxDepth) {
+    console.log("URLs Increase");
+    depthCounter += 1;
+    urlsToVisit = [...storedUrls];
+    storedUrls = [];
+  }
+
   const url = urlsToVisit.pop();
   if (visitedUrls.has(url)) {
-    crawl();
+    await crawl();
     return;
   }
 
   console.log(`Crawling ${url}`);
   visitedUrls.add(url);
 
-  axios
-    .get(url)
-    .then((response) => {
-      const html = response.data;
-      const $ = cheerio.load(html);
+  try {
+    const response = await axios.get(url);
+    const html = response.data;
+    const $ = cheerio.load(html);
 
-      $("a").each((index, element) => {
-        const link = $(element).attr("href");
-        if (link && isSameDomain(link) && !visitedUrls.has(link)) {
-          urlsToVisit.push(link);
+    $("a").each((index, element) => {
+      const link = $(element).attr("href");
+      if (
+        link &&
+        isSameDomain(link) &&
+        !visitedUrls.has(link) &&
+        !link.startsWith("#")
+      ) {
+        let tempUrl;
+        if (link.startsWith("https")) {
+          tempUrl = link;
         }
-      });
-
-      crawl(); // Proceed to the next URL in the queue
-    })
-    .catch((error) => {
-      console.error(`Error crawling ${url}: `, error.message);
-      crawl(); // Even if there's an error, proceed to the next URL
+        if (!link.startsWith("https")) {
+          tempUrl = `${domainName}${link}`;
+        }
+        storedUrls.push(tempUrl);
+        finalUrls.push(tempUrl);
+      }
     });
+    await crawl();
+  } catch (error) {
+    console.log(error.message);
+    await crawl();
+  }
 }
 
-crawl();
+await crawl();
