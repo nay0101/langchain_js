@@ -1,7 +1,6 @@
 import * as cheerio from "cheerio";
 import { URL } from "url";
 import { default as axios } from "axios";
-import * as fs from "node:fs";
 
 async function useWebCrawler(startingUrl, maxDepth = 1) {
   const domainName = new URL(startingUrl).origin;
@@ -10,17 +9,6 @@ async function useWebCrawler(startingUrl, maxDepth = 1) {
   let tempUrls = [];
   let finalUrls = [];
   let depthCounter = 1;
-
-  // function saveLog(urls, depth) {
-  //   fs.writeFile(`./logs/webcrawler${depth}.txt`, "", (err) => {
-  //     if (err) console.log(err);
-  //   });
-  //   urls.forEach((url) => {
-  //     fs.appendFile(`./logs/webcrawler${depth}.txt`, `${url}\n`, (err) => {
-  //       if (err) console.log(err);
-  //     });
-  //   });
-  // }
 
   function isSameDomain(url) {
     try {
@@ -36,7 +24,6 @@ async function useWebCrawler(startingUrl, maxDepth = 1) {
       finalUrls = finalUrls.filter(
         (url, index) => finalUrls.indexOf(url) === index
       );
-      // saveLog(finalUrls, maxDepth);
       console.log("Crawling finished.");
       return;
     }
