@@ -31,7 +31,7 @@
     "googleapis": "^126.0.1",
     "html-to-text": "^9.0.5",
     "jsdom": "^23.2.0",
-    "langchain": "^0.1.21",
+    "langchain": "^0.1.26",
     "langchain-core": "^0.0.4",
     "pdf-parse": "^1.1.1",
     "web-auth-library": "^1.0.3"
