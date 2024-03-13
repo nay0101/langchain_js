@@ -50,7 +50,7 @@ const recordManager = new PostgresRecordManager(indexName, recordManagerConfig);
 
 await recordManager.createSchema();
 
-const docs = await useDirectoryLoader("./assets/HLB Data");
+const docs = await useDirectoryLoader("./assets/Sample Data");
 
 console.log(
   await index({
