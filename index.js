@@ -35,7 +35,7 @@ const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-ada-002",
 });
 
-const collectionName = "crc_chain_js";
+const collectionName = "postgres_js";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 let tempToken = 0;
