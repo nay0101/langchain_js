@@ -10,11 +10,13 @@ config();
 const ELASTIC_API_KEY = process.env.ELASTIC_API_KEY;
 const ELASTIC_CLOUD_ID = process.env.ELASTIC_CLOUD_ID;
 
+const indexName = "elastic_postgres";
+const postgresTableName = "elastic_postgres";
+
 const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-ada-002",
 });
 
-const indexName = "elastic_postgres";
 let vectorStore;
 try {
   vectorStore = new ElasticVectorSearch(embeddings, {
@@ -32,7 +34,6 @@ try {
   console.log(err);
 }
 
-const postgresTableName = "elastic_postgres";
 // Create a new record manager
 const recordManagerConfig = {
   postgresConnectionOptions: {
