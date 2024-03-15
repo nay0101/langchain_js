@@ -35,6 +35,8 @@
     "jsdom": "^23.2.0",
     "langchain": "^0.1.26",
     "langchain-core": "^0.0.4",
+    "mammoth": "^1.7.0",
+    "officeparser": "^4.0.8",
     "pdf-parse": "^1.1.1",
     "pg": "^8.11.3",
     "web-auth-library": "^1.0.3"
