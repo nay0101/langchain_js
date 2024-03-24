@@ -31,6 +31,8 @@ async function getRetriever(documents, embeddings, collectionName) {
     recordManagerConfig
   );
 
+  console.log(recordManager);
+
   await recordManager.createSchema();
 
   console.log(
@@ -47,5 +49,7 @@ async function getRetriever(documents, embeddings, collectionName) {
 
   return vectorStore.asRetriever(vectorStoreConfig);
 }
+
+await getRetriever();
 
 export { getRetriever };
