@@ -10,26 +10,14 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
 import { usePuppeteer, useCheerio } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
-import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { useWebCrawler } from "./utils/webcrawler.js";
+import { useCheerioWebCrawler } from "./utils/webcrawler.js";
 
 config();
 
-// const urls = [
-//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
-//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
-//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
-//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
-//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
-//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
-//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
-//   "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
-// ];
-
 /* Create Training Data for Chatbot */
-const urls = await useWebCrawler(
+const urls = await useCheerioWebCrawler(
   "https://www.hlb.com.my/en/personal-banking/home.html"
 );
 
@@ -109,9 +97,4 @@ const askQuestion = async (question) => {
   return { question, answer, sources };
 };
 
-// await generateAnswers({
-//   askQuestion,
-//   returnSources: true,
-//   userInput: true,
-// }); // Set userInput to true to get the User Input
 await askQuestion("what are the interest rates of fixed deposit?");
