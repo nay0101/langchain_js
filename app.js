@@ -23,41 +23,48 @@ app.set("view engine", "ejs");
 /* 
   Routes
 */
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  let documents = [];
+  if (req.query.code) {
+    const { code } = req.query;
+    const clientId = process.env.NOTION_CLIENT_ID;
+    const clientSecret = process.env.NOTION_CLIENT_SECRET;
+    const redirectURL = process.env.NOTION_REDIRECT_URL;
+    // encode in base 64
+    const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString(
+      "base64"
+    );
+
+    const response = await axios.post(
+      "https://api.notion.com/v1/oauth/token",
+      {
+        grant_type: "authorization_code",
+        code: code,
+        redirect_uri: redirectURL,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Basic ${encoded}`,
+        },
+      }
+    );
+    const { access_token } = await response.data;
+    const notion = new Client({ auth: access_token });
+    const { results } = await notion.search();
+    documents = await useNotionLoader(access_token, results);
+  }
+  res.render("index", {
+    documents,
+  });
 });
+
 app.get("/auth/notion/callback", async (req, res) => {
   if (req.query.error) return res.sendStatus(401);
   const { code } = req.query;
-  const clientId = "18bb82a4-1f29-4a10-a396-bb249bb74830";
-  const clientSecret = "secret_fGjJxV3NjfWg4ILKziXX0sispWD0gYuJTrKPzbPRpaD";
-  const redirectUri = "http://localhost:3000/auth/notion/callback";
-  // encode in base 64
-  const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
-
-  const response = await axios.post(
-    "https://api.notion.com/v1/oauth/token",
-    {
-      grant_type: "authorization_code",
-      code: code,
-      redirect_uri: redirectUri,
-    },
-    {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Basic ${encoded}`,
-      },
-    }
-  );
-  const { access_token } = await response.data;
-  const notion = new Client({ auth: access_token });
-  const { results } = await notion.search();
-  const documents = await useNotionLoader(access_token, results);
-  res.status(200).send({ documents });
+  res.redirect("/?code=" + code);
 });
-
-app.get("/api", (req, res) => res.send("Hello World"));
 
 /*
   Static Files
