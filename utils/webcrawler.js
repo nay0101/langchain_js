@@ -1,8 +1,9 @@
 import * as cheerio from "cheerio";
 import { URL } from "url";
 import { default as axios } from "axios";
+import fs from "node:fs";
 
-async function useWebCrawler(startingUrl, maxDepth = 1) {
+async function useWebCrawler(startingUrl, maxDepth = 0) {
   const domainName = new URL(startingUrl).origin;
   const visitedUrls = new Set();
   let urlsToVisit = [startingUrl];
@@ -55,7 +56,7 @@ async function useWebCrawler(startingUrl, maxDepth = 1) {
             link &&
             isSameDomain(link) &&
             !visitedUrls.has(link) &&
-            !link.startsWith("#")
+            (link.startsWith("/") || link.startsWith("https"))
           ) {
             if (link.startsWith("https")) {
               tempUrl = link;
@@ -78,7 +79,11 @@ async function useWebCrawler(startingUrl, maxDepth = 1) {
   }
 
   await crawl();
-
+  finalUrls.forEach((url) => {
+    fs.appendFile("./test.txt", `${url}\n`, (err) => {
+      if (err) console.log(err);
+    });
+  });
   return finalUrls;
 }
 

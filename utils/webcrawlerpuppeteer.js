@@ -65,7 +65,7 @@ async function usePuppeteerWebCrawler(startingUrl, maxDepth = 1) {
             link &&
             isSameDomain(link) &&
             !visitedUrls.has(link) &&
-            !link.startsWith("#")
+            (link.startsWith("/") || link.startsWith("https"))
           ) {
             const fullLink = link.startsWith("https")
               ? link
