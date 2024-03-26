@@ -47,6 +47,7 @@
     "officeparser": "^4.0.8",
     "pdf-parse": "^1.1.1",
     "pg": "^8.11.3",
+    "puppeteer": "^19.11.1",
     "web-auth-library": "^1.0.3"
   },
   "devDependencies": {

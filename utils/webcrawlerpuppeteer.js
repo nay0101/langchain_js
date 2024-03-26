@@ -1,14 +1,17 @@
-import * as cheerio from "cheerio";
+import puppeteer from "puppeteer";
 import { URL } from "url";
-import { default as axios } from "axios";
 
-async function useWebCrawler(startingUrl, maxDepth = 1) {
+async function usePuppeteerWebCrawler(startingUrl, maxDepth = 1) {
   const domainName = new URL(startingUrl).origin;
   const visitedUrls = new Set();
   let urlsToVisit = [startingUrl];
   let tempUrls = [];
   let finalUrls = [];
   let depthCounter = 1;
+  const browser = await puppeteer.launch({
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
 
   function isSameDomain(url) {
     try {
@@ -43,30 +46,35 @@ async function useWebCrawler(startingUrl, maxDepth = 1) {
       }
       console.log(`Crawling ${url}`);
       visitedUrls.add(url);
-      try {
-        const response = await axios.get(url);
-        const html = response.data;
-        const $ = cheerio.load(html);
-        let tempUrl;
 
-        $("a").each((index, element) => {
-          const link = $(element).attr("href");
+      const page = await browser.newPage();
+      try {
+        await page.goto(url, {
+          waitUntil: "networkidle2",
+        });
+        // Extract links directly using Puppeteer
+        const linksOnPage = await page.evaluate(() => {
+          return Array.from(document.querySelectorAll("a")).map(
+            (anchor) => anchor.href
+          );
+        });
+
+        page.close();
+        for (const link of linksOnPage) {
           if (
             link &&
             isSameDomain(link) &&
             !visitedUrls.has(link) &&
             !link.startsWith("#")
           ) {
-            if (link.startsWith("https")) {
-              tempUrl = link;
-            }
-            if (!link.startsWith("https")) {
-              tempUrl = `${domainName}${link}`;
-            }
-            tempUrls.push(tempUrl);
-            finalUrls.push(tempUrl);
+            const fullLink = link.startsWith("https")
+              ? link
+              : `${domainName}${link}`;
+            tempUrls.push(fullLink);
+            finalUrls.push(fullLink);
           }
-        });
+        }
+
         await crawl();
       } catch (error) {
         console.log(error.message);
@@ -78,8 +86,9 @@ async function useWebCrawler(startingUrl, maxDepth = 1) {
   }
 
   await crawl();
+  browser.close();
 
   return finalUrls;
 }
 
-export { useWebCrawler };
+export { usePuppeteerWebCrawler };

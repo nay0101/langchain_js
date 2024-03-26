@@ -39,7 +39,7 @@ async function usePuppeteer(urls) {
         headless: "new",
       },
       gotoOptions: {
-        waitUntil: "domcontentloaded",
+        waitUntil: "networkidle2",
       },
       async evaluate(page, browser) {
         let result = await page.evaluate(() => {
