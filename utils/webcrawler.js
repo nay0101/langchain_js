@@ -177,8 +177,4 @@ async function usePuppeteerWebCrawler(startingUrl, maxDepth = 0) {
   return finalUrls;
 }
 
-await useCheerioWebCrawler(
-  "https://js.langchain.com/docs/get_started/introduction"
-);
-
 export { useCheerioWebCrawler, usePuppeteerWebCrawler };
