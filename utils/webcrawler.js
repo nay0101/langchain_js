@@ -57,6 +57,7 @@ async function useCheerioWebCrawler(startingUrl, maxDepth = 0) {
             isSameDomain(link) &&
             !visitedUrls.has(link) &&
             !link.includes("#") &&
+            !link.includes(".pdf") &&
             (link.startsWith("/") || link.startsWith("https"))
           ) {
             if (link.startsWith("https")) {
@@ -81,7 +82,11 @@ async function useCheerioWebCrawler(startingUrl, maxDepth = 0) {
 
   await crawl();
 
-  console.log(finalUrls.join(",").replaceAll(",", "\n"));
+  console.log(
+    `Total URLS: ${finalUrls.length}\n${finalUrls
+      .join(",")
+      .replaceAll(",", "\n")}`
+  );
   return finalUrls;
 }
 
@@ -149,6 +154,7 @@ async function usePuppeteerWebCrawler(startingUrl, maxDepth = 0) {
             isSameDomain(link) &&
             !visitedUrls.has(link) &&
             !link.includes("#") &&
+            !link.includes(".pdf") &&
             (link.startsWith("/") || link.startsWith("https"))
           ) {
             const fullLink = link.startsWith("https")
@@ -173,7 +179,11 @@ async function usePuppeteerWebCrawler(startingUrl, maxDepth = 0) {
   await crawl();
   await browser.close();
 
-  console.log(finalUrls.join(",").replaceAll(",", "\n"));
+  console.log(
+    `Total URLS: ${finalUrls.length}\n${finalUrls
+      .join(",")
+      .replaceAll(",", "\n")}`
+  );
   return finalUrls;
 }
 
