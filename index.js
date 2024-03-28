@@ -8,27 +8,32 @@ import {
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { usePuppeteer } from "./utils/webloaders.js";
+import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
+import { useCheerioWebCrawler } from "./utils/webcrawler.js";
 
 config();
 
-const urls = [
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
-  "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
-];
+// const urls = [
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
+//   "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
+// ];
 
 /* Create Training Data for Chatbot */
-const documents = await usePuppeteer(urls);
+const urls = await useCheerioWebCrawler(
+  "https://www.hlb.com.my/en/personal-banking/home.html",
+  1
+);
+const documents = await useCheerio(urls);
 
 const embeddings = new OpenAIEmbeddings({
   // modelName: "text-embedding-3-small",
@@ -40,8 +45,8 @@ const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 let tempToken = 0;
 const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo-1106",
-  // modelName: "gpt-4-0125-preview",
+  // modelName: "gpt-3.5-turbo-1106",
+  modelName: "gpt-4-0125-preview",
   temperature: 0.1,
   streaming: true,
   callbacks: [
@@ -114,6 +119,7 @@ const askQuestion = async (question) => {
 
   const answer = await result.text;
   const sources = await result.sourceDocuments;
+  console.log(sources);
   console.log(answer);
   return { question, answer, sources };
 };
@@ -123,4 +129,9 @@ const askQuestion = async (question) => {
 //   returnSources: true,
 //   userInput: true,
 // }); // Set userInput to true to get the User Input
-await askQuestion("what are the interest rates of fixed deposit?");
+// await askQuestion(
+//   "I want to invest USD10000 for Brillar Bank Foreign Currency Fixed Deposit for 12 months. What is the total interest amount at the end of term in RM?"
+// );
+await askQuestion(
+  "what is the interest rate for foreign currency fixed deposit in USD"
+);

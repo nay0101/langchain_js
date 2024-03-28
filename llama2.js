@@ -18,7 +18,8 @@ config();
 
 /* Create Training Data for Chatbot */
 const urls = await useCheerioWebCrawler(
-  "https://www.hlb.com.my/en/personal-banking/home.html"
+  "https://www.cimb.com.my/en/personal/home.html",
+  1
 );
 
 const documents = await useCheerio(urls);
@@ -97,4 +98,4 @@ const askQuestion = async (question) => {
   return { question, answer, sources };
 };
 
-await askQuestion("what are the interest rates of fixed deposit?");
+await askQuestion("how many types of fixed deposit does the bank offer?");
