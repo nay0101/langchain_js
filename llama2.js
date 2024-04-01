@@ -6,26 +6,29 @@ import {
   HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { usePuppeteer, useCheerio } from "./utils/webloaders.js";
+import { useCheerio } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
-import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
-import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
+import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 
 config();
 
 /* Create Training Data for Chatbot */
-const urls = await useCheerioWebCrawler(
-  "https://www.cimb.com.my/en/personal/home.html",
-  1
-);
+const urls = [
+  "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
+  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
+  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
+  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
+  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
+  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
+  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
+  "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
+];
 
 const documents = await useCheerio(urls);
 
-const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-ada-002",
+const embeddings = new HuggingFaceInferenceEmbeddings({
+  model: "hkunlp/instructor-xl",
 });
 
 const collectionName = "llama2";
@@ -37,10 +40,14 @@ const llm = new HuggingFaceInference({
 });
 
 /* Creating Prompt */
-const system_template = `Use the following pieces of context to answer the users question. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-----------------
-{context}`;
+const system_template = `[INST] <<SYS>>
+You are a helpful, respectful, and honest assistant. Answer exactly from the context.
+<</SYS>>
+Answer the question from the context below:
+{context}
+
+Question: {question} [/INST]
+`;
 
 const messages = [
   SystemMessagePromptTemplate.fromTemplate(system_template),
@@ -48,18 +55,6 @@ const messages = [
 ];
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
-
-/* Creating Compression Retriever for Accurate Results */
-const embeddings_filter = new EmbeddingsFilter({
-  embeddings,
-  similarityThreshold: 0.8,
-  k: 10,
-});
-
-const compression_retriever = new ContextualCompressionRetriever({
-  baseCompressor: embeddings_filter,
-  baseRetriever: retriever,
-});
 
 /* Creating Memory Instance */
 const memory = new BufferWindowMemory({
@@ -71,19 +66,15 @@ const memory = new BufferWindowMemory({
 });
 
 /* Creating Question Chain */
-const chain = ConversationalRetrievalQAChain.fromLLM(
-  llm,
-  compression_retriever,
-  {
-    returnSourceDocuments: true,
-    memory: memory,
-    // verbose: true,
-    qaChainOptions: {
-      type: "stuff",
-      prompt: prompt,
-    },
-  }
-);
+const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
+  returnSourceDocuments: true,
+  memory: memory,
+  // verbose: true,
+  qaChainOptions: {
+    type: "stuff",
+    prompt: prompt,
+  },
+});
 
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
@@ -94,8 +85,9 @@ const askQuestion = async (question) => {
 
   const answer = await result.text;
   const sources = await result.sourceDocuments;
+  console.log(sources);
   console.log(answer);
   return { question, answer, sources };
 };
 
-await askQuestion("how many types of fixed deposit does the bank offer?");
+await askQuestion("what are the interest rates for fixed deposit?");

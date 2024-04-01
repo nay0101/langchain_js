@@ -31,6 +31,7 @@ async function useCheerio(urls, batchSize = 5) {
     const batchDocs = await Promise.all(promises);
     docs.push(...batchDocs);
   }
+  console.log("Scraping Finished.");
 
   const { documents } = await splitDocuments(docs);
 
