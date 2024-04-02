@@ -3,7 +3,7 @@ import { index } from "langchain/indexes";
 import { PostgresRecordManager } from "@langchain/community/indexes/postgres";
 
 async function getRetriever(documents, embeddings, collectionName) {
-  const postgresTableName = "hlb_instruct";
+  const postgresTableName = collectionName;
 
   const vectorStoreConfig = {
     k: 15,

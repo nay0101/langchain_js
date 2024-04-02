@@ -10,6 +10,7 @@ import { BufferWindowMemory } from "langchain/memory";
 import { useCheerio } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
+import { OpenAIEmbeddings } from "@langchain/openai";
 
 config();
 
@@ -28,12 +29,11 @@ const urls = [
 const documents = await useCheerio(urls);
 
 const embeddings = new HuggingFaceInferenceEmbeddings({
-  model: "hkunlp/instructor-base",
+  model: "mixedbread-ai/mxbai-embed-large-v1",
   maxRetries: 0,
-  maxConcurrency: 10,
 });
 
-const collectionName = "llama2_instruct-base";
+const collectionName = "llama2-mxbai2";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
