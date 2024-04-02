@@ -3,14 +3,14 @@ import { index } from "langchain/indexes";
 import { PostgresRecordManager } from "@langchain/community/indexes/postgres";
 
 async function getRetriever(documents, embeddings, collectionName) {
-  const postgresTableName = "hlb";
+  const postgresTableName = "hlb_instruct";
 
   const vectorStoreConfig = {
     k: 15,
     searchType: "similarity",
   };
 
-  const vectorStore = new Chroma(embeddings, {
+  const vectorStore = await Chroma.fromDocuments(documents, embeddings, {
     collectionName: collectionName,
   });
 

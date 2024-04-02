@@ -28,10 +28,12 @@ const urls = [
 const documents = await useCheerio(urls);
 
 const embeddings = new HuggingFaceInferenceEmbeddings({
-  model: "hkunlp/instructor-xl",
+  model: "hkunlp/instructor-base",
+  maxRetries: 0,
+  maxConcurrency: 10,
 });
 
-const collectionName = "llama2";
+const collectionName = "llama2_instruct-base";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
