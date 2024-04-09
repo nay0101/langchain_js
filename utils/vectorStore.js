@@ -10,7 +10,7 @@ async function getRetriever(documents, embeddings, collectionName) {
     searchType: "similarity",
   };
 
-  const vectorStore = await Chroma.fromDocuments(documents, embeddings, {
+  const vectorStore = new Chroma(embeddings, {
     collectionName: collectionName,
   });
 
