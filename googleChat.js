@@ -10,7 +10,7 @@ import {
 } from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { BufferWindowMemory } from "langchain/memory";
-import { usePuppeteer } from "./utils/webloaders.js";
+import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
@@ -30,19 +30,19 @@ const urls = [
 ];
 
 /* Create Training Data for Chatbot */
-const documents = await usePuppeteer(urls);
+const documents = await useCheerio(urls);
 // const documents = await useDirectoryLoader("./assets/HLB Data");
 
 const embeddings = new GoogleGenerativeAIEmbeddings({
-  modelName: "embedding-001",
+  modelName: "text-embedding-004",
 });
 
-const collectionName = "crc_chain_js_googlechat";
+const collectionName = "crc_chain_js_googlechat_test";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
 const llm = new ChatGoogleGenerativeAI({
-  modelName: "gemini-pro",
+  modelName: "gemini-1.5-pro-latest",
   streaming: true,
   callbacks: [
     {
@@ -93,19 +93,15 @@ const memory = new BufferWindowMemory({
 });
 
 /* Creating Question Chain */
-const chain = ConversationalRetrievalQAChain.fromLLM(
-  llm,
-  compression_retriever,
-  {
-    returnSourceDocuments: true,
-    memory: memory,
-    // verbose: true,
-    qaChainOptions: {
-      type: "stuff",
-      prompt: prompt,
-    },
-  }
-);
+const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
+  returnSourceDocuments: true,
+  memory: memory,
+  // verbose: true,
+  qaChainOptions: {
+    type: "stuff",
+    prompt: prompt,
+  },
+});
 
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
@@ -115,7 +111,7 @@ const askQuestion = async (question) => {
   });
   const answer = await result.text;
   const sources = await result.sourceDocuments;
-
+  console.log(sources);
   return { question, answer, sources };
 };
 

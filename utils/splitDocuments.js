@@ -1,7 +1,7 @@
 import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
-async function splitDocuments(docs, chunkSize = 1024, chunkOverlap = 20) {
+async function splitDocuments(docs, chunkSize = 2000, chunkOverlap = 200) {
   const splitter = new RecursiveCharacterTextSplitter({
     chunkSize: chunkSize,
     chunkOverlap: chunkOverlap > chunkSize / 2 ? chunkSize / 2 : chunkOverlap,
