@@ -14,7 +14,6 @@ import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { Document } from "@langchain/core/documents";
 
 config();
 
@@ -30,22 +29,15 @@ const urls = [
 ];
 
 /* Create Training Data for Chatbot */
-// const documents = await useCheerio(urls);
-const documents = [
-  new Document({
-    pageContent: "test",
-    metadata: {
-      source: "here",
-    },
-  }),
-];
+const documents = await useCheerio(urls);
 
 const embeddings = new OpenAIEmbeddings({
-  // modelName: "text-embedding-3-small",
-  modelName: "text-embedding-ada-002",
+  modelName: "text-embedding-3-large",
+  dimensions: 256,
+  // modelName: "text-embedding-ada-002",
 });
 
-const collectionName = "postgres_js";
+const collectionName = "postgres_js_test";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 let tempToken = 0;
@@ -71,9 +63,6 @@ const system_template = `Use the following pieces of context to answer the users
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
 You can also reference to the sample question and answers.
 ----------------
-Question: How many types of fixed deposit are there?
-Answer: There are 6 types of fixed deposit.
-
 {context}`;
 
 const messages = [
@@ -82,18 +71,6 @@ const messages = [
 ];
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
-
-/* Creating Compression Retriever for Accurate Results */
-const embeddings_filter = new EmbeddingsFilter({
-  embeddings,
-  similarityThreshold: 0.8,
-  k: 10,
-});
-
-const compression_retriever = new ContextualCompressionRetriever({
-  baseCompressor: embeddings_filter,
-  baseRetriever: retriever,
-});
 
 /* Creating Memory Instance */
 const memory = new BufferWindowMemory({
@@ -105,19 +82,15 @@ const memory = new BufferWindowMemory({
 });
 
 /* Creating Question Chain */
-const chain = ConversationalRetrievalQAChain.fromLLM(
-  llm,
-  compression_retriever,
-  {
-    returnSourceDocuments: true,
-    memory: memory,
-    // verbose: true,
-    qaChainOptions: {
-      type: "stuff",
-      prompt: prompt,
-    },
-  }
-);
+const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
+  returnSourceDocuments: true,
+  memory: memory,
+  // verbose: true,
+  qaChainOptions: {
+    type: "stuff",
+    prompt: prompt,
+  },
+});
 
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
@@ -141,4 +114,4 @@ const askQuestion = async (question) => {
 // await askQuestion(
 //   "I want to invest USD10000 for Brillar Bank Foreign Currency Fixed Deposit for 12 months. What is the total interest amount at the end of term in RM?"
 // );
-await askQuestion("How many fixed deposits?");
+await askQuestion("How many types of fixed deposits do you offer?");
