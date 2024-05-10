@@ -40,7 +40,7 @@ const embeddings = new GoogleVertexAIEmbeddings({
   model: "text-multilingual-embedding-preview-0409",
 });
 
-const collectionName = "testvertex";
+const collectionName = "testvertex_1";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
@@ -125,4 +125,4 @@ const askQuestion = async (question) => {
 //   userInput: false,
 // }); // Set userInput to true to get the User Input
 
-await askQuestion("how many types of fixed deposit are there?");
+await askQuestion("what are the interest rates for fixed deposit?");

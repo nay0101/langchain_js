@@ -37,7 +37,7 @@ const embeddings = new GoogleGenerativeAIEmbeddings({
   modelName: "text-embedding-004",
 });
 
-const collectionName = "crc_chain_js_googlechat_test";
+const collectionName = "crc_chain_js_googlechat_new";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 
@@ -70,18 +70,6 @@ const messages = [
 ];
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
-
-/* Creating Compression Retriever for Accurate Results */
-const embeddings_filter = new EmbeddingsFilter({
-  embeddings,
-  similarityThreshold: 0.7,
-  k: 10,
-});
-
-const compression_retriever = new ContextualCompressionRetriever({
-  baseCompressor: embeddings_filter,
-  baseRetriever: retriever,
-});
 
 /* Creating Memory Instance */
 const memory = new BufferWindowMemory({
@@ -121,4 +109,4 @@ const askQuestion = async (question) => {
 //   userInput: false,
 // }); // Set userInput to true to get the User Input
 
-await askQuestion("how many types of fixed deposit are there?");
+await askQuestion("what are the interest rates for fixed deposit?");

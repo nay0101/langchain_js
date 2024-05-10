@@ -33,11 +33,12 @@ const embeddings = new HuggingFaceInferenceEmbeddings({
   maxRetries: 0,
 });
 
-const collectionName = "llama2-mxbai2";
+const collectionName = "llama2_mxbai2";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
-  model: "meta-llama/Llama-2-70b-chat-hf",
+  maxRetries: 1,
+  model: "meta-llama/Meta-Llama-3-8B",
   maxTokens: 1000,
 });
 
