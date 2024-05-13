@@ -109,4 +109,4 @@ const askQuestion = async (question) => {
 //   userInput: false,
 // }); // Set userInput to true to get the User Input
 
-await askQuestion("what are the interest rates for fixed deposit?");
+await askQuestion("how many types of fixed deposit do you offer?");

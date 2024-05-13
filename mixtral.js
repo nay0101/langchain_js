@@ -8,7 +8,7 @@ import {
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { usePuppeteer } from "./utils/webloaders.js";
+import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
@@ -28,18 +28,20 @@ const urls = [
 ];
 
 /* Create Training Data for Chatbot */
-const documents = await usePuppeteer(urls);
+const documents = await useCheerio(urls);
 
 const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-ada-002",
+  modelName: "text-embedding-3-large",
+  dimensions: 256,
 });
 
 const collectionName = "mixtral";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
-  model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
+  model: "mistralai/Mixtral-8x22B-Instruct-v0.1",
   maxTokens: 1000,
+  maxRetries: 0,
 });
 
 /* Creating Prompt */

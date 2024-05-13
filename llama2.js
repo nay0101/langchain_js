@@ -28,17 +28,22 @@ const urls = [
 
 const documents = await useCheerio(urls);
 
-const embeddings = new HuggingFaceInferenceEmbeddings({
-  model: "mixedbread-ai/mxbai-embed-large-v1",
-  maxRetries: 0,
+// const embeddings = new HuggingFaceInferenceEmbeddings({
+//   model: "mixedbread-ai/mxbai-embed-large-v1",
+//   maxRetries: 0,
+// });
+
+const embeddings = new OpenAIEmbeddings({
+  modelName: "text-embedding-3-large",
+  dimensions: 256,
 });
 
-const collectionName = "llama2_mxbai2";
+const collectionName = "llama2_openai";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
-  maxRetries: 1,
-  model: "meta-llama/Meta-Llama-3-8B",
+  maxRetries: 0,
+  model: "meta-llama/Meta-Llama-3-70B-Instruct",
   maxTokens: 1000,
 });
 
@@ -93,4 +98,4 @@ const askQuestion = async (question) => {
   return { question, answer, sources };
 };
 
-await askQuestion("what are the interest rates for fixed deposit?");
+await askQuestion("how many types of fixed deposit do you offer?");

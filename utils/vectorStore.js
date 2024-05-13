@@ -7,7 +7,7 @@ async function getRetriever(documents, embeddings, collectionName) {
   const postgresTableName = collectionName;
 
   const vectorStoreConfig = {
-    k: 1,
+    k: 3,
     searchType: "similarity",
   };
 
@@ -30,11 +30,11 @@ async function getRetriever(documents, embeddings, collectionName) {
     distanceStrategy: "cosine",
   };
 
-  // const vectorStore = new Chroma(embeddings, {
-  //   collectionName: collectionName,
-  // });
+  const vectorStore = new Chroma(embeddings, {
+    collectionName: collectionName,
+  });
 
-  const vectorStore = await PGVectorStore.initialize(embeddings, pgConfig);
+  // const vectorStore = await PGVectorStore.initialize(embeddings, pgConfig);
 
   const recordManagerConfig = {
     postgresConnectionOptions: {

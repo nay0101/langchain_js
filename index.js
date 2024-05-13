@@ -34,7 +34,6 @@ const documents = await useCheerio(urls);
 const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-3-large",
   dimensions: 256,
-  // modelName: "text-embedding-ada-002",
 });
 
 const collectionName = "postgres_js_test";
