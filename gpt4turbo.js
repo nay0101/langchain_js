@@ -42,7 +42,7 @@ const retriever = await getRetriever(documents, embeddings, collectionName);
 let tempToken = 0;
 const llm = new ChatOpenAI({
   // modelName: "gpt-3.5-turbo-1106",
-  modelName: "gpt-4-0125-preview",
+  modelName: "gpt-4-turbo",
   temperature: 0.1,
   streaming: true,
   callbacks: [
@@ -113,4 +113,4 @@ const askQuestion = async (question) => {
 // await askQuestion(
 //   "I want to invest USD10000 for Brillar Bank Foreign Currency Fixed Deposit for 12 months. What is the total interest amount at the end of term in RM?"
 // );
-await askQuestion("How many types of fixed deposits do you offer?");
+await askQuestion("what are the interest rates for fixed deposit?");

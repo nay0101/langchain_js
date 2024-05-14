@@ -11,9 +11,10 @@ import { useCheerio } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { OpenAIEmbeddings } from "@langchain/openai";
+import { reset } from "./reset.js";
 
 config();
-
+await reset();
 /* Create Training Data for Chatbot */
 const urls = [
   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
@@ -43,6 +44,7 @@ const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
   maxRetries: 0,
+  // model: "meta-llama/Llama-2-70b-chat-hf",
   model: "meta-llama/Meta-Llama-3-70B-Instruct",
   maxTokens: 1000,
 });
@@ -52,9 +54,7 @@ const system_template = `[INST] <<SYS>>
 You are a helpful, respectful, and honest assistant. Answer exactly from the context.
 <</SYS>>
 Answer the question from the context below:
-{context}
-
-Question: {question} [/INST]
+{context} [/INST]
 `;
 
 const messages = [
@@ -93,8 +93,9 @@ const askQuestion = async (question) => {
 
   const answer = await result.text;
   const sources = await result.sourceDocuments;
-  console.log(sources);
-  console.log(answer);
+  // console.log(sources);
+  // console.log(answer);
+  console.log(result);
   return { question, answer, sources };
 };
 

@@ -18,8 +18,11 @@ import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { reset } from "./reset.js";
 
 config();
+await reset();
 
 const urls = [
   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
@@ -40,7 +43,12 @@ const embeddings = new GoogleVertexAIEmbeddings({
   model: "text-multilingual-embedding-preview-0409",
 });
 
-const collectionName = "testvertex_1";
+// const embeddings = new OpenAIEmbeddings({
+//   modelName: "text-embedding-3-large",
+//   dimensions: 256,
+// });
+
+const collectionName = "testvertex_openai_3";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 

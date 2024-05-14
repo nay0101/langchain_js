@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "chroma": "chroma run --path /db_path",
+    "chroma": "chroma run --path ./db_path",
     "start": "nodemon app",
     "assistant": "node assistant",
     "test": "echo \"Error: no test specified\" && exit 1"

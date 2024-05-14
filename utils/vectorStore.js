@@ -55,6 +55,16 @@ async function getRetriever(documents, embeddings, collectionName) {
 
   await recordManager.createSchema();
 
+  await index({
+    docsSource: [],
+    recordManager,
+    vectorStore,
+    options: {
+      cleanup: "full",
+      sourceIdKey: "source",
+    },
+  });
+
   console.log(
     await index({
       docsSource: documents,

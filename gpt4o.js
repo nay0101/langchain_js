@@ -1,25 +1,21 @@
 import { config } from "dotenv";
-import {
-  ChatGoogleGenerativeAI,
-  GoogleGenerativeAIEmbeddings,
-} from "@langchain/google-genai";
+import { ChatOpenAI } from "@langchain/openai";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
+import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
 import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { reset } from "./reset.js";
+import { useCheerioWebCrawler } from "./utils/webcrawler.js";
 
 config();
-await reset();
 
 const urls = [
   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
@@ -34,31 +30,25 @@ const urls = [
 
 /* Create Training Data for Chatbot */
 const documents = await useCheerio(urls);
-// const documents = await useDirectoryLoader("./assets/HLB Data");
 
-const embeddings = new GoogleGenerativeAIEmbeddings({
-  modelName: "text-embedding-004",
+const embeddings = new OpenAIEmbeddings({
+  modelName: "text-embedding-3-large",
+  dimensions: 256,
 });
 
-// const embeddings = new OpenAIEmbeddings({
-//   modelName: "text-embedding-3-large",
-//   dimensions: 256,
-// });
-
-const collectionName = "gemini_openai1";
+const collectionName = "postgres_js_test";
 const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
-
-const llm = new ChatGoogleGenerativeAI({
-  modelName: "gemini-1.5-pro-latest",
+let tempToken = 0;
+const llm = new ChatOpenAI({
+  modelName: "gpt-4o",
+  temperature: 0.1,
   streaming: true,
   callbacks: [
     {
       handleLLMNewToken(token) {
         console.log(token);
       },
-    },
-    {
       handleLLMEnd(output) {
         console.log(output);
       },
@@ -69,6 +59,7 @@ const llm = new ChatGoogleGenerativeAI({
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
+You can also reference to the sample question and answers.
 ----------------
 {context}`;
 
@@ -105,16 +96,20 @@ const askQuestion = async (question) => {
     question,
     chat_history: memory,
   });
+
   const answer = await result.text;
   const sources = await result.sourceDocuments;
   console.log(sources);
+  console.log(answer);
   return { question, answer, sources };
 };
 
 // await generateAnswers({
 //   askQuestion,
 //   returnSources: true,
-//   userInput: false,
+//   userInput: true,
 // }); // Set userInput to true to get the User Input
-
+// await askQuestion(
+//   "I want to invest USD10000 for Brillar Bank Foreign Currency Fixed Deposit for 12 months. What is the total interest amount at the end of term in RM?"
+// );
 await askQuestion("what are the interest rates for fixed deposit?");
