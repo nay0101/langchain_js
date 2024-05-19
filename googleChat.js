@@ -17,22 +17,27 @@ import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embe
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { reset } from "./reset.js";
+import { useCheerioWebCrawler } from "./utils/webcrawler.js";
 
 config();
 await reset();
 
-const urls = [
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
-  "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
-];
+// const urls = [
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
+//   "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
+// ];
 
 /* Create Training Data for Chatbot */
+const urls = await useCheerioWebCrawler(
+  "https://win066.wixsite.com/brillar-bank",
+  2
+);
 const documents = await useCheerio(urls);
 // const documents = await useDirectoryLoader("./assets/HLB Data");
 
@@ -117,4 +122,4 @@ const askQuestion = async (question) => {
 //   userInput: false,
 // }); // Set userInput to true to get the User Input
 
-await askQuestion("what are the interest rates for fixed deposit?");
+await askQuestion("how many types of fixed deposit do you offer?");

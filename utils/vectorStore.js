@@ -7,7 +7,7 @@ async function getRetriever(documents, embeddings, collectionName) {
   const postgresTableName = collectionName;
 
   const vectorStoreConfig = {
-    k: 3,
+    k: 1,
     searchType: "similarity",
   };
 

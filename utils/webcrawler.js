@@ -8,7 +8,7 @@ async function useCheerioWebCrawler(startingUrl, maxDepth = 0) {
   const visitedUrls = new Set();
   let urlsToVisit = [startingUrl];
   let tempUrls = [];
-  let finalUrls = [];
+  let finalUrls = [startingUrl];
   let depthCounter = 1;
 
   function isSameDomain(url) {

@@ -14,26 +14,34 @@ import { generateAnswers } from "./utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 import { useCheerioWebCrawler } from "./utils/webcrawler.js";
+import { reset } from "./reset.js";
+import { LLMChainExtractor } from "langchain/retrievers/document_compressors/chain_extract";
+import { HuggingFaceInference } from "@langchain/community/llms/hf";
 
 config();
+await reset();
 
-const urls = [
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
-  "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
-  "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
-];
+// const urls = [
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/fixed-deposit-account.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/e-fixed-deposit.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/flexi-fd.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/senior-savers-flexi-fd.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/junior-fixed-deposit.html",
+//   "https://www.hlb.com.my/en/personal-banking/fixed-deposit/fixed-deposit-account/foreign-fixed-deposit-account.html",
+//   "https://www.hlb.com.my/en/personal-banking/help-support/fees-and-charges/deposits.html",
+// ];
 
 /* Create Training Data for Chatbot */
+const urls = await useCheerioWebCrawler(
+  "https://win066.wixsite.com/brillar-bank",
+  2
+);
 const documents = await useCheerio(urls);
 
 const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-3-large",
-  dimensions: 256,
+  dimensions: 1024,
 });
 
 const collectionName = "postgres_js_test";
@@ -43,7 +51,7 @@ let tempToken = 0;
 const llm = new ChatOpenAI({
   // modelName: "gpt-3.5-turbo-1106",
   modelName: "gpt-4-turbo",
-  temperature: 0.1,
+  temperature: 0.9,
   streaming: true,
   callbacks: [
     {
@@ -59,8 +67,7 @@ const llm = new ChatOpenAI({
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-You can also reference to the sample question and answers.
+Make sure to sound like a real person. If the answer is not provided in the context, simply say "I don't have the information".
 ----------------
 {context}`;
 
@@ -80,6 +87,17 @@ const memory = new BufferWindowMemory({
   returnMessages: true,
 });
 
+const compressorModel = new HuggingFaceInference({
+  maxRetries: 0,
+  model: "meta-llama/Meta-Llama-3-70B-Instruct",
+  maxTokens: 1000,
+});
+const baseCompressor = LLMChainExtractor.fromLLM(compressorModel);
+
+const compressionRetriever = new ContextualCompressionRetriever({
+  baseCompressor,
+  baseRetriever: retriever,
+});
 /* Creating Question Chain */
 const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
   returnSourceDocuments: true,
@@ -113,4 +131,4 @@ const askQuestion = async (question) => {
 // await askQuestion(
 //   "I want to invest USD10000 for Brillar Bank Foreign Currency Fixed Deposit for 12 months. What is the total interest amount at the end of term in RM?"
 // );
-await askQuestion("what are the interest rates for fixed deposit?");
+await askQuestion("how many types of fixed deposit do you offer?");
