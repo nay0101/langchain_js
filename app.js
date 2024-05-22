@@ -18,47 +18,58 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.set("trust proxy", true);
 app.set("views", path.join(process.cwd(), "views"));
 app.set("view engine", "ejs");
 /* 
   Routes
 */
 app.get("/", async (req, res) => {
-  let documents = [];
-  if (req.query.code) {
-    const { code } = req.query;
-    const clientId = process.env.NOTION_CLIENT_ID;
-    const clientSecret = process.env.NOTION_CLIENT_SECRET;
-    const redirectURL = process.env.NOTION_REDIRECT_URL;
-    // encode in base 64
-    const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString(
-      "base64"
-    );
-
-    const response = await axios.post(
-      "https://api.notion.com/v1/oauth/token",
-      {
-        grant_type: "authorization_code",
-        code: code,
-        redirect_uri: redirectURL,
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Basic ${encoded}`,
-        },
-      }
-    );
-    const { access_token } = await response.data;
-    const notion = new Client({ auth: access_token });
-    const { results } = await notion.search();
-    documents = await useNotionLoader(access_token, results);
-  }
-  res.render("index", {
-    documents,
-  });
+  const GEOLOCATION_API_KEY = process.env.GEOLOCATION_API_KEY;
+  const ip = req.ip;
+  const { data } = await axios.get(
+    `https://ipgeolocation.abstractapi.com/v1/?api_key=${GEOLOCATION_API_KEY}&ip_address=${ip}`
+  );
+  console.log(data);
+  res.json(data);
 });
+
+// app.get("/", async (req, res) => {
+//   let documents = [];
+//   if (req.query.code) {
+//     const { code } = req.query;
+//     const clientId = process.env.NOTION_CLIENT_ID;
+//     const clientSecret = process.env.NOTION_CLIENT_SECRET;
+//     const redirectURL = process.env.NOTION_REDIRECT_URL;
+//     // encode in base 64
+//     const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString(
+//       "base64"
+//     );
+
+//     const response = await axios.post(
+//       "https://api.notion.com/v1/oauth/token",
+//       {
+//         grant_type: "authorization_code",
+//         code: code,
+//         redirect_uri: redirectURL,
+//       },
+//       {
+//         headers: {
+//           Accept: "application/json",
+//           "Content-Type": "application/json",
+//           Authorization: `Basic ${encoded}`,
+//         },
+//       }
+//     );
+//     const { access_token } = await response.data;
+//     const notion = new Client({ auth: access_token });
+//     const { results } = await notion.search();
+//     documents = await useNotionLoader(access_token, results);
+//   }
+//   res.render("index", {
+//     documents,
+//   });
+// });
 
 app.get("/auth/notion/callback", async (req, res) => {
   if (req.query.error) return res.sendStatus(401);
