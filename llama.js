@@ -13,6 +13,7 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import { reset } from "./reset.js";
 import { useCheerioWebCrawler } from "./utils/webcrawler.js";
 import { HuggingFaceInference } from "@langchain/community/llms/hf";
+import { CallbackHandler } from "langfuse-langchain";
 
 config();
 await reset();
@@ -49,8 +50,8 @@ const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
   maxRetries: 0,
-  // model: "meta-llama/Llama-2-70b-chat-hf",
-  model: "meta-llama/Meta-Llama-3-70B-Instruct",
+  model: "meta-llama/Llama-2-70b-chat-hf",
+  // model: "meta-llama/Meta-Llama-3-70B-Instruct",
   maxTokens: 1000,
 });
 
@@ -81,19 +82,24 @@ const memory = new BufferWindowMemory({
 const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
   returnSourceDocuments: true,
   memory: memory,
-  verbose: true,
+  // verbose: true,
   qaChainOptions: {
     type: "stuff",
     prompt: prompt,
   },
 });
 
+const langfuseHandler = new CallbackHandler();
+
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
-  const result = await chain.invoke({
-    question,
-    chat_history: memory,
-  });
+  const result = await chain.invoke(
+    {
+      question,
+      chat_history: memory,
+    },
+    { callbacks: [langfuseHandler] }
+  );
 
   const answer = await result.text;
   const sources = await result.sourceDocuments;
