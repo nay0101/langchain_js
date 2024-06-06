@@ -42,7 +42,7 @@ const documents = await useCheerio(urls);
 
 const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-3-large",
-  dimensions: 256,
+  dimensions: 1024,
 });
 
 const collectionName = "llama2_openai";
@@ -50,8 +50,8 @@ const retriever = await getRetriever(documents, embeddings, collectionName);
 // ----------------------------------------
 const llm = new HuggingFaceInference({
   maxRetries: 0,
-  model: "meta-llama/Llama-2-70b-chat-hf",
-  // model: "meta-llama/Meta-Llama-3-70B-Instruct",
+  // model: "meta-llama/Llama-2-70b-chat-hf",
+  model: "meta-llama/Meta-Llama-3-70B-Instruct",
   maxTokens: 1000,
 });
 

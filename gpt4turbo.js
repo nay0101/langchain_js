@@ -98,6 +98,7 @@ const compressionRetriever = new ContextualCompressionRetriever({
   baseCompressor,
   baseRetriever: retriever,
 });
+
 /* Creating Question Chain */
 const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
   returnSourceDocuments: true,

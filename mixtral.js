@@ -57,15 +57,14 @@ const messages = [
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
 
-/* Creating Compression Retriever for Accurate Results */
-const embeddings_filter = new EmbeddingsFilter({
-  embeddings,
-  similarityThreshold: 0.8,
-  k: 10,
+const compressorModel = new HuggingFaceInference({
+  maxRetries: 0,
+  model: "meta-llama/Meta-Llama-3-70B-Instruct",
+  maxTokens: 1000,
 });
-
-const compression_retriever = new ContextualCompressionRetriever({
-  baseCompressor: embeddings_filter,
+const baseCompressor = LLMChainExtractor.fromLLM(compressorModel);
+const compressionRetriever = new ContextualCompressionRetriever({
+  baseCompressor,
   baseRetriever: retriever,
 });
 
@@ -81,11 +80,11 @@ const memory = new BufferWindowMemory({
 /* Creating Question Chain */
 const chain = ConversationalRetrievalQAChain.fromLLM(
   llm,
-  compression_retriever,
+  compressionRetriever,
   {
     returnSourceDocuments: true,
     memory: memory,
-    // verbose: true,
+    verbose: true,
     qaChainOptions: {
       type: "stuff",
       prompt: prompt,

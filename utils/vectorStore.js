@@ -11,30 +11,9 @@ async function getRetriever(documents, embeddings, collectionName) {
     searchType: "similarity",
   };
 
-  const pgConfig = {
-    postgresConnectionOptions: {
-      type: "postgres",
-      host: "127.0.0.1",
-      port: 5432,
-      user: "postgres",
-      password: "123456",
-      database: "vectorstore",
-    },
-    tableName: collectionName,
-    columns: {
-      idColumnName: "id",
-      vectorColumnName: "vector",
-      contentColumnName: "content",
-      metadataColumnName: "metadata",
-    },
-    distanceStrategy: "cosine",
-  };
-
   const vectorStore = new Chroma(embeddings, {
     collectionName: collectionName,
   });
-
-  // const vectorStore = await PGVectorStore.initialize(embeddings, pgConfig);
 
   const recordManagerConfig = {
     postgresConnectionOptions: {
