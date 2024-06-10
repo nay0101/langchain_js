@@ -1,11 +1,8 @@
 import { config } from "dotenv";
-import { ChatOpenAI } from "@langchain/openai";
 import {
   ChatPromptTemplate,
-  FewShotChatMessagePromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { useCheerio } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { useCheerioWebCrawler } from "./utils/webcrawler.js";
@@ -17,9 +14,8 @@ import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retr
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { HuggingFaceInference } from "@langchain/community/llms/hf";
-import { SemanticSimilarityExampleSelector } from "@langchain/core/example_selectors";
-import { Document } from "@langchain/core/documents";
 
 config();
 await reset();
@@ -32,71 +28,47 @@ const urls = await useCheerioWebCrawler(
 const documents = await useCheerio(urls);
 
 const files = await useDirectoryLoader("./assets/Few Shots/", 1000, 100);
-// console.log(files);
-const examples = files.map((file) => {
-  const content = file.pageContent.split("input: ")[1].split("output: ");
-  const finalDoc = new Document({
-    pageContent: file.pageContent,
-    metadata: Object.assign(
-      file.metadata,
-      {
-        input: content[0],
-      },
-      { output: content[1] }
-    ),
-  });
-  return finalDoc;
-});
 
-const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-3-large",
-  dimensions: 1024,
-});
-
-const fewshotsCollection = "fewshotRetriever";
-const fewshotRetriever = await getRetriever({
-  documents: examples,
-  embeddings,
-  collectionName: fewshotsCollection,
-});
-
-const exampleSelector = new SemanticSimilarityExampleSelector({
-  vectorStoreRetriever: fewshotRetriever,
-  exampleKeys: ["input", "output"],
-});
-
-const examplePrompt = ChatPromptTemplate.fromMessages([
-  ["human", "{input}"],
-  ["ai", "{output}"],
-]);
-
-const fewShotPrompt = new FewShotChatMessagePromptTemplate({
-  inputVariables: ["input"],
-  exampleSelector,
-  examplePrompt,
+const embeddingModel = "jinaai/jina-embeddings-v2-base-en";
+const embeddings = new HuggingFaceInferenceEmbeddings({
+  model: embeddingModel,
+  maxRetries: 0,
 });
 
 // Retriever
-const contextCollection = "contextRetriever";
-const contextRetriever = await getRetriever({
+const contextCollection = "firstRetriever";
+const firstRetriever = await getRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
+  k: 3,
+  similarityThreshold: 0.2,
+});
+
+const fewshotsCollection = "secondRetriever";
+const secondRetriever = await getRetriever({
+  documents: files,
+  embeddings,
+  collectionName: fewshotsCollection,
+  k: 3,
+});
+
+const retriever = new EnsembleRetriever({
+  retrievers: [firstRetriever, secondRetriever],
+  weights: [0.5, 0.5],
 });
 
 // ----------------------------------------
-const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo",
-  temperature: 0.1,
+const llmModel = "mistralai/Mixtral-8x7B-Instruct-v0.1";
+const llm = new HuggingFaceInference({
+  model: llmModel,
+  maxRetries: 0,
+  maxTokens: 1000,
 });
 
 // Contextualize question
 const contextualizeQSystemPrompt = `
-Given a chat history and the latest user question
-which might reference context in the chat history,
-formulate a standalone question which can be understood
-without the chat history. Do NOT answer the question, just
-reformulate it if needed and otherwise return it as is.`;
+Given a chat history and the latest user question which might reference context in the chat history, formulate a standalone question which can be understood without the chat history. Do NOT answer the question, just reformulate it if needed and otherwise return it as is.`;
 
 const contextualizeQPrompt = ChatPromptTemplate.fromMessages([
   ["system", contextualizeQSystemPrompt],
@@ -106,20 +78,18 @@ const contextualizeQPrompt = ChatPromptTemplate.fromMessages([
 
 const historyAwareRetriever = await createHistoryAwareRetriever({
   llm,
-  retriever: contextRetriever,
+  retriever,
   rephrasePrompt: contextualizeQPrompt,
 });
 
 // Answer question
 const qaSystemPrompt = `
-You are an assistant for question-answering tasks. Try to answer by your recent knowledge first. If you cannot answer from the chat history, use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Don't answer from your general knowledge. Use three sentences maximum and keep the answer concise.
+You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
 \n\n
 {context}`;
-
 const qaPrompt = ChatPromptTemplate.fromMessages([
   ["system", qaSystemPrompt],
   new MessagesPlaceholder("chat_history"),
-  fewShotPrompt,
   ["human", "{input}"],
 ]);
 
@@ -137,12 +107,12 @@ const chain = await createRetrievalChain({
   combineDocsChain: questionAnswerChain,
 });
 
-const chatHistory = [];
-
 const langfuseHandler = new CallbackHandler({
-  sessionId: "Few Shot Retrievers",
-  userId: "Nay Lin Aung",
+  sessionId: embeddingModel,
+  userId: llmModel,
 });
+
+const chatHistory = [];
 
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {

@@ -4,7 +4,13 @@ import { PostgresRecordManager } from "@langchain/community/indexes/postgres";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 
-async function getRetriever(documents, embeddings, collectionName, k) {
+async function getRetriever({
+  documents,
+  embeddings,
+  collectionName,
+  k = 1,
+  similarityThreshold = 0.01,
+}) {
   const postgresTableName = collectionName;
 
   const vectorStore = new Chroma(embeddings, {
@@ -61,8 +67,8 @@ async function getRetriever(documents, embeddings, collectionName, k) {
 
   const baseCompressor = new EmbeddingsFilter({
     embeddings,
-    similarityThreshold: 0.6,
-    k: 1 || k,
+    similarityThreshold,
+    k: k,
   });
 
   const retriever = new ContextualCompressionRetriever({

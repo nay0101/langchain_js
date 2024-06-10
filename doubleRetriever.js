@@ -8,7 +8,7 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import { useCheerio } from "./utils/webloaders.js";
 import { getRetriever } from "./utils/vectorStore.js";
 import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./reset.js";
+import { reset } from "./utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
 import { useDirectoryLoader } from "./utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
@@ -36,20 +36,22 @@ const embeddings = new OpenAIEmbeddings({
 
 // Retriever
 const contextCollection = "firstRetriever";
-const firstRetriever = await getRetriever(
+const firstRetriever = await getRetriever({
   documents,
   embeddings,
-  contextCollection,
-  3
-);
+  collectionName: contextCollection,
+  k: 3,
+  similarityThreshold: 0.5,
+});
 
 const fewshotsCollection = "secondRetriever";
-const secondRetriever = await getRetriever(
-  files,
+const secondRetriever = await getRetriever({
+  documents: files,
   embeddings,
-  fewshotsCollection,
-  3
-);
+  collectionName: fewshotsCollection,
+  k: 3,
+  similarityThreshold: 0.5,
+});
 
 const retriever = new EnsembleRetriever({
   retrievers: [firstRetriever, secondRetriever],

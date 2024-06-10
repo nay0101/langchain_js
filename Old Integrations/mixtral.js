@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { ChatOpenAI } from "@langchain/openai";
+import { HuggingFaceInference } from "langchain/llms/hf";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
@@ -8,17 +8,13 @@ import {
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
-import { generateAnswers } from "./utils/answerGeneration.js";
+import { useCheerio, usePuppeteer } from "../utils/webloaders.js";
+import { getRetriever } from "../utils/vectorStore.js";
+import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { CallbackHandler } from "langfuse-langchain";
-import { reset } from "./reset.js";
 
 config();
-await reset();
 
 const urls = [
   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
@@ -36,22 +32,21 @@ const documents = await useCheerio(urls);
 
 const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-3-large",
-  dimensions: 1024,
+  dimensions: 256,
 });
 
-const collectionName = "langfuseIntegration";
-const retriever = await getRetriever(documents, embeddings, collectionName);
+const collectionName = "mixtral";
+const retriever = await getRetriever({ documents, embeddings, collectionName });
 // ----------------------------------------
-let tempToken = 0;
-const llm = new ChatOpenAI({
-  modelName: "gpt-4-turbo",
-  temperature: 0.1,
+const llm = new HuggingFaceInference({
+  model: "mistralai/Mixtral-8x22B-Instruct-v0.1",
+  maxTokens: 1000,
+  maxRetries: 0,
 });
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
-You can also reference to the sample question and answers.
 ----------------
 {context}`;
 
@@ -61,6 +56,17 @@ const messages = [
 ];
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
+
+const compressorModel = new HuggingFaceInference({
+  maxRetries: 0,
+  model: "meta-llama/Meta-Llama-3-70B-Instruct",
+  maxTokens: 1000,
+});
+const baseCompressor = LLMChainExtractor.fromLLM(compressorModel);
+const compressionRetriever = new ContextualCompressionRetriever({
+  baseCompressor,
+  baseRetriever: retriever,
+});
 
 /* Creating Memory Instance */
 const memory = new BufferWindowMemory({
@@ -72,40 +78,36 @@ const memory = new BufferWindowMemory({
 });
 
 /* Creating Question Chain */
-const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
-  returnSourceDocuments: true,
-  memory: memory,
-  outputKey: "text",
-  verbose: true,
-  qaChainOptions: {
-    type: "stuff",
-    prompt: prompt,
-  },
-});
-const langfuseHandler = new CallbackHandler({
-  userId: "user name",
-  sessionId: "chat name",
-});
+const chain = ConversationalRetrievalQAChain.fromLLM(
+  llm,
+  compressionRetriever,
+  {
+    returnSourceDocuments: true,
+    memory: memory,
+    verbose: true,
+    qaChainOptions: {
+      type: "stuff",
+      prompt: prompt,
+    },
+  }
+);
+
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
-  langfuseHandler.metadata = { question }; //for easy trackings
-  const result = await chain.invoke(
-    {
-      question,
-      chat_history: memory,
-    },
-    { callbacks: [langfuseHandler] }
-  );
+  const result = await chain.invoke({
+    question,
+    chat_history: memory,
+  });
 
   const answer = await result.text;
   const sources = await result.sourceDocuments;
-  console.log(sources);
   console.log(answer);
-
-  await langfuseHandler.shutdownAsync();
-
   return { question, answer, sources };
 };
 
-await askQuestion("how many types of fixed deposit do you offer?");
-await askQuestion("tell me about the second one");
+// await generateAnswers({
+//   askQuestion,
+//   returnSources: true,
+//   userInput: true,
+// }); // Set userInput to true to get the User Input
+await askQuestion("what are the interest rates of fixed deposit?");

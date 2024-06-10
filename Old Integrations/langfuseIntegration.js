@@ -1,25 +1,21 @@
 import { config } from "dotenv";
-import { ChatVertexAI } from "@langchain/google-vertexai";
-
-import {
-  ChatGoogleGenerativeAI,
-  GoogleGenerativeAIEmbeddings,
-} from "@langchain/google-genai";
+import { ChatOpenAI } from "@langchain/openai";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
+import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
-import { generateAnswers } from "./utils/answerGeneration.js";
+import { useCheerio, usePuppeteer } from "../utils/webloaders.js";
+import { getRetriever } from "../utils/vectorStore.js";
+import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { reset } from "./reset.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { CallbackHandler } from "langfuse-langchain";
+import { reset } from "../reset.js";
 
 config();
 await reset();
@@ -37,41 +33,25 @@ const urls = [
 
 /* Create Training Data for Chatbot */
 const documents = await useCheerio(urls);
-// const documents = await useDirectoryLoader("./assets/HLB Data");
 
-const embeddings = new GoogleVertexAIEmbeddings({
-  model: "text-multilingual-embedding-preview-0409",
+const embeddings = new OpenAIEmbeddings({
+  modelName: "text-embedding-3-large",
+  dimensions: 1024,
 });
 
-// const embeddings = new OpenAIEmbeddings({
-//   modelName: "text-embedding-3-large",
-//   dimensions: 256,
-// });
-
-const collectionName = "testvertex_openai_3";
-const retriever = await getRetriever(documents, embeddings, collectionName);
+const collectionName = "langfuseIntegration";
+const retriever = await getRetriever({ documents, embeddings, collectionName });
 // ----------------------------------------
-
-const llm = new ChatVertexAI({
-  model: "gemini-1.5-pro-preview-0409",
-  streaming: true,
-  callbacks: [
-    {
-      handleLLMNewToken(token) {
-        console.log(token);
-      },
-    },
-    {
-      handleLLMEnd(output) {
-        console.log(output);
-      },
-    },
-  ],
+let tempToken = 0;
+const llm = new ChatOpenAI({
+  modelName: "gpt-4-turbo",
+  temperature: 0.1,
 });
 
 /* Creating Prompt */
 const system_template = `Use the following pieces of context to answer the users question. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
+You can also reference to the sample question and answers.
 ----------------
 {context}`;
 
@@ -81,18 +61,6 @@ const messages = [
 ];
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
-
-/* Creating Compression Retriever for Accurate Results */
-const embeddings_filter = new EmbeddingsFilter({
-  embeddings,
-  similarityThreshold: 0.7,
-  k: 10,
-});
-
-const compression_retriever = new ContextualCompressionRetriever({
-  baseCompressor: embeddings_filter,
-  baseRetriever: retriever,
-});
 
 /* Creating Memory Instance */
 const memory = new BufferWindowMemory({
@@ -107,30 +75,37 @@ const memory = new BufferWindowMemory({
 const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
   returnSourceDocuments: true,
   memory: memory,
-  // verbose: true,
+  outputKey: "text",
+  verbose: true,
   qaChainOptions: {
     type: "stuff",
     prompt: prompt,
   },
 });
-
+const langfuseHandler = new CallbackHandler({
+  userId: "user name",
+  sessionId: "chat name",
+});
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
-  const result = await chain.invoke({
-    question,
-    chat_history: memory,
-  });
+  langfuseHandler.metadata = { question }; //for easy trackings
+  const result = await chain.invoke(
+    {
+      question,
+      chat_history: memory,
+    },
+    { callbacks: [langfuseHandler] }
+  );
+
   const answer = await result.text;
   const sources = await result.sourceDocuments;
-  console.log(answer);
   console.log(sources);
+  console.log(answer);
+
+  await langfuseHandler.shutdownAsync();
+
   return { question, answer, sources };
 };
 
-// await generateAnswers({
-//   askQuestion,
-//   returnSources: true,
-//   userInput: false,
-// }); // Set userInput to true to get the User Input
-
-await askQuestion("what are the interest rates for fixed deposit?");
+await askQuestion("how many types of fixed deposit do you offer?");
+await askQuestion("tell me about the second one");

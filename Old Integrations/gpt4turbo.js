@@ -8,13 +8,13 @@ import {
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
-import { generateAnswers } from "./utils/answerGeneration.js";
+import { useCheerio, usePuppeteer } from "../utils/webloaders.js";
+import { getRetriever } from "../utils/vectorStore.js";
+import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./reset.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../reset.js";
 import { LLMChainExtractor } from "langchain/retrievers/document_compressors/chain_extract";
 import { HuggingFaceInference } from "@langchain/community/llms/hf";
 
@@ -45,7 +45,7 @@ const embeddings = new OpenAIEmbeddings({
 });
 
 const collectionName = "postgres_js_test";
-const retriever = await getRetriever(documents, embeddings, collectionName);
+const retriever = await getRetriever({ documents, embeddings, collectionName });
 // ----------------------------------------
 let tempToken = 0;
 const llm = new ChatOpenAI({

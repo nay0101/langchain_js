@@ -1,20 +1,28 @@
 import { config } from "dotenv";
-import { HuggingFaceInference } from "langchain/llms/hf";
+import { ChatVertexAI } from "@langchain/google-vertexai";
+
+import {
+  ChatGoogleGenerativeAI,
+  GoogleGenerativeAIEmbeddings,
+} from "@langchain/google-genai";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { useCheerio, usePuppeteer } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
-import { generateAnswers } from "./utils/answerGeneration.js";
+import { useCheerio, usePuppeteer } from "../utils/webloaders.js";
+import { getRetriever } from "../utils/vectorStore.js";
+import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
+import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { reset } from "../reset.js";
 
 config();
+await reset();
 
 const urls = [
   "https://www.hlb.com.my/en/personal-banking/fixed-deposit.html?icp=hlb-en-all-footer-txt-fd",
@@ -29,19 +37,36 @@ const urls = [
 
 /* Create Training Data for Chatbot */
 const documents = await useCheerio(urls);
+// const documents = await useDirectoryLoader("./assets/HLB Data");
 
-const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-3-large",
-  dimensions: 256,
+const embeddings = new GoogleVertexAIEmbeddings({
+  model: "text-multilingual-embedding-preview-0409",
 });
 
-const collectionName = "mixtral";
-const retriever = await getRetriever(documents, embeddings, collectionName);
+// const embeddings = new OpenAIEmbeddings({
+//   modelName: "text-embedding-3-large",
+//   dimensions: 256,
+// });
+
+const collectionName = "testvertex_openai_3";
+const retriever = await getRetriever({ documents, embeddings, collectionName });
 // ----------------------------------------
-const llm = new HuggingFaceInference({
-  model: "mistralai/Mixtral-8x22B-Instruct-v0.1",
-  maxTokens: 1000,
-  maxRetries: 0,
+
+const llm = new ChatVertexAI({
+  model: "gemini-1.5-pro-preview-0409",
+  streaming: true,
+  callbacks: [
+    {
+      handleLLMNewToken(token) {
+        console.log(token);
+      },
+    },
+    {
+      handleLLMEnd(output) {
+        console.log(output);
+      },
+    },
+  ],
 });
 
 /* Creating Prompt */
@@ -57,14 +82,15 @@ const messages = [
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
 
-const compressorModel = new HuggingFaceInference({
-  maxRetries: 0,
-  model: "meta-llama/Meta-Llama-3-70B-Instruct",
-  maxTokens: 1000,
+/* Creating Compression Retriever for Accurate Results */
+const embeddings_filter = new EmbeddingsFilter({
+  embeddings,
+  similarityThreshold: 0.7,
+  k: 10,
 });
-const baseCompressor = LLMChainExtractor.fromLLM(compressorModel);
-const compressionRetriever = new ContextualCompressionRetriever({
-  baseCompressor,
+
+const compression_retriever = new ContextualCompressionRetriever({
+  baseCompressor: embeddings_filter,
   baseRetriever: retriever,
 });
 
@@ -78,19 +104,15 @@ const memory = new BufferWindowMemory({
 });
 
 /* Creating Question Chain */
-const chain = ConversationalRetrievalQAChain.fromLLM(
-  llm,
-  compressionRetriever,
-  {
-    returnSourceDocuments: true,
-    memory: memory,
-    verbose: true,
-    qaChainOptions: {
-      type: "stuff",
-      prompt: prompt,
-    },
-  }
-);
+const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
+  returnSourceDocuments: true,
+  memory: memory,
+  // verbose: true,
+  qaChainOptions: {
+    type: "stuff",
+    prompt: prompt,
+  },
+});
 
 /* Invoking Chain for Q&A */
 const askQuestion = async (question) => {
@@ -98,16 +120,17 @@ const askQuestion = async (question) => {
     question,
     chat_history: memory,
   });
-
   const answer = await result.text;
   const sources = await result.sourceDocuments;
   console.log(answer);
+  console.log(sources);
   return { question, answer, sources };
 };
 
 // await generateAnswers({
 //   askQuestion,
 //   returnSources: true,
-//   userInput: true,
+//   userInput: false,
 // }); // Set userInput to true to get the User Input
-await askQuestion("what are the interest rates of fixed deposit?");
+
+await askQuestion("what are the interest rates for fixed deposit?");

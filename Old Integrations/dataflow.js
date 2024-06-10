@@ -8,9 +8,9 @@ import {
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
-import { useCheerio } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
-import { reset } from "./reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getRetriever } from "../utils/vectorStore.js";
+import { reset } from "../utils/reset.js";
 import { ChromaClient } from "chromadb";
 import { promises as fs } from "node:fs";
 
@@ -52,7 +52,7 @@ const embeddings = new OpenAIEmbeddings({
 });
 
 const collectionName = "js_test";
-const retriever = await getRetriever(documents, embeddings, collectionName);
+const retriever = await getRetriever({ documents, embeddings, collectionName });
 
 const client = new ChromaClient();
 const collection = await client.getCollection({
