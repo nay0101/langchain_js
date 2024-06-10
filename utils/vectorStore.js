@@ -1,18 +1,15 @@
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import { index } from "langchain/indexes";
-import { PGVectorStore } from "@langchain/community/vectorstores/pgvector";
 import { PostgresRecordManager } from "@langchain/community/indexes/postgres";
+import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
+import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 
-async function getRetriever(documents, embeddings, collectionName) {
+async function getRetriever(documents, embeddings, collectionName, k) {
   const postgresTableName = collectionName;
-
-  const vectorStoreConfig = {
-    k: 1,
-    searchType: "similarity",
-  };
 
   const vectorStore = new Chroma(embeddings, {
     collectionName: collectionName,
+    collectionMetadata: { "hnsw:space": "cosine" },
   });
 
   const recordManagerConfig = {
@@ -56,7 +53,24 @@ async function getRetriever(documents, embeddings, collectionName) {
     })
   );
 
-  return vectorStore.asRetriever(vectorStoreConfig);
+  const retrieverConfig = {
+    k: 5,
+    searchType: "similarity",
+  };
+  const baseRetriever = vectorStore.asRetriever(retrieverConfig);
+
+  const baseCompressor = new EmbeddingsFilter({
+    embeddings,
+    similarityThreshold: 0.6,
+    k: 1 || k,
+  });
+
+  const retriever = new ContextualCompressionRetriever({
+    baseCompressor,
+    baseRetriever,
+  });
+
+  return retriever;
 }
 
 export { getRetriever };
