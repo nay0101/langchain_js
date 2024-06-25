@@ -2,8 +2,10 @@ import * as cheerio from "cheerio";
 import { splitDocuments } from "./splitDocuments.js";
 import puppeteer from "puppeteer";
 import { Document } from "@langchain/core/documents";
+import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
-async function useCheerio(urls, batchSize = 5) {
+async function useCheerio(urls, batchSize = 5, chunkSize, chunkOverlap) {
   const urlsToScrape = urls.filter((url, index) => urls.indexOf(url) === index);
   const docs = [];
   for (let i = 0; i < urlsToScrape.length; i += batchSize) {
@@ -13,6 +15,7 @@ async function useCheerio(urls, batchSize = 5) {
       try {
         const response = await fetch(url);
         const $ = cheerio.load(await response.text());
+        $("table").remove();
         const result = $("body")
           .prop("innerText")
           .split("\n")
@@ -33,7 +36,38 @@ async function useCheerio(urls, batchSize = 5) {
   }
   console.log("Scraping Finished.");
 
-  const { documents } = await splitDocuments(docs);
+  const { documents } = await splitDocuments(docs, chunkSize, chunkOverlap);
+
+  return documents;
+}
+
+async function useTableLoader(urls, batchSize = 5, chunkSize, chunkOverlap) {
+  const urlsToScrape = urls.filter((url, index) => urls.indexOf(url) === index);
+  const docs = [];
+  for (let i = 0; i < urlsToScrape.length; i += batchSize) {
+    const batch = urlsToScrape.slice(i, i + batchSize);
+    console.log(`Scraping:\n${batch.join(",").replaceAll(",", "\n")}`);
+    const promises = batch.map(async (url) => {
+      try {
+        const response = await fetch(url);
+        const $ = cheerio.load(await response.text());
+        const result = $("table");
+        const doc = new Document({
+          pageContent: result,
+          metadata: { source: url },
+        });
+        return doc;
+      } catch (error) {
+        console.log(`${url} - ${error.message}`);
+        return false;
+      }
+    });
+    const batchDocs = await Promise.all(promises);
+    docs.push(...batchDocs);
+  }
+  console.log("Scraping Finished.");
+
+  const { documents } = await splitDocuments(docs, chunkSize, chunkOverlap);
 
   return documents;
 }
@@ -88,4 +122,4 @@ async function usePuppeteer(urls, batchSize = 5) {
   return documents;
 }
 
-export { useCheerio, usePuppeteer };
+export { useCheerio, usePuppeteer, useTableLoader };

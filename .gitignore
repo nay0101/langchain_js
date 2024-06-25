@@ -4,3 +4,4 @@ chroma.log
 vertexCredentials.json
 logs
 test*
+db_path

@@ -31,7 +31,11 @@ const urls = await useCheerioWebCrawler(
 );
 const documents = await useCheerio(urls);
 
-const files = await useDirectoryLoader("./assets/Few Shots/", 1000, 100);
+const files = await useDirectoryLoader({
+  directory: "./assets/Few Shots/",
+  chunkSize: 1000,
+  chunkOverlap: 100,
+});
 // console.log(files);
 const examples = files.map((file) => {
   const content = file.pageContent.split("input: ")[1].split("output: ");

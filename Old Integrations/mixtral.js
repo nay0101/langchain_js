@@ -39,7 +39,7 @@ const collectionName = "mixtral";
 const retriever = await getRetriever({ documents, embeddings, collectionName });
 // ----------------------------------------
 const llm = new HuggingFaceInference({
-  model: "mistralai/Mixtral-8x22B-Instruct-v0.1",
+  model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
   maxTokens: 1000,
   maxRetries: 0,
 });

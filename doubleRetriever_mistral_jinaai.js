@@ -27,7 +27,11 @@ const urls = await useCheerioWebCrawler(
 );
 const documents = await useCheerio(urls);
 
-const files = await useDirectoryLoader("./assets/Few Shots/", 1000, 100);
+const files = await useDirectoryLoader({
+  directory: "./assets/Few Shots/",
+  chunkSize: 1000,
+  chunkOverlap: 100,
+});
 
 const embeddingModel = "jinaai/jina-embeddings-v2-base-en";
 const embeddings = new HuggingFaceInferenceEmbeddings({

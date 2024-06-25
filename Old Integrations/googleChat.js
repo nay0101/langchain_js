@@ -39,7 +39,6 @@ const urls = await useCheerioWebCrawler(
   2
 );
 const documents = await useCheerio(urls);
-// const documents = await useDirectoryLoader("./assets/HLB Data");
 
 const embeddings = new GoogleGenerativeAIEmbeddings({
   modelName: "text-embedding-004",

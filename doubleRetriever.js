@@ -6,7 +6,7 @@ import {
 } from "@langchain/core/prompts";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { useCheerio } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
+import { getElasticRetriever, getRetriever } from "./utils/vectorStore.js";
 import { useCheerioWebCrawler } from "./utils/webcrawler.js";
 import { reset } from "./utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
@@ -18,7 +18,7 @@ import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 
 config();
-await reset();
+// await reset();
 
 /* Create Training Data for Chatbot */
 const urls = await useCheerioWebCrawler(
@@ -27,7 +27,11 @@ const urls = await useCheerioWebCrawler(
 );
 const documents = await useCheerio(urls);
 
-const files = await useDirectoryLoader("./assets/Few Shots/", 1000, 100);
+const files = await useDirectoryLoader({
+  directory: "./assets/Few Shots/",
+  chunkSize: 1000,
+  chunkOverlap: 100,
+});
 
 const embeddings = new OpenAIEmbeddings({
   modelName: "text-embedding-3-large",
@@ -36,7 +40,7 @@ const embeddings = new OpenAIEmbeddings({
 
 // Retriever
 const contextCollection = "firstRetriever";
-const firstRetriever = await getRetriever({
+const firstRetriever = await getElasticRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
@@ -45,7 +49,7 @@ const firstRetriever = await getRetriever({
 });
 
 const fewshotsCollection = "secondRetriever";
-const secondRetriever = await getRetriever({
+const secondRetriever = await getElasticRetriever({
   documents: files,
   embeddings,
   collectionName: fewshotsCollection,
@@ -130,7 +134,7 @@ const askQuestion = async (question) => {
     new AIMessage(result.answer)
   );
 
-  console.log(result);
+  console.log(result.answer);
   await langfuseHandler.shutdownAsync();
 
   return true;

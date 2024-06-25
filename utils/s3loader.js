@@ -86,9 +86,9 @@ async function useS3Loader(folders = []) {
 
   const promises = FOLDERS.map(
     async (folder) =>
-      await useDirectoryLoader(
-        path.join(process.cwd(), `${BASE_DIRECTORY}/${folder}/`)
-      )
+      await useDirectoryLoader({
+        directory: path.join(process.cwd(), `${BASE_DIRECTORY}/${folder}/`),
+      })
   );
 
   const documents = await Promise.all(promises);
