@@ -93,9 +93,9 @@ async function getElasticRetriever({
   k = 1,
   similarityThreshold = 0.01,
 }) {
-  const ELASTIC_API_KEY = process.env.ELASTIC_API_KEY ?? null;
-  const ELASTIC_CLOUD_ID = process.env.ELASTIC_CLOUD_ID ?? null;
-  const ELASTIC_URL = process.env.ELASTIC_URL ?? null;
+  const ELASTIC_API_KEY = process.env.ELASTIC_API_KEY;
+  const ELASTIC_CLOUD_ID = process.env.ELASTIC_CLOUD_ID;
+  const ELASTIC_URL = process.env.ELASTIC_URL;
 
   const vectorStoreIndexName = collectionName.toLowerCase();
   let config = {
@@ -109,12 +109,10 @@ async function getElasticRetriever({
     config = {
       node: ELASTIC_URL,
     };
-    console.log("URL");
   } else if (ELASTIC_CLOUD_ID) {
     config.cloud = {
       id: ELASTIC_CLOUD_ID,
     };
-    console.log("Cloud ID");
   }
 
   config.auth = {

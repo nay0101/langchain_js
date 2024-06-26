@@ -4,7 +4,7 @@ import {
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
 import { useCheerio } from "./utils/webloaders.js";
-import { getRetriever } from "./utils/vectorStore.js";
+import { getElasticRetriever, getRetriever } from "./utils/vectorStore.js";
 import { useCheerioWebCrawler } from "./utils/webcrawler.js";
 import { reset } from "./utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
@@ -18,7 +18,7 @@ import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/
 import { HuggingFaceInference } from "@langchain/community/llms/hf";
 
 config();
-await reset();
+// await reset();
 
 /* Create Training Data for Chatbot */
 const urls = await useCheerioWebCrawler(
@@ -40,8 +40,8 @@ const embeddings = new HuggingFaceInferenceEmbeddings({
 });
 
 // Retriever
-const contextCollection = "firstRetriever";
-const firstRetriever = await getRetriever({
+const contextCollection = "mistralfirst";
+const firstRetriever = await getElasticRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
@@ -49,8 +49,8 @@ const firstRetriever = await getRetriever({
   similarityThreshold: 0.2,
 });
 
-const fewshotsCollection = "secondRetriever";
-const secondRetriever = await getRetriever({
+const fewshotsCollection = "mistralSecond";
+const secondRetriever = await getElasticRetriever({
   documents: files,
   embeddings,
   collectionName: fewshotsCollection,
