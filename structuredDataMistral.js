@@ -1,9 +1,7 @@
 import { config } from "dotenv";
 import * as uuid from "uuid";
 
-import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { MultiVectorRetriever } from "langchain/retrievers/multi_vector";
-import { InMemoryStore } from "@langchain/core/stores";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { RunnableSequence } from "@langchain/core/runnables";
@@ -13,6 +11,7 @@ import { Client } from "@elastic/elasticsearch";
 import { useCheerio, useTableLoader } from "./utils/webloaders.js";
 import { HuggingFaceInference } from "@langchain/community/llms/hf";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
+import { LocalFileStore } from "langchain/storage/file_system";
 
 config();
 const ELASTIC_API_KEY = process.env.ELASTIC_API_KEY;
@@ -55,17 +54,18 @@ const textSummaries = await chain.batch(texts, {
   maxConcurrency: 5,
 });
 
-const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-3-large",
-  dimensions: 256,
+const embeddingModel = "jinaai/jina-embeddings-v2-base-en";
+const embeddings = new HuggingFaceInferenceEmbeddings({
+  model: "jinaai/jina-embeddings-v2-base-en",
+  maxRetries: 0,
 });
 
 // The byteStore to use to store the original chunks
-const byteStore = new InMemoryStore();
+const byteStore = await LocalFileStore.fromPath("./bytestore");
 const idKey = "doc_id";
 
 // The vectorstore to use to index the child chunks
-const vectorstoreIndexName = "newtest";
+const vectorstoreIndexName = "mistral24";
 const vectorstore = new ElasticVectorSearch(embeddings, {
   client: new Client({
     cloud: {

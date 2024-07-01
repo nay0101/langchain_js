@@ -41,7 +41,7 @@ const embeddings = new HuggingFaceInferenceEmbeddings({
 
 // Retriever
 const contextCollection = "mistralfirst";
-const firstRetriever = await getElasticRetriever({
+const firstRetriever = await getRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
@@ -50,7 +50,7 @@ const firstRetriever = await getElasticRetriever({
 });
 
 const fewshotsCollection = "mistralSecond";
-const secondRetriever = await getElasticRetriever({
+const secondRetriever = await getRetriever({
   documents: files,
   embeddings,
   collectionName: fewshotsCollection,

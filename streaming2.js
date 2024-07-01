@@ -67,14 +67,10 @@ const retriever = new EnsembleRetriever({
 const llm = new ChatOpenAI({
   modelName: "gpt-3.5-turbo",
   temperature: 0.1,
-  streaming: true,
   callbacks: [
     {
-      handleLLMNewToken(output) {
-        console.log(output);
-      },
       handleLLMEnd(output) {
-        console.log(output);
+        console.log(output.generations[0][0]);
       },
     },
   ],
@@ -133,7 +129,22 @@ const askQuestion = async (question) => {
   langfuseHandler.metadata = {
     question,
   };
-  const result = await chain.invoke(
+
+  // const events = await chain.streamEvents(
+  //   {
+  //     input: question,
+  //     chat_history: chatHistory,
+  //   },
+  //   { callbacks: [langfuseHandler], version: "v2" }
+  // );
+
+  // for await (const event of events) {
+  //   if (event.event === "on_chat_model_stream") {
+  //     console.log(event.data.chunk.content);
+  //   }
+  // }
+
+  const stream = await chain.stream(
     {
       input: question,
       chat_history: chatHistory,
@@ -141,12 +152,9 @@ const askQuestion = async (question) => {
     { callbacks: [langfuseHandler] }
   );
 
-  chatHistory.push(
-    new HumanMessage(result.input),
-    new AIMessage(result.answer)
-  );
-
-  console.log(result);
+  for await (const chunk of stream) {
+    console.log(chunk);
+  }
   await langfuseHandler.shutdownAsync();
 
   return true;

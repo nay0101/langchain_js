@@ -7,6 +7,8 @@ import { config } from "dotenv";
 import { ElasticVectorSearch } from "@langchain/community/vectorstores/elasticsearch";
 import { Document } from "@langchain/core/documents";
 import { Client } from "@elastic/elasticsearch";
+import { HuggingFaceInference } from "@langchain/community/llms/hf";
+import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 
 config();
 
@@ -18,14 +20,28 @@ const docs = await useDirectoryLoader({
 
 const doc = docs.map((doc) => doc.pageContent);
 
-const model = new ChatOpenAI({
-  model: "gpt-3.5-turbo",
+// const model = new ChatOpenAI({
+//   model: "gpt-3.5-turbo",
+// });
+
+const llmModel = "mistralai/Mixtral-8x7B-Instruct-v0.1";
+const model = new HuggingFaceInference({
+  model: llmModel,
+  maxRetries: 0,
+  maxTokens: 1000,
 });
 
-const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-3-large",
-  dimensions: 256,
+// const embeddings = new OpenAIEmbeddings({
+//   modelName: "text-embedding-3-large",
+//   dimensions: 256,
+// });
+
+const embeddingModel = "BAAI/bge-m3";
+const embeddings = new HuggingFaceInferenceEmbeddings({
+  model: embeddingModel,
+  maxRetries: 0,
 });
+
 const prompt = ChatPromptTemplate.fromTemplate(
   "Extract Tables from the provided context: {context}"
 );

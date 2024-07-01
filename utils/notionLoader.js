@@ -1,4 +1,4 @@
-import { NotionAPILoader } from "langchain/document_loaders/web/notionapi";
+import { NotionAPILoader } from "@langchain/community/document_loaders/web/notionapi";
 import { splitDocuments } from "./splitDocuments.js";
 import { config } from "dotenv";
 
