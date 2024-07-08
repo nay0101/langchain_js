@@ -3,7 +3,11 @@ import { URL } from "url";
 import { default as axios } from "axios";
 import puppeteer from "puppeteer";
 
-async function useCheerioWebCrawler(startingUrl, maxDepth = 0) {
+async function useCheerioWebCrawler(
+  startingUrl,
+  maxDepth = 0,
+  urlsToExclude = []
+) {
   const domainName = new URL(startingUrl).origin;
   const visitedUrls = new Set();
   let urlsToVisit = [startingUrl];
@@ -23,7 +27,8 @@ async function useCheerioWebCrawler(startingUrl, maxDepth = 0) {
   async function crawl() {
     if (urlsToVisit.length === 0 && depthCounter > maxDepth) {
       finalUrls = finalUrls.filter(
-        (url, index) => finalUrls.indexOf(url) === index
+        (url, index) =>
+          finalUrls.indexOf(url) === index && !urlsToExclude.includes(url)
       );
       console.log("Crawling finished.");
       return;

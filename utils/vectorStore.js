@@ -14,7 +14,7 @@ async function getRetriever({
   embeddings,
   collectionName,
   k = 1,
-  similarityThreshold = 0.01,
+  similarityThreshold = 0.0001,
 }) {
   const postgresTableName = collectionName;
 
@@ -67,7 +67,7 @@ async function getRetriever({
   );
 
   const retrieverConfig = {
-    k: 5,
+    k: k,
     searchType: "similarity",
   };
   const baseRetriever = vectorStore.asRetriever(retrieverConfig);
@@ -75,7 +75,6 @@ async function getRetriever({
   const baseCompressor = new EmbeddingsFilter({
     embeddings,
     similarityThreshold,
-    k: k,
   });
 
   const retriever = new ContextualCompressionRetriever({

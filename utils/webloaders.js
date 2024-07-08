@@ -15,7 +15,6 @@ async function useCheerio(urls, batchSize = 5, chunkSize, chunkOverlap) {
       try {
         const response = await fetch(url);
         const $ = cheerio.load(await response.text());
-        $("table").remove();
         const result = $("body")
           .prop("innerText")
           .split("\n")

@@ -4,9 +4,10 @@ import { CohereRerank } from "@langchain/cohere";
 
 config();
 
-const reranker = (retriever) => {
+const reranker = ({ retriever, k = 3 }) => {
   const rerankerModel = new CohereRerank({
     model: "rerank-multilingual-v3.0",
+    topN: k,
   });
 
   const reranker = new ContextualCompressionRetriever({

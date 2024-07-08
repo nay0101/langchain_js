@@ -19,6 +19,9 @@ import { HuggingFaceInference } from "@langchain/community/llms/hf";
 import { reranker } from "./utils/reranker.js";
 import { promises as fs } from "node:fs";
 import { finished } from "node:stream";
+import { ChatAnthropic } from "@langchain/anthropic";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { VoyageEmbeddings } from "@langchain/community/embeddings/voyage";
 
 config();
 await reset();
@@ -42,44 +45,40 @@ const files = await useDirectoryLoader({
   chunkOverlap: 100,
 });
 
-const embeddingModel = "BAAI/bge-m3";
-const embeddings = new HuggingFaceInferenceEmbeddings({
-  model: embeddingModel,
-  maxRetries: 0,
+const embeddingModel = "text-embedding-3-large";
+const embeddings = new OpenAIEmbeddings({
+  modelName: "text-embedding-3-large",
+  dimensions: 1024,
 });
 
 // Retriever
-const contextCollection = "cohereFirst";
-const firstRetriever = await getRetriever({
+const contextCollection = "claudeFirst";
+const contextRetriever = await getRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
   k: 5,
 });
 
-const fewshotsCollection = "cohereSecond";
-const secondRetriever = await getRetriever({
-  documents: files,
-  embeddings,
-  collectionName: fewshotsCollection,
-  k: 3,
-});
+// const fewshotsCollection = "claudeSecond";
+// const fewshotRetriever = await getRetriever({
+//   documents: files,
+//   embeddings,
+//   collectionName: fewshotsCollection,
+//   k: 3,
+// });
 
 const retriever = new EnsembleRetriever({
-  retrievers: [firstRetriever],
-  weights: [0.5],
+  retrievers: [contextRetriever],
 });
 
-// const retriever = firstRetriever;
-
-const rerank = reranker(retriever);
+const rerank = reranker({ retriever, k: 3 });
 
 // ----------------------------------------
-const llmModel = "mistralai/Mixtral-8x7B-Instruct-v0.1";
-const llm = new HuggingFaceInference({
+const llmModel = "claude-3-haiku-20240307";
+const llm = new ChatAnthropic({
   model: llmModel,
-  maxRetries: 0,
-  maxTokens: 1000,
+  temperature: 0.1,
 });
 
 // Contextualize question
@@ -151,11 +150,12 @@ const askQuestion = async (question) => {
   const input = result.input;
   const context = result.context;
   const answer = result.answer;
+
   const error = (err) => {
     return console.log(err);
   };
 
-  const filePath = "./mistral.txt";
+  const filePath = "./claude_haiku_openai.txt";
   await fs.appendFile(
     filePath,
     `Question: ${input}\nAnswer: ${answer}\n\nContext:`,
@@ -165,7 +165,34 @@ const askQuestion = async (question) => {
     await fs.appendFile(filePath, `\n\n${context[i].pageContent}`, error);
   }
   await fs.appendFile(filePath, `\n-----------------------------\n`, error);
+  console.log(`finished: ${question}`);
   await langfuseHandler.shutdownAsync();
-  console.log("finished", question);
   return true;
 };
+
+await askQuestion(
+  "Tell what is Brillar bank, where is it based in etc., and the type of products it offers"
+);
+await askQuestion("How many type of fixed deposits does brillar bank provide");
+await askQuestion("What are the Interest Rates for Fixed Deposit");
+await askQuestion("What is eFixed Deposit");
+await askQuestion("What are the Interest rates for eFixed Deposit");
+await askQuestion("Do the same for rest of the products");
+await askQuestion(
+  "What is the difference between Fixed Deposit and eFixed Deposit?"
+);
+await askQuestion(
+  "Give an example of how interest for a product is calculated"
+);
+await askQuestion(
+  "Lets say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw  at the end of the term."
+);
+await askQuestion(
+  "What are the minimum opening amount for foreign currency fixed deposit in USD in your bank?"
+);
+await askQuestion(
+  "what is the difference between the percentage of interest rates of flexi fixed deposit and e-fixed deposit"
+);
+await askQuestion(
+  "How many type of currency does Brillar bank provide for foreign currency fixed deposit?"
+);
