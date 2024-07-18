@@ -1,11 +1,10 @@
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import { index } from "langchain/indexes";
-import { PostgresRecordManager } from "@langchain/community/indexes/postgres";
-import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
-import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 import { ElasticVectorSearch } from "@langchain/community/vectorstores/elasticsearch";
 import { config } from "dotenv";
 import { Client } from "@elastic/elasticsearch";
+import { RecordManager } from "./recordManager.js";
+import { SimilarityThresholdRetriever } from "./embeddingFilter.js";
 
 config();
 
@@ -16,31 +15,12 @@ async function getRetriever({
   k = 1,
   similarityThreshold = 0.0001,
 }) {
-  const postgresTableName = collectionName;
-
   const vectorStore = new Chroma(embeddings, {
     collectionName: collectionName,
     collectionMetadata: { "hnsw:space": "cosine" },
   });
 
-  const recordManagerConfig = {
-    postgresConnectionOptions: {
-      type: "postgres",
-      host: "127.0.0.1",
-      port: 5432,
-      user: "postgres",
-      password: "123456",
-      database: "postgres",
-    },
-    tableName: postgresTableName,
-  };
-
-  const recordManager = new PostgresRecordManager(
-    collectionName,
-    recordManagerConfig
-  );
-
-  await recordManager.createSchema();
+  const recordManager = await RecordManager({ tableName: collectionName });
 
   console.log(
     await index({
@@ -70,16 +50,13 @@ async function getRetriever({
     k: k,
     searchType: "similarity",
   };
+
   const baseRetriever = vectorStore.asRetriever(retrieverConfig);
 
-  const baseCompressor = new EmbeddingsFilter({
+  const retriever = SimilarityThresholdRetriever({
+    baseRetriever,
     embeddings,
     similarityThreshold,
-  });
-
-  const retriever = new ContextualCompressionRetriever({
-    baseCompressor,
-    baseRetriever,
   });
 
   return retriever;
@@ -90,7 +67,7 @@ async function getElasticRetriever({
   embeddings,
   collectionName,
   k = 1,
-  similarityThreshold = 0.01,
+  similarityThreshold = 0.0001,
 }) {
   const ELASTIC_API_KEY = process.env.ELASTIC_API_KEY;
   const ELASTIC_CLOUD_ID = process.env.ELASTIC_CLOUD_ID;
@@ -123,25 +100,7 @@ async function getElasticRetriever({
     indexName: vectorStoreIndexName,
   });
 
-  const postgresTableName = collectionName;
-  const recordManagerConfig = {
-    postgresConnectionOptions: {
-      type: "postgres",
-      host: "127.0.0.1",
-      port: 5432,
-      user: "postgres",
-      password: "123456",
-      database: "postgres",
-    },
-    tableName: postgresTableName,
-  };
-
-  const recordManager = new PostgresRecordManager(
-    collectionName,
-    recordManagerConfig
-  );
-
-  await recordManager.createSchema();
+  const recordManager = await RecordManager({ tableName: collectionName });
 
   console.log(
     await index({
@@ -168,20 +127,15 @@ async function getElasticRetriever({
   );
 
   const retrieverConfig = {
-    k: 5,
+    k: k,
     searchType: "similarity",
   };
   const baseRetriever = vectorStore.asRetriever(retrieverConfig);
 
-  const baseCompressor = new EmbeddingsFilter({
+  const retriever = SimilarityThresholdRetriever({
+    baseRetriever,
     embeddings,
     similarityThreshold,
-    k: k,
-  });
-
-  const retriever = new ContextualCompressionRetriever({
-    baseCompressor,
-    baseRetriever,
   });
 
   return retriever;

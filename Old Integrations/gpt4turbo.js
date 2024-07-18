@@ -10,7 +10,6 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferWindowMemory } from "langchain/memory";
 import { useCheerio, usePuppeteer } from "../utils/webloaders.js";
 import { getRetriever } from "../utils/vectorStore.js";
-import { generateAnswers } from "../utils/answerGeneration.js";
 import { EmbeddingsFilter } from "langchain/retrievers/document_compressors/embeddings_filter";
 import { ContextualCompressionRetriever } from "langchain/retrievers/contextual_compression";
 import { useCheerioWebCrawler } from "../utils/webcrawler.js";

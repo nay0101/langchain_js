@@ -2,8 +2,6 @@ import * as cheerio from "cheerio";
 import { splitDocuments } from "./splitDocuments.js";
 import puppeteer from "puppeteer";
 import { Document } from "@langchain/core/documents";
-import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 async function useCheerio(urls, batchSize = 5, chunkSize, chunkOverlap) {
   const urlsToScrape = urls.filter((url, index) => urls.indexOf(url) === index);
