@@ -2,6 +2,7 @@ import * as cheerio from "cheerio";
 import { splitDocuments } from "./splitDocuments.js";
 import puppeteer from "puppeteer";
 import { Document } from "@langchain/core/documents";
+import { promises as fs } from "node:fs";
 
 async function useCheerio(urls, batchSize = 5, chunkSize, chunkOverlap) {
   const urlsToScrape = urls.filter((url, index) => urls.indexOf(url) === index);
@@ -21,6 +22,9 @@ async function useCheerio(urls, batchSize = 5, chunkSize, chunkOverlap) {
         const doc = new Document({
           pageContent: result,
           metadata: { source: url },
+        });
+        await fs.appendFile("./urls.txt", `${decodeURI(url)}\n`, (error) => {
+          if (error) return error;
         });
         return doc;
       } catch (error) {

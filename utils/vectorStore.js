@@ -61,7 +61,32 @@ async function getRetriever({
 
   return retriever;
 }
+async function getRetrieverOnly({
+  embeddings,
+  collectionName,
+  k = 1,
+  similarityThreshold = 0.0001,
+}) {
+  const vectorStore = new Chroma(embeddings, {
+    collectionName: collectionName,
+    collectionMetadata: { "hnsw:space": "cosine" },
+  });
 
+  const retrieverConfig = {
+    k: k,
+    searchType: "similarity",
+  };
+
+  const baseRetriever = vectorStore.asRetriever(retrieverConfig);
+
+  const retriever = SimilarityThresholdRetriever({
+    baseRetriever,
+    embeddings,
+    similarityThreshold,
+  });
+
+  return retriever;
+}
 async function getElasticRetriever({
   documents,
   embeddings,
@@ -141,4 +166,4 @@ async function getElasticRetriever({
   return retriever;
 }
 
-export { getRetriever, getElasticRetriever };
+export { getRetriever, getElasticRetriever, getRetrieverOnly };

@@ -1,5 +1,5 @@
 node_modules/
-.env
+*env
 chroma.log
 vertexCredentials.json
 logs
