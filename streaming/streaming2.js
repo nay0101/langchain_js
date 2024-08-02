@@ -1,30 +1,31 @@
 import { config } from "dotenv";
+import { ChatOpenAI } from "@langchain/openai";
 import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { useCheerio } from "./utils/webloaders.js";
-import { getElasticRetriever, getRetriever } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { useCheerio } from "../utils/webloaders.js";
+import { getElasticRetriever, getRetriever } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
-import { HuggingFaceInference } from "@langchain/community/llms/hf";
 
 config();
 // await reset();
 
 /* Create Training Data for Chatbot */
-const urls = await useCheerioWebCrawler(
-  "https://win066.wixsite.com/brillar-bank",
-  2
-);
+// const urls = await useCheerioWebCrawler(
+//   "https://win066.wixsite.com/brillar-bank",
+//   2
+// );
+const urls = ["https://win066.wixsite.com/brillar-bank"];
 const documents = await useCheerio(urls);
 
 const files = await useDirectoryLoader({
@@ -33,41 +34,46 @@ const files = await useDirectoryLoader({
   chunkOverlap: 100,
 });
 
-const embeddingModel = "jinaai/jina-embeddings-v2-base-en";
-const embeddings = new HuggingFaceInferenceEmbeddings({
-  model: embeddingModel,
-  maxRetries: 0,
+const embeddings = new OpenAIEmbeddings({
+  modelName: "text-embedding-3-large",
+  dimensions: 1024,
 });
 
 // Retriever
-const contextCollection = "mistralfirst";
-const firstRetriever = await getRetriever({
+const contextCollection = "firstRetriever";
+const firstRetriever = await getElasticRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
   k: 3,
-  similarityThreshold: 0.2,
+  similarityThreshold: 0.5,
 });
 
-const fewshotsCollection = "mistralSecond";
-const secondRetriever = await getRetriever({
-  documents: files,
-  embeddings,
-  collectionName: fewshotsCollection,
-  k: 3,
-});
+const fewshotsCollection = "secondRetriever";
+// const secondRetriever = await getElasticRetriever({
+//   documents: files,
+//   embeddings,
+//   collectionName: fewshotsCollection,
+//   k: 3,
+//   similarityThreshold: 0.5,
+// });
 
 const retriever = new EnsembleRetriever({
-  retrievers: [firstRetriever, secondRetriever],
-  weights: [0.5, 0.5],
+  retrievers: [firstRetriever],
+  weights: [0.5],
 });
 
 // ----------------------------------------
-const llmModel = "mistralai/Mixtral-8x7B-Instruct-v0.1";
-const llm = new HuggingFaceInference({
-  model: llmModel,
-  maxRetries: 0,
-  maxTokens: 1000,
+const llm = new ChatOpenAI({
+  modelName: "gpt-3.5-turbo",
+  temperature: 0.1,
+  callbacks: [
+    {
+      handleLLMEnd(output) {
+        console.log(output.generations[0][0]);
+      },
+    },
+  ],
 });
 
 // Contextualize question
@@ -112,8 +118,8 @@ const chain = await createRetrievalChain({
 });
 
 const langfuseHandler = new CallbackHandler({
-  sessionId: embeddingModel,
-  userId: llmModel,
+  sessionId: "Two Retrievers",
+  userId: "Nay Lin Aung",
 });
 
 const chatHistory = [];
@@ -123,7 +129,22 @@ const askQuestion = async (question) => {
   langfuseHandler.metadata = {
     question,
   };
-  const result = await chain.invoke(
+
+  // const events = await chain.streamEvents(
+  //   {
+  //     input: question,
+  //     chat_history: chatHistory,
+  //   },
+  //   { callbacks: [langfuseHandler], version: "v2" }
+  // );
+
+  // for await (const event of events) {
+  //   if (event.event === "on_chat_model_stream") {
+  //     console.log(event.data.chunk.content);
+  //   }
+  // }
+
+  const stream = await chain.stream(
     {
       input: question,
       chat_history: chatHistory,
@@ -131,12 +152,9 @@ const askQuestion = async (question) => {
     { callbacks: [langfuseHandler] }
   );
 
-  chatHistory.push(
-    new HumanMessage(result.input),
-    new AIMessage(result.answer)
-  );
-
-  console.log(result);
+  for await (const chunk of stream) {
+    console.log(chunk);
+  }
   await langfuseHandler.shutdownAsync();
 
   return true;

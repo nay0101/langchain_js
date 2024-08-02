@@ -27,6 +27,7 @@
     "@langchain/google-gauth": "^0.0.0",
     "@langchain/google-genai": "^0.0.12",
     "@langchain/google-vertexai": "^0.0.12",
+    "@langchain/mistralai": "^0.0.27",
     "@langchain/openai": "^0.0.28",
     "@notionhq/client": "^2.2.14",
     "@pinecone-database/pinecone": "^1.1.2",

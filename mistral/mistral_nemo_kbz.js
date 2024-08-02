@@ -3,21 +3,21 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { useCheerio } from "./utils/webloaders.js";
-import { getRetriever, getRetrieverOnly } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getRetriever, getRetrieverOnly } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { reranker } from "./utils/reranker.js";
+import { reranker } from "../utils/reranker.js";
 import { promises as fs } from "node:fs";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
-import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatMistralAI, MistralAIEmbeddings } from "@langchain/mistralai";
 
 config();
 // await reset();
@@ -26,43 +26,27 @@ config();
 // const urls = await useCheerioWebCrawler("https://www.kbzbank.com/mm/");
 // const documents = await useCheerio(urls, 5, 2000);
 
-const files = await useDirectoryLoader({
-  directory: "./assets/Few Shots/KBZ/",
-  chunkSize: 2000,
-  chunkOverlap: 100,
-});
-
 const embeddingModel = "text-embedding-3-large";
 const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-3-large",
+  model: embeddingModel,
   dimensions: 256,
 });
 
 // Retriever
-const contextCollection = "gpt4ofirst";
+const contextCollection = "mistral_nemo_kbz";
 const contextRetriever = await getRetrieverOnly({
   embeddings,
   collectionName: contextCollection,
-  k: 10,
+  k: 5,
 });
-
-// const fewshotsCollection = "gpt4osecond4";
-// const fewshotRetriever = await getRetriever({
-//   documents: files,
-//   embeddings,
-//   collectionName: fewshotsCollection,
-//   k: 5,
-// });
 
 const retriever = new EnsembleRetriever({
   retrievers: [contextRetriever],
 });
 
-const rerank = reranker({ retriever, k: 5 });
-
 // ----------------------------------------
-const llmModel = "claude-3-haiku-20240307";
-const llm = new ChatAnthropic({
+const llmModel = "open-mistral-nemo";
+const llm = new ChatMistralAI({
   model: llmModel,
   temperature: 0.1,
 });
@@ -128,10 +112,14 @@ const askQuestion = async (question) => {
     { callbacks: [langfuseHandler] }
   );
 
-  // chatHistory.push(
-  //   new HumanMessage(result.input),
-  //   new AIMessage(result.answer)
-  // );
+  chatHistory.push(
+    new HumanMessage(result.input),
+    new AIMessage(result.answer)
+  );
+
+  if (chatHistory.length > 6) {
+    chatHistory.splice(0, 2);
+  }
 
   const input = result.input;
   const context = result.context;
@@ -141,21 +129,17 @@ const askQuestion = async (question) => {
     return console.log(err);
   };
 
-  const filePath = "./claudeBurmesehaiku.txt";
-  await fs.appendFile(
-    filePath,
-    `Question: ${input}\nAnswer: ${answer}\n\nContext:`,
-    error
-  );
-  for (let i = 0; i < context.length; i++) {
-    await fs.appendFile(
-      filePath,
-      `\n\nSource: ${decodeURI(context[i].metadata.source)}\n${
-        context[i].pageContent
-      }`,
-      error
-    );
-  }
+  const filePath = "./new_mistral_nemo_kbz.txt";
+  await fs.appendFile(filePath, `Question: ${input}\nAnswer: ${answer}`, error);
+  // for (let i = 0; i < context.length; i++) {
+  //   await fs.appendFile(
+  //     filePath,
+  //     `\n\nSource: ${decodeURI(context[i].metadata.source)}\n${
+  //       context[i].pageContent
+  //     }`,
+  //     error
+  //   );
+  // }
   await fs.appendFile(filePath, `\n-----------------------------\n`, error);
   console.log(`finished: ${question}`);
   await langfuseHandler.shutdownAsync();

@@ -23,9 +23,6 @@ async function useCheerio(urls, batchSize = 5, chunkSize, chunkOverlap) {
           pageContent: result,
           metadata: { source: url },
         });
-        await fs.appendFile("./urls.txt", `${decodeURI(url)}\n`, (error) => {
-          if (error) return error;
-        });
         return doc;
       } catch (error) {
         console.log(`${url} - ${error.message}`);

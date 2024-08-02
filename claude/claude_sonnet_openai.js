@@ -3,12 +3,12 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { useCheerio } from "./utils/webloaders.js";
-import { getElasticRetriever, getRetriever } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getElasticRetriever, getRetriever } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
@@ -16,7 +16,7 @@ import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { HuggingFaceInference } from "@langchain/community/llms/hf";
-import { reranker } from "./utils/reranker.js";
+import { reranker } from "../utils/reranker.js";
 import { promises as fs } from "node:fs";
 import { finished } from "node:stream";
 import { ChatAnthropic } from "@langchain/anthropic";
@@ -37,6 +37,7 @@ const urls = await useCheerioWebCrawler(
     "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-4",
   ]
 );
+
 const documents = await useCheerio(urls, 5, 4000);
 
 const files = await useDirectoryLoader({
@@ -60,22 +61,22 @@ const contextRetriever = await getRetriever({
   k: 5,
 });
 
-// const fewshotsCollection = "claudeSecond";
-// const fewshotRetriever = await getRetriever({
-//   documents: files,
-//   embeddings,
-//   collectionName: fewshotsCollection,
-//   k: 3,
-// });
-
-const retriever = new EnsembleRetriever({
-  retrievers: [contextRetriever],
+const fewshotsCollection = "claudeSecond";
+const fewshotRetriever = await getRetriever({
+  documents: files,
+  embeddings,
+  collectionName: fewshotsCollection,
+  k: 5,
 });
 
-const rerank = reranker({ retriever, k: 3 });
+const retriever = new EnsembleRetriever({
+  retrievers: [contextRetriever, fewshotRetriever],
+});
+
+const rerank = reranker({ retriever, k: 5 });
 
 // ----------------------------------------
-const llmModel = "claude-3-haiku-20240307";
+const llmModel = "claude-3-5-sonnet-20240620";
 const llm = new ChatAnthropic({
   model: llmModel,
   temperature: 0.1,
@@ -155,7 +156,7 @@ const askQuestion = async (question) => {
     return console.log(err);
   };
 
-  const filePath = "./claude_haiku_openai.txt";
+  const filePath = "./claude_openai_burmese.txt";
   await fs.appendFile(
     filePath,
     `Question: ${input}\nAnswer: ${answer}\n\nContext:`,
@@ -170,29 +171,30 @@ const askQuestion = async (question) => {
   return true;
 };
 
-await askQuestion(
-  "Tell what is Brillar bank, where is it based in etc., and the type of products it offers"
-);
-await askQuestion("How many type of fixed deposits does brillar bank provide");
 await askQuestion("What are the Interest Rates for Fixed Deposit");
-await askQuestion("What is eFixed Deposit");
-await askQuestion("What are the Interest rates for eFixed Deposit");
-await askQuestion("Do the same for rest of the products");
-await askQuestion(
-  "What is the difference between Fixed Deposit and eFixed Deposit?"
-);
-await askQuestion(
-  "Give an example of how interest for a product is calculated"
-);
-await askQuestion(
-  "Lets say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw  at the end of the term."
-);
-await askQuestion(
-  "What are the minimum opening amount for foreign currency fixed deposit in USD in your bank?"
-);
-await askQuestion(
-  "what is the difference between the percentage of interest rates of flexi fixed deposit and e-fixed deposit"
-);
-await askQuestion(
-  "How many type of currency does Brillar bank provide for foreign currency fixed deposit?"
-);
+
+// await askQuestion(
+//   "Tell what is Brillar bank, where is it based in etc., and the type of products it offers"
+// );
+// await askQuestion("How many type of fixed deposits does brillar bank provide");
+// await askQuestion("What is eFixed Deposit");
+// await askQuestion("What are the Interest rates for eFixed Deposit");
+// await askQuestion("Do the same for rest of the products");
+// await askQuestion(
+//   "What is the difference between Fixed Deposit and eFixed Deposit?"
+// );
+// await askQuestion(
+//   "Give an example of how interest for a product is calculated"
+// );
+// await askQuestion(
+//   "Lets say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw  at the end of the term."
+// );
+// await askQuestion(
+//   "What are the minimum opening amount for foreign currency fixed deposit in USD in your bank?"
+// );
+// await askQuestion(
+//   "what is the difference between the percentage of interest rates of flexi fixed deposit and e-fixed deposit"
+// );
+// await askQuestion(
+//   "How many type of currency does Brillar bank provide for foreign currency fixed deposit?"
+// );

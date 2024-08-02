@@ -10,7 +10,7 @@ import { RunnableSequence } from "@langchain/core/runnables";
 import { Document } from "@langchain/core/documents";
 import { ElasticVectorSearch } from "@langchain/community/vectorstores/elasticsearch";
 import { Client } from "@elastic/elasticsearch";
-import { useCheerio, useTableLoader } from "./utils/webloaders.js";
+import { useCheerio, useTableLoader } from "../utils/webloaders.js";
 import { HuggingFaceInference } from "@langchain/community/llms/hf";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { loadSummarizationChain } from "langchain/chains";

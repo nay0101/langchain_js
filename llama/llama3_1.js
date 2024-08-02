@@ -3,20 +3,21 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { useCheerio } from "./utils/webloaders.js";
-import { getRetriever, getRetrieverOnly } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getRetriever, getRetrieverOnly } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { reranker } from "./utils/reranker.js";
+import { reranker } from "../utils/reranker.js";
 import { promises as fs } from "node:fs";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
+import { HuggingFaceInference } from "@langchain/community/llms/hf";
 
 config();
 // await reset();
@@ -60,10 +61,11 @@ const retriever = new EnsembleRetriever({
 const rerank = reranker({ retriever, k: 5 });
 
 // ----------------------------------------
-const llmModel = "gpt-4o";
-const llm = new ChatOpenAI({
-  model: llmModel,
-  temperature: 0.1,
+const modelName = "meta-llama/Meta-Llama-3.1-8B";
+const llm = new HuggingFaceInference({
+  model: modelName,
+  maxTokens: 1000,
+  maxRetries: 0,
 });
 
 // Contextualize question
@@ -109,7 +111,7 @@ const chain = await createRetrievalChain({
 
 const langfuseHandler = new CallbackHandler({
   sessionId: embeddingModel,
-  userId: llmModel,
+  userId: modelName,
 });
 
 const chatHistory = [];
@@ -140,7 +142,7 @@ const askQuestion = async (question) => {
     return console.log(err);
   };
 
-  const filePath = "./gpt4omini10k.txt";
+  const filePath = "./llama31.txt";
   await fs.appendFile(
     filePath,
     `Question: ${input}\nAnswer: ${answer}\n\nContext:`,
@@ -190,4 +192,4 @@ const askQuestion = async (question) => {
 await askQuestion(
   "Corporate business တွေအတွက် ဘယ်လို product တွေ service တွေရှိလဲ"
 );
-await askQuestion("Bulk payment အကြောင်းသေချာရှင်းပြပါ");
+// await askQuestion("Bulk payment အကြောင်းသေချာရှင်းပြပါ");

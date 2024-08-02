@@ -1,31 +1,30 @@
 import { config } from "dotenv";
-import { ChatOpenAI } from "@langchain/openai";
 import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { useCheerio } from "./utils/webloaders.js";
-import { getElasticRetriever, getRetriever } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getElasticRetriever, getRetriever } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
+import { HuggingFaceInference } from "@langchain/community/llms/hf";
 
 config();
 // await reset();
 
 /* Create Training Data for Chatbot */
-// const urls = await useCheerioWebCrawler(
-//   "https://win066.wixsite.com/brillar-bank",
-//   2
-// );
-const urls = ["https://win066.wixsite.com/brillar-bank"];
+const urls = await useCheerioWebCrawler(
+  "https://win066.wixsite.com/brillar-bank",
+  2
+);
 const documents = await useCheerio(urls);
 
 const files = await useDirectoryLoader({
@@ -34,50 +33,41 @@ const files = await useDirectoryLoader({
   chunkOverlap: 100,
 });
 
-const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-3-large",
-  dimensions: 1024,
+const embeddingModel = "jinaai/jina-embeddings-v2-base-en";
+const embeddings = new HuggingFaceInferenceEmbeddings({
+  model: embeddingModel,
+  maxRetries: 0,
 });
 
 // Retriever
-const contextCollection = "firstRetriever";
-const firstRetriever = await getElasticRetriever({
+const contextCollection = "mistralfirst";
+const firstRetriever = await getRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
   k: 3,
-  similarityThreshold: 0.5,
+  similarityThreshold: 0.2,
 });
 
-const fewshotsCollection = "secondRetriever";
-// const secondRetriever = await getElasticRetriever({
-//   documents: files,
-//   embeddings,
-//   collectionName: fewshotsCollection,
-//   k: 3,
-//   similarityThreshold: 0.5,
-// });
+const fewshotsCollection = "mistralSecond";
+const secondRetriever = await getRetriever({
+  documents: files,
+  embeddings,
+  collectionName: fewshotsCollection,
+  k: 3,
+});
 
 const retriever = new EnsembleRetriever({
-  retrievers: [firstRetriever],
-  weights: [0.5],
+  retrievers: [firstRetriever, secondRetriever],
+  weights: [0.5, 0.5],
 });
 
 // ----------------------------------------
-const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo",
-  temperature: 0.1,
-  streaming: true,
-  callbacks: [
-    {
-      handleLLMNewToken(output) {
-        console.log(output);
-      },
-      handleLLMEnd(output) {
-        console.log(output);
-      },
-    },
-  ],
+const llmModel = "mistralai/Mixtral-8x7B-Instruct-v0.1";
+const llm = new HuggingFaceInference({
+  model: llmModel,
+  maxRetries: 0,
+  maxTokens: 1000,
 });
 
 // Contextualize question
@@ -122,8 +112,8 @@ const chain = await createRetrievalChain({
 });
 
 const langfuseHandler = new CallbackHandler({
-  sessionId: "Two Retrievers",
-  userId: "Nay Lin Aung",
+  sessionId: embeddingModel,
+  userId: llmModel,
 });
 
 const chatHistory = [];

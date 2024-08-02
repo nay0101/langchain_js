@@ -5,12 +5,12 @@ import {
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { useCheerio } from "./utils/webloaders.js";
-import { getElasticRetriever, getRetriever } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getElasticRetriever, getRetriever } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
