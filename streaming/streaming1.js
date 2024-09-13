@@ -41,7 +41,7 @@ const embeddings = new OpenAIEmbeddings({
 
 // Retriever
 const contextCollection = "firstRetriever";
-const firstRetriever = await getElasticRetriever({
+const firstRetriever = await getRetriever({
   documents,
   embeddings,
   collectionName: contextCollection,
@@ -68,16 +68,16 @@ const llm = new ChatOpenAI({
   modelName: "gpt-3.5-turbo",
   temperature: 0.1,
   streaming: true,
-  callbacks: [
-    {
-      handleLLMNewToken(output) {
-        console.log(output);
-      },
-      handleLLMEnd(output) {
-        console.log(output);
-      },
-    },
-  ],
+  // callbacks: [
+  //   {
+  //     handleLLMNewToken(output) {
+  //       console.log(output);
+  //     },
+  //     handleLLMEnd(output) {
+  //       console.log(output);
+  //     },
+  //   },
+  // ],
 });
 
 // Contextualize question
@@ -138,7 +138,19 @@ const askQuestion = async (question) => {
       input: question,
       chat_history: chatHistory,
     },
-    { callbacks: [langfuseHandler] }
+    {
+      callbacks: [
+        langfuseHandler,
+        {
+          handleLLMNewToken(output) {
+            console.log(output);
+          },
+          handleLLMEnd(output) {
+            console.log(output);
+          },
+        },
+      ],
+    }
   );
 
   chatHistory.push(
@@ -146,7 +158,7 @@ const askQuestion = async (question) => {
     new AIMessage(result.answer)
   );
 
-  console.log(result);
+  // console.log(result);
   await langfuseHandler.shutdownAsync();
 
   return true;

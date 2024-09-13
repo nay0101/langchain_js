@@ -9,42 +9,45 @@ import { SimilarityThresholdRetriever } from "./embeddingFilter.js";
 config();
 
 async function getRetriever({
-  documents,
+  documents = [],
   embeddings,
   collectionName,
   k = 1,
   similarityThreshold = 0.0001,
+  ingestion = true,
 }) {
   const vectorStore = new Chroma(embeddings, {
     collectionName: collectionName,
     collectionMetadata: { "hnsw:space": "cosine" },
   });
 
-  const recordManager = await RecordManager({ tableName: collectionName });
+  if (ingestion) {
+    const recordManager = await RecordManager({ tableName: collectionName });
 
-  console.log(
-    await index({
-      docsSource: [],
-      recordManager,
-      vectorStore,
-      options: {
-        cleanup: "full",
-        sourceIdKey: "source",
-      },
-    })
-  );
+    console.log(
+      await index({
+        docsSource: [],
+        recordManager,
+        vectorStore,
+        options: {
+          cleanup: "full",
+          sourceIdKey: "source",
+        },
+      })
+    );
 
-  console.log(
-    await index({
-      docsSource: documents,
-      recordManager,
-      vectorStore,
-      options: {
-        cleanup: "full",
-        sourceIdKey: "source",
-      },
-    })
-  );
+    console.log(
+      await index({
+        docsSource: documents,
+        recordManager,
+        vectorStore,
+        options: {
+          cleanup: "full",
+          sourceIdKey: "source",
+        },
+      })
+    );
+  }
 
   const retrieverConfig = {
     k: k,
@@ -61,6 +64,8 @@ async function getRetriever({
 
   return retriever;
 }
+
+// For Testing
 async function getRetrieverOnly({
   embeddings,
   collectionName,
@@ -87,6 +92,7 @@ async function getRetrieverOnly({
 
   return retriever;
 }
+
 async function getElasticRetriever({
   documents,
   embeddings,

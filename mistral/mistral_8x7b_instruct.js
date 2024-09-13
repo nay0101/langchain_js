@@ -3,51 +3,58 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { useCheerio } from "./utils/webloaders.js";
-import { getRetriever, getRetrieverOnly } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getRetriever, getRetrieverOnly } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { reranker } from "./utils/reranker.js";
+import { reranker } from "../utils/reranker.js";
 import { promises as fs } from "node:fs";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { ChatMistralAI, MistralAIEmbeddings } from "@langchain/mistralai";
+import { HuggingFaceInference } from "@langchain/community/llms/hf";
 
 config();
 // await reset();
 
 /* Create Training Data for Chatbot */
-const urls = await useCheerioWebCrawler(
-  "https://win066.wixsite.com/brillar-bank",
-  0,
-  [
-    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-1",
-    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-2",
-    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-3",
-    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-4",
-    "https://win066.wixsite.com//www.wix.com/lpviral/enviral?utm_campaign=vir_wixad_live&adsVersion=white&orig_msid=b491eeea-eb71-4ae8-a4a9-51a49285863d",
-  ]
-);
-const documents = await useCheerio(urls, 5, 2000);
+// const urls = await useCheerioWebCrawler(
+//   "https://win066.wixsite.com/brillar-bank",
+//   0,
+//   [
+//     "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-1",
+//     "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-2",
+//     "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-3",
+//     "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-4",
+//     "https://win066.wixsite.com//www.wix.com/lpviral/enviral?utm_campaign=vir_wixad_live&adsVersion=white&orig_msid=b491eeea-eb71-4ae8-a4a9-51a49285863d",
+//   ]
+// );
+// const documents = await useCheerio(urls, 5, 2000);
 
-const embeddingModel = "mistral-embed";
-const embeddings = new MistralAIEmbeddings({
-  model: embeddingModel,
+const embeddingModel = "text-embedding-3-large";
+const embeddings = new OpenAIEmbeddings({
+  modelName: "text-embedding-3-large",
+  dimensions: 256,
 });
 
+// const embeddingModel = "mistral-embed";
+// const embeddings = new MistralAIEmbeddings({
+//   model: embeddingModel,
+// });
+
 // Retriever
-const contextCollection = "mistral_large";
+const contextCollection = "gpt4ofirst";
 const contextRetriever = await getRetriever({
-  documents,
   embeddings,
   collectionName: contextCollection,
-  k: 5,
+  k: 3,
+  ingestion: false,
 });
 
 const retriever = new EnsembleRetriever({
@@ -55,10 +62,11 @@ const retriever = new EnsembleRetriever({
 });
 
 // ----------------------------------------
-const llmModel = "mistral-large-latest";
-const llm = new ChatMistralAI({
-  model: llmModel,
-  temperature: 0.1,
+const modelName = "mistralai/Mixtral-8x7B-Instruct-v0.1";
+const llm = new HuggingFaceInference({
+  model: modelName,
+  maxTokens: 1000,
+  maxRetries: 0,
 });
 
 // Contextualize question
@@ -104,7 +112,7 @@ const chain = await createRetrievalChain({
 
 const langfuseHandler = new CallbackHandler({
   sessionId: embeddingModel,
-  userId: llmModel,
+  userId: modelName,
 });
 
 const chatHistory = [];
@@ -127,8 +135,8 @@ const askQuestion = async (question) => {
     new AIMessage(result.answer)
   );
 
-  if (chatHistory.length > 6) {
-    chatHistory.splice(0, 2);
+  if (chatHistory.length > 5) {
+    chatHistory.splice(0, 1);
   }
 
   const input = result.input;
@@ -139,46 +147,27 @@ const askQuestion = async (question) => {
     return console.log(err);
   };
 
-  const filePath = "./mistral_large.txt";
+  const filePath = "./mistral_8x7b_history.txt";
   await fs.appendFile(filePath, `Question: ${input}\nAnswer: ${answer}`, error);
-  // for (let i = 0; i < context.length; i++) {
-  //   await fs.appendFile(
-  //     filePath,
-  //     `\n\nSource: ${decodeURI(context[i].metadata.source)}\n${
-  //       context[i].pageContent
-  //     }`,
-  //     error
-  //   );
-  // }
+
   await fs.appendFile(filePath, `\n-----------------------------\n`, error);
   console.log(`finished: ${question}`);
   await langfuseHandler.shutdownAsync();
   return true;
 };
 
-await askQuestion(
-  "Tell what is Brillar bank, where is it based in etc., and the type of products it offers"
+const jsonData = await fs.readFile(
+  "./questionSets/brillarBankQuestions.json",
+  "utf-8",
+  (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  }
 );
-await askQuestion("How many type of fixed deposits does brillar bank provide");
-await askQuestion("What are the Interest Rates for Fixed Deposit");
-await askQuestion("What is eFixed Deposit");
-await askQuestion("What are the Interest rates for eFixed Deposit");
-await askQuestion("Do the same for rest of the products");
-await askQuestion(
-  "What is the difference between Fixed Deposit and eFixed Deposit?"
-);
-await askQuestion(
-  "Give an example of how interest for a product is calculated"
-);
-await askQuestion(
-  "Lets say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw  at the end of the term."
-);
-await askQuestion(
-  "What are the minimum opening amount for foreign currency fixed deposit in USD in your bank?"
-);
-await askQuestion(
-  "what is the difference between the percentage of interest rates of flexi fixed deposit and e-fixed deposit"
-);
-await askQuestion(
-  "How many type of currency does Brillar bank provide for foreign currency fixed deposit?"
-);
+
+const questions = JSON.parse(jsonData);
+for (let i = 0; i < questions.length; i++) {
+  await askQuestion(questions[i].question);
+}

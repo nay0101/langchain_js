@@ -1,0 +1,32 @@
+[
+  { "question": "KBZ ဘဏ်မှာ ဘယ် product တွေ Service တွေ ရနိုင်လဲ" },
+  { "question": "မင်းတို့ ဘဏ်ကို ဘယ်အချိန်က တည်ထောင်ခဲ့လဲ" },
+  { "question": "ဘဏ်ခွဲဘယ်နှခုမှာ ဝန်ဆောင်မှုပေးလဲ" },
+  { "question": "fixed deposit ရဲ့ interest rate ကိုပြောပြပါ" },
+  { "question": "fixed deposit အကြောင်း အသေးစိတ်ရှင်းပြပါ" },
+  { "question": "fixed deposit မှာ တစ်နှစ်ငွေထည့်ထားလျှင် ဘယ်လောက်ပြန်ရမလဲ" },
+  { "question": "regular accounts နဲ့ old accounts ဘာကွာလဲ" },
+  { "question": "mbanking အကောင့်ဘယ်လိုဖွင့်ရမလဲ" },
+  { "question": "ဘဏ်အကောင့်ဖွင့်ရန် ဖြစ်စဉ်အဆင့်ဆင့်ကိုရှင်းပြပါ" },
+  {
+    "question": "Credit card ကို ဘယ်လိုလျှောက်ရလဲဖြစ်စဉ်အဆင့်ဆင့်ကိုရှင်းပြပါ"
+  },
+  { "question": "KBZ bank မှာ ဘယ် loan products တွေ ရနိုင်လဲ" },
+  {
+    "question": "ချေးငွေသက်တမ်း ငါးနှစ်စာဖြင့် home loan ကို EMI calculator ဖြင့်တွက်ပြပါ"
+  },
+  {
+    "question": "မြန်မာနိုင်ငံသားနှင့်လက်ထပ်ထားသော နိုင်ငံခြားသားအနေနဲ့ home loan လျှောက်ထားနိုင်လား"
+  },
+  { "question": "Loan လျှောက်လွှာက အချိန်ဘယ်လောက်ကြာနိုင်လဲ" },
+  { "question": "KBZ Pay အကြောင်းပြောပြပါ" },
+  { "question": "ငါ့ bank card ကို ဘယ်လို activate လုပ်ရမလဲ" },
+  {
+    "question": "ငါ credit ကဒ် အခိုးခံလိုက်ရလို့၊အဲ့ကဒ်ကို ဘယ်လိုပိတ်သိမ်းရမလဲ"
+  },
+  { "question": "လုပ်ခလစာပေးဝန်ဆောင်မှု KBZ payroll ‌အကြောင်းရှင်းပြပါ" },
+  {
+    "question": "Corporate business တွေအတွက် ဘယ်လို product တွေ service တွေရှိလဲ"
+  },
+  { "question": "Bulk payment အကြောင်းသေချာရှင်းပြပါ" }
+]

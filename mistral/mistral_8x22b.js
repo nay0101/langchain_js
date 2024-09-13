@@ -17,65 +17,51 @@ import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { reranker } from "../utils/reranker.js";
 import { promises as fs } from "node:fs";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
-import { HuggingFaceInference } from "@langchain/community/llms/hf";
+import { ChatMistralAI, MistralAIEmbeddings } from "@langchain/mistralai";
 
 config();
 // await reset();
-// const urls = await useCheerioWebCrawler(
-//   "https://win066.wixsite.com/brillar-bank"
-// );
-// const documents = await useCheerio(urls, 5, 2000);
 
-// const files = await useDirectoryLoader({
-//   directory: "./assets/Few Shots/KBZ/",
-//   chunkSize: 2000,
-//   chunkOverlap: 100,
-// });
+/* Create Training Data for Chatbot */
+const urls = await useCheerioWebCrawler(
+  "https://win066.wixsite.com/brillar-bank",
+  0,
+  [
+    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-1",
+    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-2",
+    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-3",
+    "https://win066.wixsite.com/brillar-bank/brillar-bank-blog-4",
+    "https://win066.wixsite.com//www.wix.com/lpviral/enviral?utm_campaign=vir_wixad_live&adsVersion=white&orig_msid=b491eeea-eb71-4ae8-a4a9-51a49285863d",
+  ]
+);
+const documents = await useCheerio(urls, 5, 2000);
 
-const embeddingModel = "text-embedding-3-large";
-const embeddings = new OpenAIEmbeddings({
-  modelName: "text-embedding-3-large",
-  dimensions: 256,
+const embeddingModel = "mistral-embed";
+const embeddings = new MistralAIEmbeddings({
+  model: embeddingModel,
 });
 
 // Retriever
-const contextCollection = "chunksize_1000";
+const contextCollection = "mistral_8x22b";
 const contextRetriever = await getRetriever({
+  documents,
   embeddings,
   collectionName: contextCollection,
   k: 5,
-  ingestion: false,
 });
-
-// const fewshotsCollection = "gpt4osecond4";
-// const fewshotRetriever = await getRetriever({
-//   documents: files,
-//   embeddings,
-//   collectionName: fewshotsCollection,
-//   k: 5,
-// });
 
 const retriever = new EnsembleRetriever({
   retrievers: [contextRetriever],
 });
 
-const rerank = reranker({ retriever, k: 5 });
-
 // ----------------------------------------
-const modelName = "meta-llama/Meta-Llama-3.1-70B-Instruct";
-const llm = new HuggingFaceInference({
-  model: modelName,
-  maxRetries: 0,
-  maxTokens: 1000,
+const llmModel = "open-mixtral-8x22b";
+const llm = new ChatMistralAI({
+  model: llmModel,
   temperature: 0.1,
 });
 
 // Contextualize question
-// const contextualizeQSystemPrompt = `
-//   <|begin_of_text|><|start_header_id|>system<|end_header_id|>
-//   Given a chat history and the latest user question which might reference context in the chat history, formulate a standalone question which can be understood without the chat history. Do NOT answer the question, just reformulate it if needed and otherwise return it as is.<|eot_id|><|start_header_id|>user<|end_header_id|>
-//   {input}<|eot_id|>
-//   <|start_header_id|>assistant<|end_header_id|>`;
 const contextualizeQSystemPrompt = `
   Given a chat history and the latest user question which might reference context in the chat history, formulate a standalone question which can be understood without the chat history. Do NOT answer the question, just reformulate it if needed and otherwise return it as is.`;
 
@@ -92,19 +78,10 @@ const historyAwareRetriever = await createHistoryAwareRetriever({
 });
 
 // Answer question
-// const qaSystemPrompt = `
-//   <|begin_of_text|><|start_header_id|>system<|end_header_id|>
-//   You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
-//   \n\n
-//   {context}<|eot_id|><|start_header_id|>user<|end_header_id|>
-//   {input}<|eot_id|>
-//   <|start_header_id|>assistant<|end_header_id|>
-//   `;
 const qaSystemPrompt = `
   You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
   \n\n
-  {context}
-  `;
+  {context}`;
 const qaPrompt = ChatPromptTemplate.fromMessages([
   ["system", qaSystemPrompt],
   new MessagesPlaceholder("chat_history"),
@@ -127,7 +104,7 @@ const chain = await createRetrievalChain({
 
 const langfuseHandler = new CallbackHandler({
   sessionId: embeddingModel,
-  userId: modelName,
+  userId: llmModel,
 });
 
 const chatHistory = [];
@@ -150,8 +127,8 @@ const askQuestion = async (question) => {
     new AIMessage(result.answer)
   );
 
-  if (chatHistory.length > 5) {
-    chatHistory.splice(0, 1);
+  if (chatHistory.length > 6) {
+    chatHistory.splice(0, 2);
   }
 
   const input = result.input;
@@ -162,12 +139,8 @@ const askQuestion = async (question) => {
     return console.log(err);
   };
 
-  const filePath = "./llama3.1_70B_history.txt";
-  await fs.appendFile(
-    filePath,
-    `Question: ${input}\nAnswer: ${answer}\n\nContext:`,
-    error
-  );
+  const filePath = "./mistral_8x22b.txt";
+  await fs.appendFile(filePath, `Question: ${input}\nAnswer: ${answer}`, error);
   // for (let i = 0; i < context.length; i++) {
   //   await fs.appendFile(
   //     filePath,
@@ -183,18 +156,29 @@ const askQuestion = async (question) => {
   return true;
 };
 
-const jsonData = await fs.readFile(
-  "./questionSets/brillarBankQuestions.json",
-  "utf-8",
-  (err) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-  }
+await askQuestion(
+  "Tell what is Brillar bank, where is it based in etc., and the type of products it offers"
 );
-
-const questions = JSON.parse(jsonData);
-for (let i = 0; i < questions.length; i++) {
-  await askQuestion(questions[i].question);
-}
+await askQuestion("How many type of fixed deposits does brillar bank provide");
+await askQuestion("What are the Interest Rates for Fixed Deposit");
+await askQuestion("What is eFixed Deposit");
+await askQuestion("What are the Interest rates for eFixed Deposit");
+await askQuestion("Do the same for rest of the products");
+await askQuestion(
+  "What is the difference between Fixed Deposit and eFixed Deposit?"
+);
+await askQuestion(
+  "Give an example of how interest for a product is calculated"
+);
+await askQuestion(
+  "Lets say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw  at the end of the term."
+);
+await askQuestion(
+  "What are the minimum opening amount for foreign currency fixed deposit in USD in your bank?"
+);
+await askQuestion(
+  "what is the difference between the percentage of interest rates of flexi fixed deposit and e-fixed deposit"
+);
+await askQuestion(
+  "How many type of currency does Brillar bank provide for foreign currency fixed deposit?"
+);

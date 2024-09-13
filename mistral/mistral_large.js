@@ -3,18 +3,18 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { useCheerio } from "./utils/webloaders.js";
-import { getRetriever, getRetrieverOnly } from "./utils/vectorStore.js";
-import { useCheerioWebCrawler } from "./utils/webcrawler.js";
-import { reset } from "./utils/reset.js";
+import { useCheerio } from "../utils/webloaders.js";
+import { getRetriever, getRetrieverOnly } from "../utils/vectorStore.js";
+import { useCheerioWebCrawler } from "../utils/webcrawler.js";
+import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
-import { useDirectoryLoader } from "./utils/fileloaders.js";
+import { useDirectoryLoader } from "../utils/fileloaders.js";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import CallbackHandler from "langfuse-langchain";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { reranker } from "./utils/reranker.js";
+import { reranker } from "../utils/reranker.js";
 import { promises as fs } from "node:fs";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { ChatMistralAI, MistralAIEmbeddings } from "@langchain/mistralai";
@@ -42,7 +42,7 @@ const embeddings = new MistralAIEmbeddings({
 });
 
 // Retriever
-const contextCollection = "mistral_8x22b";
+const contextCollection = "mistral_large";
 const contextRetriever = await getRetriever({
   documents,
   embeddings,
@@ -55,7 +55,7 @@ const retriever = new EnsembleRetriever({
 });
 
 // ----------------------------------------
-const llmModel = "open-mixtral-8x22b";
+const llmModel = "mistral-large-latest";
 const llm = new ChatMistralAI({
   model: llmModel,
   temperature: 0.1,
@@ -139,7 +139,7 @@ const askQuestion = async (question) => {
     return console.log(err);
   };
 
-  const filePath = "./mistral_8x22b.txt";
+  const filePath = "./mistral_large.txt";
   await fs.appendFile(filePath, `Question: ${input}\nAnswer: ${answer}`, error);
   // for (let i = 0; i < context.length; i++) {
   //   await fs.appendFile(

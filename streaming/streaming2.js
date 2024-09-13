@@ -6,7 +6,11 @@ import {
 } from "@langchain/core/prompts";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { useCheerio } from "../utils/webloaders.js";
-import { getElasticRetriever, getRetriever } from "../utils/vectorStore.js";
+import {
+  getElasticRetriever,
+  getRetriever,
+  getRetrieverOnly,
+} from "../utils/vectorStore.js";
 import { useCheerioWebCrawler } from "../utils/webcrawler.js";
 import { reset } from "../utils/reset.js";
 import { EnsembleRetriever } from "langchain/retrievers/ensemble";
@@ -25,8 +29,8 @@ config();
 //   "https://win066.wixsite.com/brillar-bank",
 //   2
 // );
-const urls = ["https://win066.wixsite.com/brillar-bank"];
-const documents = await useCheerio(urls);
+// // const urls = ["https://win066.wixsite.com/brillar-bank"];
+// const documents = await useCheerio(urls);
 
 const files = await useDirectoryLoader({
   directory: "./assets/Few Shots/",
@@ -41,12 +45,10 @@ const embeddings = new OpenAIEmbeddings({
 
 // Retriever
 const contextCollection = "firstRetriever";
-const firstRetriever = await getElasticRetriever({
-  documents,
+const firstRetriever = await getRetrieverOnly({
   embeddings,
   collectionName: contextCollection,
   k: 3,
-  similarityThreshold: 0.5,
 });
 
 const fewshotsCollection = "secondRetriever";
@@ -65,15 +67,16 @@ const retriever = new EnsembleRetriever({
 
 // ----------------------------------------
 const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo",
+  modelName: "gpt-4o-mini",
   temperature: 0.1,
-  callbacks: [
-    {
-      handleLLMEnd(output) {
-        console.log(output.generations[0][0]);
-      },
-    },
-  ],
+  streaming: true,
+  // callbacks: [
+  //   {
+  //     handleLLMEnd(output) {
+  //       console.log(output.generations[0][0]);
+  //     },
+  //   },
+  // ],
 });
 
 // Contextualize question
@@ -130,31 +133,36 @@ const askQuestion = async (question) => {
     question,
   };
 
-  // const events = await chain.streamEvents(
-  //   {
-  //     input: question,
-  //     chat_history: chatHistory,
-  //   },
-  //   { callbacks: [langfuseHandler], version: "v2" }
-  // );
-
-  // for await (const event of events) {
-  //   if (event.event === "on_chat_model_stream") {
-  //     console.log(event.data.chunk.content);
-  //   }
-  // }
-
-  const stream = await chain.stream(
+  const events = await chain.streamEvents(
     {
       input: question,
       chat_history: chatHistory,
     },
-    { callbacks: [langfuseHandler] }
+    { callbacks: [langfuseHandler], version: "v2" }
   );
 
-  for await (const chunk of stream) {
-    console.log(chunk);
+  for await (const event of events) {
+    // if (event.event === "on_chat_model_stream") {
+    //   console.log(event.data.chunk.content);
+    // }
+    if (event.event === "on_retriever_end") {
+      console.log(event.data.output[0].metadata);
+    }
   }
+
+  // const stream = await chain.stream(
+  //   {
+  //     input: question,
+  //     chat_history: chatHistory,
+  //   },
+  //   { callbacks: [langfuseHandler] }
+  // );
+
+  // let total = []
+  // for await (const chunk of stream) {
+  //   console.log(chunk.co);
+  // }
+
   await langfuseHandler.shutdownAsync();
 
   return true;
