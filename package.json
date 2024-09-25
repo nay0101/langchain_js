@@ -55,7 +55,8 @@
     "pg": "^8.11.3",
     "puppeteer": "^19.11.1",
     "uuid": "^10.0.0",
-    "web-auth-library": "^1.0.3"
+    "web-auth-library": "^1.0.3",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

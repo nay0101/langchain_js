@@ -24,14 +24,6 @@ import { AIMessage, HumanMessage } from "@langchain/core/messages";
 config();
 // await reset();
 
-/* Create Training Data for Chatbot */
-// const urls = await useCheerioWebCrawler(
-//   "https://win066.wixsite.com/brillar-bank",
-//   2
-// );
-// // const urls = ["https://win066.wixsite.com/brillar-bank"];
-// const documents = await useCheerio(urls);
-
 const files = await useDirectoryLoader({
   directory: "./assets/Few Shots/",
   chunkSize: 1000,
@@ -51,15 +43,6 @@ const firstRetriever = await getRetrieverOnly({
   k: 3,
 });
 
-const fewshotsCollection = "secondRetriever";
-// const secondRetriever = await getElasticRetriever({
-//   documents: files,
-//   embeddings,
-//   collectionName: fewshotsCollection,
-//   k: 3,
-//   similarityThreshold: 0.5,
-// });
-
 const retriever = new EnsembleRetriever({
   retrievers: [firstRetriever],
   weights: [0.5],
@@ -70,13 +53,6 @@ const llm = new ChatOpenAI({
   modelName: "gpt-4o-mini",
   temperature: 0.1,
   streaming: true,
-  // callbacks: [
-  //   {
-  //     handleLLMEnd(output) {
-  //       console.log(output.generations[0][0]);
-  //     },
-  //   },
-  // ],
 });
 
 // Contextualize question
@@ -142,11 +118,8 @@ const askQuestion = async (question) => {
   );
 
   for await (const event of events) {
-    // if (event.event === "on_chat_model_stream") {
-    //   console.log(event.data.chunk.content);
-    // }
-    if (event.event === "on_retriever_end") {
-      console.log(event.data.output[0].metadata);
+    if (event.event === "on_chat_model_stream") {
+      console.log(event.data.chunk.content);
     }
   }
 
