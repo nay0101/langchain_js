@@ -19,7 +19,7 @@ import { promises as fs } from "node:fs";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 
 config();
-// await reset();
+await reset();
 
 /* Create Training Data for Chatbot */
 const urls = await useCheerioWebCrawler(
@@ -34,11 +34,11 @@ const urls = await useCheerioWebCrawler(
 );
 const documents = await useCheerio(urls, 5, 2000);
 
-const files = await useDirectoryLoader({
-  directory: "./assets/Few Shots/KBZ/",
-  chunkSize: 2000,
-  chunkOverlap: 100,
-});
+// const files = await useDirectoryLoader({
+//   directory: "./assets/Few Shots/KBZ/",
+//   chunkSize: 2000,
+//   chunkOverlap: 100,
+// });
 
 const embeddingModel = "text-embedding-3-large";
 const embeddings = new OpenAIEmbeddings({
@@ -47,8 +47,9 @@ const embeddings = new OpenAIEmbeddings({
 });
 
 // Retriever
-const contextCollection = "gpt4ominibbank";
-const contextRetriever = await getRetrieverOnly({
+const contextCollection = "realtime_test";
+const contextRetriever = await getRetriever({
+  documents,
   embeddings,
   collectionName: contextCollection,
   k: 5,

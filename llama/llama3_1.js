@@ -66,7 +66,7 @@ const modelName = "meta-llama/Meta-Llama-3.1-70B-Instruct";
 const llm = new HuggingFaceInference({
   model: modelName,
   maxRetries: 0,
-  maxTokens: 1000,
+  maxTokens: 100000,
   temperature: 0.1,
 });
 

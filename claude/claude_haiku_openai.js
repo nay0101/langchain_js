@@ -79,6 +79,7 @@ const llmModel = "claude-3-haiku-20240307";
 const llm = new ChatAnthropic({
   model: llmModel,
   temperature: 0.1,
+  maxTokens: 4096,
 });
 
 // Contextualize question
@@ -173,26 +174,26 @@ const askQuestion = async (question) => {
 await askQuestion(
   "Tell what is Brillar bank, where is it based in etc., and the type of products it offers"
 );
-await askQuestion("How many type of fixed deposits does brillar bank provide");
-await askQuestion("What are the Interest Rates for Fixed Deposit");
-await askQuestion("What is eFixed Deposit");
-await askQuestion("What are the Interest rates for eFixed Deposit");
-await askQuestion("Do the same for rest of the products");
-await askQuestion(
-  "What is the difference between Fixed Deposit and eFixed Deposit?"
-);
-await askQuestion(
-  "Give an example of how interest for a product is calculated"
-);
-await askQuestion(
-  "Lets say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw  at the end of the term."
-);
-await askQuestion(
-  "What are the minimum opening amount for foreign currency fixed deposit in USD in your bank?"
-);
-await askQuestion(
-  "what is the difference between the percentage of interest rates of flexi fixed deposit and e-fixed deposit"
-);
-await askQuestion(
-  "How many type of currency does Brillar bank provide for foreign currency fixed deposit?"
-);
+// await askQuestion("How many type of fixed deposits does brillar bank provide");
+// await askQuestion("What are the Interest Rates for Fixed Deposit");
+// await askQuestion("What is eFixed Deposit");
+// await askQuestion("What are the Interest rates for eFixed Deposit");
+// await askQuestion("Do the same for rest of the products");
+// await askQuestion(
+//   "What is the difference between Fixed Deposit and eFixed Deposit?"
+// );
+// await askQuestion(
+//   "Give an example of how interest for a product is calculated"
+// );
+// await askQuestion(
+//   "Lets say I want to invest RM 50,000 in Fixed Deposit for 12 months. Please calculate the total amount that I can withdraw  at the end of the term."
+// );
+// await askQuestion(
+//   "What are the minimum opening amount for foreign currency fixed deposit in USD in your bank?"
+// );
+// await askQuestion(
+//   "what is the difference between the percentage of interest rates of flexi fixed deposit and e-fixed deposit"
+// );
+// await askQuestion(
+//   "How many type of currency does Brillar bank provide for foreign currency fixed deposit?"
+// );

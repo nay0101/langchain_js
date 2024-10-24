@@ -80,6 +80,7 @@ const llmModel = "claude-3-5-sonnet-20240620";
 const llm = new ChatAnthropic({
   model: llmModel,
   temperature: 0.1,
+  maxTokens: 8192,
 });
 
 // Contextualize question

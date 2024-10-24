@@ -64,6 +64,7 @@ const llmModel = "gpt-4o";
 const llm = new ChatOpenAI({
   model: llmModel,
   temperature: 0.1,
+  maxTokens: 16384,
 });
 
 // Contextualize question
