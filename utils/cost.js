@@ -3,7 +3,11 @@ import { Langfuse } from "langfuse-langchain";
 
 config();
 
-async function getTotalCost({ chatbotName, fromTimestamp, toTimestamp }) {
+async function getTotalCost({
+  chatbotName,
+  fromTimestamp = null,
+  toTimestamp = null,
+}) {
   const langfuse = new Langfuse();
   const langfuseConfig = {
     userId: chatbotName,
