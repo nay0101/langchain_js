@@ -28,7 +28,7 @@ const context = [
   }),
 ];
 
-const modelName = "mistralai/Mixtral-8x7B-Instruct-v0.1";
+const modelName = "meta-llama/Meta-Llama-3.1-70B-Instruct";
 const llm = new HuggingFaceInference({
   model: modelName,
   maxRetries: 0,
